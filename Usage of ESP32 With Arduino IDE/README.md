@@ -15,3 +15,12 @@ To install ESP32 board in your Arduino IDE, follow the steps below.
 
  
 ![Untitledd](https://user-images.githubusercontent.com/112697142/208445667-963ec70d-b191-49ed-a9c4-1906bcc809f1.png)
+
+- Click the Boards Manager
+
+![arduinoboard](https://user-images.githubusercontent.com/112697142/209644042-b65e3e12-ae33-4756-a7eb-a47da9d6af19.png)
+
+- Install ESP32 by clicking install button after searching for ESP32. It'll be ready in a few seconds.
+
+![ardubo](https://user-images.githubusercontent.com/112697142/209644481-aad29edf-534c-41ae-ba10-a866addfa134.png)
+
