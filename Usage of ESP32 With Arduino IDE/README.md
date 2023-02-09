@@ -38,4 +38,16 @@ Plug your ESP32 board to your computer after you open Arduino IDE and follow ste
 
 ![ardexam](https://user-images.githubusercontent.com/112697142/209685993-18cf4e36-fae3-4b21-a506-23f1f86ed91e.png)
 
+- ##### A new sketch opens in your Arduino IDE.
+
+![S](https://user-images.githubusercontent.com/112697142/217796920-13df56dd-abad-439b-81a8-66ad97f4d7b0.png)
+
+- ##### Press the Upload button
+- ##### If everything went as expected, we'll see “Done uploading” message.
+
+![Screenshotfsdf 2023-02-09 141242](https://user-images.githubusercontent.com/112697142/217797281-2c65781a-b6c8-404d-bdd6-965a6a3c6ab4.png)
+
+- ##### Open the Arduino IDE Serial Monitor at a baud rate of 115200.
+
+![image](https://user-images.githubusercontent.com/112697142/217797641-1f3f525a-6821-4857-b283-694af1301d79.png)
 
