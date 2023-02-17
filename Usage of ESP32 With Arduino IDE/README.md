@@ -1,8 +1,8 @@
 ## Usage of ESP32 With Arduino IDE
-Because of its high processing power and useful functions, ESP32 is highly preferred among many microcontrollers and development boards. Let's learn how to use ESP32 and install ESP32 library.
+Because of its high processing power and useful functions, ESP32 is highly preferred among many microcontrollers and development boards. Let's learn how to use ESP32 and install the ESP32 library.
 
 ## Installing ESP32 in Arduino IDE
-To install ESP32 board in your Arduino IDE, follow the steps below.
+To install the ESP32 board in your Arduino IDE, follow the steps below.
 
 - In Arduino IDE, go to File>Preferences
 
