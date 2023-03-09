@@ -1,7 +1,5 @@
 # OmniBot
 
-<img src="https://user-images.githubusercontent.com/112697142/224023298-91933300-8645-4284-a0e9-b28337aaf451.png" width="50%" height="40%">
-
 
 Thanks to its special omni wheels, OmniBot provides easy access to every point without making any rotational movement. Using OmniBot, you can reach hard-to-reach any points very easily. This robot is designed to reach hard-to-reach spots.
 
