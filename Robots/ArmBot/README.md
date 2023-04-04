@@ -7,3 +7,6 @@
 ArmBot is a REX robot that enables the objects around it to be moved from one point to another one with remote control thanks to its robot arm. Robot arm on ArmBot consists of 3 servo motors. It can move in 4 different axes, up, down, right and left, and with the movement of ArmBot, it can easily reach even objects that are difficult to reach.
 
 
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/112697142/229800991-1b163540-1c6c-4295-a2a1-9384fd888750.gif" alt="animated" />
+</p>
