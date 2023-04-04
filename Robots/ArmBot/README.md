@@ -8,5 +8,5 @@ ArmBot is a REX robot that enables the objects around it to be moved from one po
 
 
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/112697142/229800991-1b163540-1c6c-4295-a2a1-9384fd888750.gif" alt="animated" />
+  <img src="https://user-images.githubusercontent.com/112697142/229811200-1524aba2-5395-4e89-839e-a1b8bd28d55f.gif" alt="animated" />
 </p>
