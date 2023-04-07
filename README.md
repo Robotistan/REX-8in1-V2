@@ -20,8 +20,7 @@ There is a port for connecting and 1 buzzer and switch integrated into the card,
 - ##### [Documents]
    * [Datasheets]
    * [E-Book]
-   * [Installation Manuals]
-- ##### [Package Content]
+   * [Installation Manuals] 
 - ##### [Robots](https://github.com/Robotistan/8in1/tree/main/Robots) 
    * [ArmBot](https://github.com/Robotistan/8in1/tree/main/Robots/ArmBot)
    * [BalanceBot](https://github.com/Robotistan/8in1/tree/main/Robots/BalanceBot)
