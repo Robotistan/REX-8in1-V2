@@ -17,7 +17,7 @@ There is a port for connecting and 1 buzzer and switch integrated into the card,
 ## Repository Contents
 
 - ##### [Add-on Packs](https://github.com/Robotistan/8in1/tree/main/Add-on%20Packs)
-- ##### [Documents]
+- ##### [Documents](https://github.com/Robotistan/8in1/tree/main/Documents)
    * [Datasheets]
    * [E-Book]
    * [Installation Manuals] 
