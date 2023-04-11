@@ -3,7 +3,9 @@ Line follower sensors detect the presence of a black line by emitting infrared (
 - An emitter
 - A light sensor (receiver)
 <p align="center">
+
   <img src="https://user-images.githubusercontent.com/112697142/230352474-a23c896c-584f-4dc7-a559-e2915b4881b6.gif" alt="animated" />
+  
 </p>
 
 ## How to use a line sensor
