@@ -1,5 +1,4 @@
 # REX 8 in 1 
-https://rex-rdt.readthedocs.io/en/latest/
 <p align="center">
   <img src="https://user-images.githubusercontent.com/112697142/229721526-375c7a74-edb2-4781-a401-df036e431216.gif" alt="animated" />
 </p>
