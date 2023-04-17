@@ -1,7 +1,7 @@
 ## ESP32 WROOM 32E Pinout
 
 <p align="center">
-360° Review
+360° Preview
 </p>
 
 <p align="center">
