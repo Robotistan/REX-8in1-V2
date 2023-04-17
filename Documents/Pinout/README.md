@@ -14,37 +14,38 @@
 </p>
 Which pins connected to Sockets
 
-+ IR Sensor Pins
-- GPIO1 TX
-- GPIO3 RX
+| IR Sensor | GPIO     |       Notes                   |
+| :-------- | :------- | :-------------------------    |
+| `TX`    | `1`     | **Gerekli**. API anahtarınız.    |
+| `RX`    | `3`     | **Gerekli**. API anahtarınız.    |
 
-+ Motor-A 
-- M_A1 GPIO15
-- M_A2 GPIO23
+| Motor-A   | GPIO     | Notes                         |
+| :-------- | :------- | :-------------------------    |
+| `M_A1`    | `15`     | **Gerekli**. API anahtarınız. |
+| `M_A2`    | `23`     | **Gerekli**. API anahtarınız. |
 
-+ Motor-B
-- M_B1 GPIO32
-- M_B2 GPIO33
+| Motor-B   | GPIO     | Notes                         |
+| :-------- | :------- | :-------------------------    |
+| `M_B1`    | `32`     | **Gerekli**. API anahtarınız. |
+| `M_B2`    | `33`     | **Gerekli**. API anahtarınız. |
 
-+ Motor-C
-- M_C1 GPIO4
-- M_C2 GPIO5
+| Motor-C   | GPIO     | Notes                         |
+| :-------- | :------- | :-------------------------    |
+| `M_c1`    | `4`     | **Gerekli**. API anahtarınız. |
+| `M_c2`    | `5`     | **Gerekli**. API anahtarınız. |
 
-+ Motor-D
-- M_D1 GPI14
-- M_D2 GPI27
+| Motor-D   | GPIO     | Notes                         |
+| :-------- | :------- | :-------------------------    |
+| `M_D1`    | `14`     | **Gerekli**. API anahtarınız. |
+| `M_D2`    | `27`     | **Gerekli**. API anahtarınız. |
 
-+ Servo-1
-- GPIO2
 
-+ Servo-2
-- GPIO26
-
-+ Servo-3
-- GPIO18
-
-+ Servo-4
-- GPIO19
+| Servo Pins   | GPIO     | Notes                         |
+| :--------    | :------- | :-------------------------    |
+| `Servo-1`    | `2`      | **Gerekli**. API anahtarınız. |
+| `Servo-2`    | `26`     | **Gerekli**. API anahtarınız. |
+| `Servo-3`    | `18`     | **Gerekli**. API anahtarınız. |
+| `Servo-4`    | `19`     | **Gerekli**. API anahtarınız. |
 
 
 </p>
