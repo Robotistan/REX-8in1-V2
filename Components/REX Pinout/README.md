@@ -19,7 +19,7 @@
   <img src="https://user-images.githubusercontent.com/78815495/232464806-6abdce40-22c8-40ba-807a-c8adba2092a3.png" alt="animated" />
 </p>
 
-## Which pins connected to Sockets
+## Pin Connection Tables
 ### DC Motor Pins
 | Motor-A   | GPIO     | Explanation                         | - | Motor-B   | GPIO     | Explanation                         |
 | :-------- | :------- | :-------------------------    |:--| :-------- | :------- | :-------------------------    |
