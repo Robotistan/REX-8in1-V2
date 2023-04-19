@@ -23,23 +23,23 @@
 
 | Motor-A   | GPIO     | Notes                         |
 | :-------- | :------- | :-------------------------    |
-| `M_A1`    | `15`     | **Gerekli**. API anahtarınız. |
-| `M_A2`    | `23`     | **Gerekli**. API anahtarınız. |
+| `M_A1`    | `15`     | Forward.                      |
+| `M_A2`    | `23`     | Backward.                     |
 
 | Motor-B   | GPIO     | Notes                         |
 | :-------- | :------- | :-------------------------    |
-| `M_B1`    | `32`     | **Gerekli**. API anahtarınız. |
-| `M_B2`    | `33`     | **Gerekli**. API anahtarınız. |
+| `M_B1`    | `32`     | Forward.                      |
+| `M_B2`    | `33`     | Backward.                     |
 
 | Motor-C   | GPIO     | Notes                         |
 | :-------- | :------- | :-------------------------    |
-| `M_c1`    | `4`      | **Gerekli**. API anahtarınız. |
-| `M_c2`    | `5`      | **Gerekli**. API anahtarınız. |
+| `M_C1`    | `4`      | Forward.                      |
+| `M_C2`    | `5`      | Backward.                     |
 
 | Motor-D   | GPIO     | Notes                         |
 | :-------- | :------- | :-------------------------    |
-| `M_D1`    | `14`     | **Gerekli**. API anahtarınız. |
-| `M_D2`    | `27`     | **Gerekli**. API anahtarınız. |
+| `M_D1`    | `14`     | Forward.                      |
+| `M_D2`    | `27`     | Backward.                     |
 
 
 | Servo Pins   | GPIO     | Notes                         |
