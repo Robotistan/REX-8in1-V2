@@ -19,49 +19,49 @@
   <img src="https://user-images.githubusercontent.com/78815495/232464806-6abdce40-22c8-40ba-807a-c8adba2092a3.png" alt="animated" />
 </p>
 
-### Which pins connected to Sockets
-
-| Motor-A   | GPIO     | Notes                         | - | Motor-B   | GPIO     | Notes                         |
+## Which pins connected to Sockets
+### DC Motor Pins
+| Motor-A   | GPIO     | Explanation                         | - | Motor-B   | GPIO     | Explanation                         |
 | :-------- | :------- | :-------------------------    |:--| :-------- | :------- | :-------------------------    |
 | `M_A1`    | `15`     | Forward.                      | - | `M_B1`    | `32`     | Forward.                      |
 | `M_A2`    | `23`     | Backward.                     | - | `M_B2`    | `33`     | Backward.                     |
 
-| Motor-C   | GPIO     | Notes                         |  | Motor-D   | GPIO     | Notes                         |
-| :-------- | :------- | :-------------------------    |:-| :-------- | :------- | :-------------------------    |
-| `M_C1`    | `4`      | Forward.                      |  | `M_D1`    | `14`     | Forward.                      |
-| `M_C2`    | `5`      | Backward.                     |  | `M_D2`    | `27`     | Backward.                     |
+| Motor-C   | GPIO     | Explanation                         | - | Motor-D   | GPIO     | Explanation                         |
+| :-------- | :------- | :-------------------------    |:- | :-------- | :------- | :-------------------------    |
+| `M_C1`    | `4`      | Forward.                      | - | `M_D1`    | `14`     | Forward.                      |
+| `M_C2`    | `5`      | Backward.                     | - | `M_D2`    | `27`     | Backward.                     |
 
-
-| Servo Pins   | GPIO     | Notes                      |  | Servo Pins   | GPIO     | Notes                      |
+### Servo Motor Pins
+| Servo Pins   | GPIO     | Explanation                      | -  | Servo Pins   | GPIO     | Explanation                      |
 | :--------    | :------- | :------------------------- |:-| :--------    | :------- | :------------------------- |
-| `Servo-1`    | `2`      | Powered by 6V | | `Servo-3`    | `18`     | Powered by 6V |
-| `Servo-2`    | `26`     | Powered by 6V | | `Servo-4`    | `19`     | Powered by 6V |
+| `Servo-1`    | `2`      | Powered by 6V | - | `Servo-3`    | `18`     | Powered by 6V |
+| `Servo-2`    | `26`     | Powered by 6V | - | `Servo-4`    | `19`     | Powered by 6V |
 
-
-| IR Sensor | GPIO     |       Notes                   |
+### IR Sensor Pins
+| IR Sensor | GPIO     |       Explanation                   |
 | :-------- | :------- | :-------------------------    |
 | `TX`      | `1`      | Connected to UA0 RX. |
 | `RX`      | `3`      | Connected to UA0 TX. |
-
-| Ulstrasonic Sensor   | GPIO      |                                     Notes                                      |
+### Ulstrasonic Sensor Pins
+| Ulstrasonic Sensor   | GPIO      |                                     Explanation                                      |
 | :--------            | :-------  | :-------------------------                                                     |
 | `TRIG`               | `17`      | Pin is used to trigger ultrasonic sound pulses                                 |
 | `ECHO`               | `16`      | By measuring the time the Echo pin stays high, the distance can be calculated. |
-
-| I2C        | GPIO      |       Notes                   |
+### I2C Pins
+| I2C        | GPIO      |       Explanation                   |
 | :--------  | :-------  | :-------------------------    |
-| `SCL`      | `22`      | **Connected**. Yellow Cable. |
-| `SDA`      | `21`      | **Connected**. ''White Cable.''  |
-
-| Buzzer     | GPIO      |       Notes                   |
+| `SCL`      | `22`      | **Connected** Yellow Connection Cable. |
+| `SDA`      | `21`      | **Connected** White Connection Cable. |
+### Buzzer Pin
+| Buzzer     | GPIO      |       Explanation                   |
 | :--------  | :-------  | :-------------------------    |
-| `Buzzer`   | `25`      | **Gerekli**. API anahtarınız. |
-
-| MPU6050    | GPIO      |       Notes                  |
+| `Buzzer`   | `25`      |  **Connected** pin 25. |
+### MPU6050 Pins
+| MPU6050    | GPIO      |       Explanation                  |
 | :--------  | :-------  | :-------------------------   |
-| `SCL`      | `22`      | **Connected**. Yellow Cable. |
-| `SDA`      | `21`      | **Connected**. White Cable.  |
-| `INT`      | `13`      | **Connected**. Yellow Cable. |
+| `SCL`      | `22`      | I2C Communication |
+| `SDA`      | `21`      | I2C Communication |
+| `INT`      | `13`      | interrupt pin     |
 
 
 </p>
