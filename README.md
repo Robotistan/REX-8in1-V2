@@ -18,9 +18,9 @@ There is a port for connecting and 1 buzzer and switch integrated into the card,
 - ##### [Add-on Packs](https://github.com/Robotistan/8in1/tree/main/Add-on%20Packs)
 - ##### [Documents](https://github.com/Robotistan/8in1/tree/main/Documents)
    * [Line-IR Follower Sensor](https://github.com/Robotistan/8in1/tree/main/Documents/Line-IR%20Follower%20Sensor)
-   * [REX Main](https://github.com/Robotistan/8in1/tree/main/Documents/REX-Main)
+   * [REX Pinout/Main](https://github.com/Robotistan/8in1/tree/main/Documents/REX%20Pinout)
    * [E-Book]
-   * [Installation Manuals] 
+   * [Installation Manuals](https://github.com/Robotistan/8in1/tree/main/Installation%20Manuals)
 - ##### [Robots](https://github.com/Robotistan/8in1/tree/main/Robots) 
    * [ArmBot](https://github.com/Robotistan/8in1/tree/main/Robots/ArmBot)
    * [BalanceBot](https://github.com/Robotistan/8in1/tree/main/Robots/BalanceBot)
