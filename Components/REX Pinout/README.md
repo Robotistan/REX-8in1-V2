@@ -21,43 +21,32 @@
 
 ### Which pins connected to Sockets
 
-| Motor-A   | GPIO     | Notes                         |
-| :-------- | :------- | :-------------------------    |
-| `M_A1`    | `15`     | Forward.                      |
-| `M_A2`    | `23`     | Backward.                     |
+| Motor-A   | GPIO     | Notes                         | - | Motor-B   | GPIO     | Notes                         |
+| :-------- | :------- | :-------------------------    |:--| :-------- | :------- | :-------------------------    |
+| `M_A1`    | `15`     | Forward.                      | - | `M_B1`    | `32`     | Forward.                      |
+| `M_A2`    | `23`     | Backward.                     | - | `M_B2`    | `33`     | Backward.                     |
 
-| Motor-B   | GPIO     | Notes                         |
-| :-------- | :------- | :-------------------------    |
-| `M_B1`    | `32`     | Forward.                      |
-| `M_B2`    | `33`     | Backward.                     |
-
-| Motor-C   | GPIO     | Notes                         |
-| :-------- | :------- | :-------------------------    |
-| `M_C1`    | `4`      | Forward.                      |
-| `M_C2`    | `5`      | Backward.                     |
-
-| Motor-D   | GPIO     | Notes                         |
-| :-------- | :------- | :-------------------------    |
-| `M_D1`    | `14`     | Forward.                      |
-| `M_D2`    | `27`     | Backward.                     |
+| Motor-C   | GPIO     | Notes                         |  | Motor-D   | GPIO     | Notes                         |
+| :-------- | :------- | :-------------------------    |:-| :-------- | :------- | :-------------------------    |
+| `M_C1`    | `4`      | Forward.                      |  | `M_D1`    | `14`     | Forward.                      |
+| `M_C2`    | `5`      | Backward.                     |  | `M_D2`    | `27`     | Backward.                     |
 
 
-| Servo Pins   | GPIO     | Notes                         |
-| :--------    | :------- | :-------------------------    |
-| `Servo-1`    | `2`      | **Gerekli**. API anahtarınız. |
-| `Servo-2`    | `26`     | **Gerekli**. API anahtarınız. |
-| `Servo-3`    | `18`     | **Gerekli**. API anahtarınız. |
-| `Servo-4`    | `19`     | **Gerekli**. API anahtarınız. |
+| Servo Pins   | GPIO     | Notes                      |  | Servo Pins   | GPIO     | Notes                      |
+| :--------    | :------- | :------------------------- |:-| :--------    | :------- | :------------------------- |
+| `Servo-1`    | `2`      | Powered by 6V | | `Servo-3`    | `18`     | Powered by 6V |
+| `Servo-2`    | `26`     | Powered by 6V | | `Servo-4`    | `19`     | Powered by 6V |
+
 
 | IR Sensor | GPIO     |       Notes                   |
 | :-------- | :------- | :-------------------------    |
-| `TX`      | `1`      | **Gerekli**. API anahtarınız. |
-| `RX`      | `3`      | **Gerekli**. API anahtarınız. |
+| `TX`      | `1`      | Connected to UA0 RX. |
+| `RX`      | `3`      | Connected to UA0 TX. |
 
-| Ulstrasonic Sensor   | GPIO      |       Notes                   |
-| :--------            | :-------  | :-------------------------    |
-| `TRIG`               | `17`      | **Gerekli**. API anahtarınız. |
-| `ECHO`               | `16`      | **Gerekli**. API anahtarınız. |
+| Ulstrasonic Sensor   | GPIO      |                                     Notes                                      |
+| :--------            | :-------  | :-------------------------                                                     |
+| `TRIG`               | `17`      | Pin is used to trigger ultrasonic sound pulses                                 |
+| `ECHO`               | `16`      | By measuring the time the Echo pin stays high, the distance can be calculated. |
 
 | I2C        | GPIO      |       Notes                   |
 | :--------  | :-------  | :-------------------------    |
