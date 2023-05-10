@@ -28,6 +28,10 @@ The REX card is a special card designed to make the mechanical and electronic in
 - ##### [Usage of ESP32 with Arduino IDE](https://github.com/Robotistan/8in1/tree/main/Usage%20of%20ESP32%20With%20Arduino%20IDE)
    * [Troubleshooting](https://github.com/Robotistan/8in1/tree/main/Usage%20of%20ESP32%20With%20Arduino%20IDE/Troubleshooting)
 
+<p align="center">
+  <img src="https://github.com/Robotistan/8in1/assets/112697142/e35969e3-77d2-4c9b-87c0-75f66865af02" alt="animated" />
+</p>
+
 ## Authors ve Appreciation
 For Design and Development
 - [@ozerngg](https://github.com/ozerngg) 
