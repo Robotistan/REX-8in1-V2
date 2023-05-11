@@ -40,8 +40,8 @@
 ### IR Sensor Pins
 | IR Sensor | GPIO     |       Explanation                   |
 | :-------- | :------- | :-------------------------    |
-| `TX`      | `1`      | Connected to UA0 RX. |
-| `RX`      | `3`      | Connected to UA0 TX. |
+| `A0`      | `34`      | Connected to left sensor when loked from top. |
+| `A1`      | `35`      | Connected to right sensor when loked from top. |
 ### Ulstrasonic Sensor Pins
 | Ulstrasonic Sensor   | GPIO      |                                     Explanation                                      |
 | :--------            | :-------  | :-------------------------                                                     |
