@@ -28,6 +28,24 @@ The REX card is a special card designed to make the mechanical and electronic in
 - ##### [Usage of ESP32 with Arduino IDE](https://github.com/Robotistan/8in1/tree/main/Usage%20of%20ESP32%20With%20Arduino%20IDE)
    * [Troubleshooting](https://github.com/Robotistan/8in1/tree/main/Usage%20of%20ESP32%20With%20Arduino%20IDE/Troubleshooting)
 
+## License
+
+
+* Apache License
+
+All original source code in this repository is Copyright (C) 2022 REX/Robotistan. This source code is licensed under the Apache License 2.0 as described in the file LICENSE.
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+
 <p align="center">
   <img src="https://github.com/Robotistan/8in1/assets/112697142/e35969e3-77d2-4c9b-87c0-75f66865af02" alt="animated" />
 </p>
