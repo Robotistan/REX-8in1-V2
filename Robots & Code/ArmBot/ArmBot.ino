@@ -24,8 +24,8 @@ enum MOTOR_TYPE motorType = DC_MOTOR;
 #define MotorC1 5
 #define MotorC2 4
 
-#define MotorD1 27
-#define MotorD2 14
+#define MotorD1 14
+#define MotorD2 27
 
 int position1 = 0 ;
 int position2 = 0 ;
