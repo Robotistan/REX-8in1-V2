@@ -5,7 +5,7 @@
 * 3 - Put servo horns on the servo motors. 
 * 4 - Turn servo motors clockwise until servo stop.
 * 5 - The cables indicate 180 degrees and directly opposite side indicates 0 degrees.
-* 6 - Put on servo horn new position. Now servo horns have to turned 0 degree direction. (The servo horns will indicates 0 degrees).
+* 6 - Put on servo horn new position. Now the servo motors should be turned to 0 degrees.. (The servo horns will indicates 0 degrees).
 
 https://github.com/Robotistan/REX-8in1-V2/assets/78815495/8cb75a79-8288-4c73-92dd-75d78a2e162c
 
