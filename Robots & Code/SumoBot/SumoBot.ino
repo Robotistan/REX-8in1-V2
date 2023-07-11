@@ -9,14 +9,14 @@ long duration, cm;
 #define MotorA1 15
 #define MotorA2 23
 
-#define MotorB1 33
-#define MotorB2 32
+#define MotorB1 32
+#define MotorB2 33
 
-#define MotorC1 17
-#define MotorC2 16
+#define MotorC1 5
+#define MotorC2 4
 
-#define MotorD1 27
-#define MotorD2 14
+#define MotorD1 14
+#define MotorD2 27
 
 #define mid 115
 #define slow 0
