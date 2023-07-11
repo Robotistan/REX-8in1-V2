@@ -20,14 +20,14 @@ int position2 = 90;
 int position3 = 90;
 int position4 = 90;
 
-#define MotorA1 23
-#define MotorA2 15
+#define MotorA1 15
+#define MotorA2 23
 
-#define MotorB1 33
-#define MotorB2 32
+#define MotorB1 32
+#define MotorB2 33
 
-#define MotorC1 16
-#define MotorC2 17
+#define MotorC1 5
+#define MotorC2 4
 
 #define MotorD1 14
 #define MotorD2 27
