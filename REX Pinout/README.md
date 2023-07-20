@@ -69,9 +69,9 @@
 </p>
 </p>
 <p align="center">
-  <img height="100" src="https://github.com/Robotistan/REX-8in1-V2/assets/111511331/9c75fb32-9052-4950-a0d4-070f6cd1bd6e" alt="animated" />
+  <img height="400" src="https://github.com/Robotistan/REX-8in1-V2/assets/111511331/9c75fb32-9052-4950-a0d4-070f6cd1bd6e" alt="animated" />
 </p>
 </p>
 <p align="center">
-  <img height="100" src="https://github.com/Robotistan/REX-8in1-V2/assets/111511331/8aa56d2c-6eb6-4dd6-9d9e-08b0318b9e36" alt="animated" />
+  <img height="400" src="https://github.com/Robotistan/REX-8in1-V2/assets/111511331/8aa56d2c-6eb6-4dd6-9d9e-08b0318b9e36" alt="animated" />
 </p>
