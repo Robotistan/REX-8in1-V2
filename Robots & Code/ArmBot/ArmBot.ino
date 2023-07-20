@@ -14,18 +14,18 @@ enum MOTOR_TYPE {
 };
 enum MOTOR_TYPE motorType = DC_MOTOR;
 
-//define pins of motors
-#define MotorA1 15
-#define MotorA2 23
+//define Motor Pins
+#define MotorA1 15 // Forward
+#define MotorA2 23 // Backward
 
-#define MotorB1 32
-#define MotorB2 33
+#define MotorB1 32 // Forward
+#define MotorB2 33 // Backward
 
-#define MotorC1 5
-#define MotorC2 4
+#define MotorC1 5 // Forward
+#define MotorC2 4 // Backward
 
-#define MotorD1 14
-#define MotorD2 27
+#define MotorD1 27 // Forward
+#define MotorD2 14 // Backward
 
 int position1 = 0 ;
 int position2 = 0 ;
@@ -68,18 +68,6 @@ void setup() {
 
   pinMode(MotorD1, OUTPUT);
   pinMode(MotorD2, OUTPUT);
-
-  digitalWrite(MotorA1, HIGH);
-  digitalWrite(MotorA2, HIGH);
-  
-  digitalWrite(MotorB1, HIGH);
-  digitalWrite(MotorB2, HIGH);
-  
-  digitalWrite(MotorC1, HIGH);
-  digitalWrite(MotorC2, HIGH);
-  
-  digitalWrite(MotorD1, HIGH);
-  digitalWrite(MotorD2, HIGH);
 
   Serial.begin(115200);      // make sure your Serial Monitor is also set at this baud rate.
   Dabble.begin("REX_ROBOT"); //set bluetooth name of your device
