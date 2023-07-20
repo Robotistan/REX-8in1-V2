@@ -67,11 +67,14 @@
 <p align="center">
   <img src="https://user-images.githubusercontent.com/78815495/232464533-1807c9cc-87b0-4529-b5ec-bb78b5b8704c.jpg" alt="animated" />
 </p>
+<h4 align="center">ESP32 WROOM 32E Pinout</h4>
 </p>
 <p align="center">
-  <img height="400" src="https://github.com/Robotistan/REX-8in1-V2/assets/111511331/9c75fb32-9052-4950-a0d4-070f6cd1bd6e" alt="animated" />
+  <img height="600" src="https://github.com/Robotistan/REX-8in1-V2/assets/111511331/9c75fb32-9052-4950-a0d4-070f6cd1bd6e" alt="animated" />
 </p>
+<h4 align="center">You can use external battery.</h4>
 </p>
 <p align="center">
-  <img height="400" src="https://github.com/Robotistan/REX-8in1-V2/assets/111511331/8aa56d2c-6eb6-4dd6-9d9e-08b0318b9e36" alt="animated" />
+  <img height="600" src="https://github.com/Robotistan/REX-8in1-V2/assets/111511331/8aa56d2c-6eb6-4dd6-9d9e-08b0318b9e36" alt="animated" />
 </p>
+<h4 align="center">There is a space between 2 layers for external battery.</h4>
