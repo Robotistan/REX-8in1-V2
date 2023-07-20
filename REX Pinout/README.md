@@ -28,8 +28,8 @@
 
 | Motor-C   | GPIO     | Explanation                         | - | Motor-D   | GPIO     | Explanation                         |
 | :-------- | :------- | :-------------------------    |:- | :-------- | :------- | :-------------------------    |
-| `M_C1`    | `4`      | Forward.                      | - | `M_D1`    | `14`     | Forward.                      |
-| `M_C2`    | `5`      | Backward.                     | - | `M_D2`    | `27`     | Backward.                     |
+| `M_C1`    | `5`      | Forward.                      | - | `M_D1`    | `27`     | Forward.                      |
+| `M_C2`    | `4`      | Backward.                     | - | `M_D2`    | `14`     | Backward.                     |
 
 ### Servo Motor Pins
 | Servo Pins   | GPIO     | Explanation                      | -  | Servo Pins   | GPIO     | Explanation                      |
