@@ -20,17 +20,18 @@ int position2 = 90;
 int position3 = 90;
 int position4 = 90;
 
-#define MotorA1 15
-#define MotorA2 23
+//Define Motor Pins
+#define MotorA1 15 // Forward
+#define MotorA2 23 // Backward
 
-#define MotorB1 32
-#define MotorB2 33
+#define MotorB1 32 // Forward
+#define MotorB2 33 // Backward
 
-#define MotorC1 5
-#define MotorC2 4
+#define MotorC1 5 // Forward
+#define MotorC2 4 // Backward
 
-#define MotorD1 14
-#define MotorD2 27
+#define MotorD1 27 // Forward
+#define MotorD2 14 // Backward
 
 #define horn 2
 
