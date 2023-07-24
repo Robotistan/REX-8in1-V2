@@ -17,7 +17,7 @@ The REX card is a special card designed to make the mechanical and electronic in
    * [E-Book]
 - #### [Installation Manuals](https://github.com/Robotistan/8in1/tree/main/Installation%20Manuals)
 - ##### [Robots](https://github.com/Robotistan/8in1/tree/main/Robots) 
-   * [ArmBot](https://github.com/Robotistan/8in1/tree/main/Robots/ArmBot)
+   * [ArmBot](https://github.com/Robotistan/REX-8in1-V2/tree/main/Robots%20%26%20Code/ArmBot)
    * [BalanceBot](https://github.com/Robotistan/8in1/tree/main/Robots/BalanceBot)
    * [OmniBot](https://github.com/Robotistan/8in1/tree/main/Robots/OmniBot)
    * [RoverBot](https://github.com/Robotistan/8in1/tree/main/Robots/RoverBot)
