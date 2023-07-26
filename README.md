@@ -4,7 +4,7 @@ REX is an educational robot kit developed by Robotistan R&D team. The 8in1 robot
 
 The REX card is a special card designed to make the mechanical and electronic installation of the robots in the 8 in 1 set more convenient. This board, which uses the ESP32E processor, has connectors to easily connect all the components used in the REX 8 in 1 set to the circuit with a single cable.
 
-4 motor driver and servo motor connectors to make the installation and circuit designs of 8 in 1 robots easier on the REX board, 1 connection connector for each to connect the HC-SR04, IR and MPU6050 sensors, to connect a 12v battery to the circuit externally port and 1 buzzer and switch integrated into the card.
+4 motor drivers and servo motors connectors to make the installation and circuit designs of 8 in 1 robots easier on the REX board, 1 connection connector for each to connect the HC-SR04, IR and MPU6050 sensors, to connect a 9v battery to the circuit externally port and 1 buzzer and switch integrated into the card.
 
 ![armbot-2](https://github.com/Robotistan/REX-8in1-V2/assets/78815495/597b91c8-1b66-411f-96be-2777d25d00fa)
 
