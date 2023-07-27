@@ -8,7 +8,7 @@
 
 🔌💡🔋🔊 Enjoy building and programming your robots with REX! Happy robot adventures! 🚀🌟🤖🎉
 
-<div align="center">
+<div align="">
   <img src="https://github.com/Robotistan/REX-8in1-V2/assets/78815495/597b91c8-1b66-411f-96be-2777d25d00fa" alt="Logo" width="800">
 </div>
 
@@ -31,7 +31,7 @@
 - ##### [Usage of ESP32 with Arduino IDE](https://github.com/Robotistan/8in1/tree/main/Usage%20of%20ESP32%20With%20Arduino%20IDE)
    * [Troubleshooting](https://github.com/Robotistan/8in1/tree/main/Usage%20of%20ESP32%20With%20Arduino%20IDE/Troubleshooting)
 
-|                                                                                                                                                                                                                  |                                                                                                                                                                                                                   |
+|                        Click on the 🤖 robot images to jump to the robot's page! 🔍🚀                                                                                                                           |                                     Enjoy exploring the robots! 🤩🔎🤖🌟                                                                                                                                        |
 |------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | [![Resim 1](https://user-images.githubusercontent.com/112697142/229721526-375c7a74-edb2-4781-a401-df036e431216.gif)](https://github.com/Robotistan/REX-8in1-V2/tree/main/Robots%20%26%20Code/ArmBot)             | [![Resim 2](https://user-images.githubusercontent.com/112697142/231426821-66edec83-a8ee-4155-87ec-7bb550523409.gif)](https://github.com/Robotistan/REX-8in1-V2/tree/main/Robots%20&%20Code/OmniBot)               |
 | [Arm Bot](https://github.com/Robotistan/REX-8in1-V2/tree/main/Robots%20%26%20Code/ArmBot)                                                                                                                        | [Omni Bot](https://github.com/Robotistan/REX-8in1-V2/tree/main/Robots%20&%20Code/OmniBot)                                                                                                                         |
