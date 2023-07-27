@@ -1,4 +1,4 @@
-# What is REX 8 in 1? 
+# What is REX 8 in 1? 🤖🔍🌟
 
 🤖 REX is an educational robot kit developed by Robotistan R&D team. The 8in1 robot kit, with its motherboard using the ESP32 infrastructure, eliminates the difficulties encountered in circuit setup such as port and cable confusion. However, Arduino IDE, Thonny IDE, and MicroBlocks IDE provide the user with great flexibility in programming. 🛠️🔌🚀
 
