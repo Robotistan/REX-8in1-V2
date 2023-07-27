@@ -38,6 +38,41 @@ The REX card is a special card designed to make the mechanical and electronic in
 | [![Resim 1](https://user-images.githubusercontent.com/112697142/231176647-606db0a1-85d6-4fbe-8dca-565c89164e5e.gif)](https://github.com/Robotistan/REX-8in1-V2/tree/main/Robots%20%26%20Code/TrackerBot)         | [![Resim 8](https://user-images.githubusercontent.com/112697142/232056329-d8ee24b2-94bb-4732-8da0-c03921780872.gif)](https://github.com/Robotistan/REX-8in1-V2/tree/main/Robots%20%26%20Code/WiBot)               |
 | [Tracker Bot](https://github.com/Robotistan/REX-8in1-V2/tree/main/Robots%20%26%20Code/TrackerBot)                                                                                                                | [Wi Bot](https://github.com/Robotistan/REX-8in1-V2/tree/main/Robots%20%26%20Code/WiBot)                                                                                                                           |
 
+<h1 align="center">Ask Me Anything! 🎉</h1>
+
+<div align="center">
+  <img src="https://github.com/Robotistan/REX-8in1-V2/assets/78815495/98dc60f1-6c73-4d80-9a4e-7f2655d0929b" alt="Logo" width="200">
+</div>
+
+<p align="center">
+  <b>Welcome to the Best GitHub File! This file is open for you to ask any kind of questions. Feel free to ask your questions!</b>
+  <br>
+  <sub>I'm looking forward to your excellent questions and inspiring answers!</sub>
+</p>
+
+<br>
+
+## 🚀 How Can I Ask a Question?
+
+To ask a question, follow these steps:
+
+1. Take a general look at this project, as your question might already be answered.
+2. Go to the [Issues](https://github.com/Robotistan/REX-8in1-V2/issues) section and click on the "New Issue" button.
+3. Provide a descriptive title and details for your question.
+4. If applicable, add tags to make it easier for others to find your question.
+5. Finally, click on the "Submit New Issue" button to post your question.
+
+## 🤖 What Type of Questions Can I Ask?
+
+This repository is open for asking any type of questions related to the project. Here are some examples:
+
+- How to do something?
+- How can I contribute to the project?
+- I found a bug, how can I report it?
+- I want to propose a new feature, what should I do?
+
+If you have any further questions or need assistance, feel free to reach out to us via email at: <a href="mehmetali.dag@robotistan.com">💌 mehmetali.dag@robotistan.com</a>
+
 ## License
 
 * Apache License
@@ -60,7 +95,7 @@ You may obtain a copy of the License at
 </p>
 
 ## Authors ve Appreciation
-For Design and Development
+For Design and Development of REX GitHuB Page by;
 - [@ozerngg](https://github.com/ozerngg) 
 - [@mehmetalidag97](https://github.com/mehmetalidag97) 
 
