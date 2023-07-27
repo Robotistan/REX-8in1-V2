@@ -1,12 +1,16 @@
 # What is REX 8 in 1? 
 
-REX is an educational robot kit developed by Robotistan R&D team. The 8in1 robot kit, with its motherboard using the ESP32 infrastructure, eliminates the difficulties encountered in circuit setup such as port and cable confusion. However, Arduino IDE, Thonny IDE and MicroBlocks IDE provide the user with great flexibility in programming.
+🤖 REX is an educational robot kit developed by Robotistan R&D team. The 8in1 robot kit, with its motherboard using the ESP32 infrastructure, eliminates the difficulties encountered in circuit setup such as port and cable confusion. However, Arduino IDE, Thonny IDE, and MicroBlocks IDE provide the user with great flexibility in programming. 🛠️🔌🚀
 
-The REX card is a special card designed to make the mechanical and electronic installation of the robots in the 8 in 1 set more convenient. This board, which uses the ESP32E processor, has connectors to easily connect all the components used in the REX 8 in 1 set to the circuit with a single cable.
+🎛️ The REX card is a special card designed to make the mechanical and electronic installation of the robots in the 8 in 1 set more convenient. This board, which uses the ESP32E processor, has connectors to easily connect all the components used in the REX 8 in 1 set to the circuit with a single cable. 🛠️🔌🤝🔗
 
-4 motor drivers and servo motors connectors to make the installation and circuit designs of 8 in 1 robots easier on the REX board, 1 connection connector for each to connect the HC-SR04, IR and MPU6050 sensors, to connect a 9v battery to the circuit externally port and 1 buzzer and switch integrated into the card.
+⚙️ 4 motor drivers and servo motors connectors to make the installation and circuit designs of 8 in 1 robots easier on the REX board, 1 connection connector for each to connect the HC-SR04, IR, and MPU6050 sensors, to connect a 9v battery to the circuit externally port and 1 buzzer and switch integrated into the card. 🛠️🔌🏎️🎛️🚀🔋🔊
 
-![armbot-2](https://github.com/Robotistan/REX-8in1-V2/assets/78815495/597b91c8-1b66-411f-96be-2777d25d00fa)
+🔌💡🔋🔊 Enjoy building and programming your robots with REX! Happy robot adventures! 🚀🌟🤖🎉
+
+<div align="center">
+  <img src="https://github.com/Robotistan/REX-8in1-V2/assets/78815495/597b91c8-1b66-411f-96be-2777d25d00fa" alt="Logo" width="800">
+</div>
 
 ## Repository Contents
 
