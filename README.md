@@ -19,8 +19,8 @@
    * [REX Pinout/Main](https://github.com/Robotistan/8in1/tree/main/Components/REX%20Pinout)
    * [E-Book]
 - #### [Installation Manuals](https://github.com/Robotistan/8in1/tree/main/Installation%20Manuals)
-- ##### [Robots](https://github.com/Robotistan/8in1/tree/main/Robots) 
-   * [ArmBot](https://github.com/Robotistan/REX-8in1-V2/tree/main/Robots%20%26%20Code/ArmBot)
+- ##### [Robots](https://github.com/Robotistan/8in1/tree/main/Robots) 🤖
+   * [ArmBot](https://github.com/Robotistan/REX-8in1-V2/tree/main/Robots%20%26%20Code/ArmBot) 
    * [BalanceBot](https://github.com/Robotistan/REX-8in1-V2/tree/main/Robots%20%26%20Code/BalanceBot)
    * [OmniBot](https://github.com/Robotistan/REX-8in1-V2/tree/main/Robots%20%26%20Code/OmniBot)
    * [RoverBot](https://github.com/Robotistan/REX-8in1-V2/tree/main/Robots%20%26%20Code/RoverBot)
