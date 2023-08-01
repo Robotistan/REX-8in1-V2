@@ -17,7 +17,7 @@
 - ##### [Components](https://github.com/Robotistan/8in1/tree/main/Components)
    * [Line-IR Follower Sensor](https://github.com/Robotistan/8in1/tree/main/Components/Line-IR%20Follower%20Sensor)
    * [REX Pinout/Main](https://github.com/Robotistan/8in1/tree/main/Components/REX%20Pinout)
-   * [E-Book]
+   * [E-Book](https://github.com/Robotistan/REX-8in1-V2/files/12227503/QUICK.START.GUIDE.pdf)
 - #### [Installation Manuals](https://github.com/Robotistan/8in1/tree/main/Installation%20Manuals)
 - ##### [Robots](https://github.com/Robotistan/8in1/tree/main/Robots) 🤖
    * [ArmBot](https://github.com/Robotistan/REX-8in1-V2/tree/main/Robots%20%26%20Code/ArmBot) 
