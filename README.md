@@ -45,7 +45,7 @@
 <h1 align="center">Ask Me Anything! 🎉</h1>
 
 <div align="center">
-  <img src="https://github.com/Robotistan/REX-8in1-V2/assets/78815495/98dc60f1-6c73-4d80-9a4e-7f2655d0929b" alt="Logo" width="200">
+  <img src="https://github.com/Robotistan/REX-8in1-V2/assets/78815495/98dc60f1-6c73-4d80-9a4e-7f2655d0929b" alt="Logo" width="400">
 </div>
 
 <p align="center">
