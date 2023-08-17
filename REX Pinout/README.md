@@ -14,9 +14,8 @@
 #### Warning! Please do not connect an external battery if you are using 18650 batteries while using the card.
 
 
-
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/78815495/232464806-6abdce40-22c8-40ba-807a-c8adba2092a3.png" alt="animated" />
+  <img src="https://github.com/Robotistan/REX-8in1-V2/assets/112697142/282f0bed-ec1c-416f-87cb-69754931806c" alt="animated" />
 </p>
 
 ## Pin Connection Tables
