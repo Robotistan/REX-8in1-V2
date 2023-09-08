@@ -44,9 +44,9 @@ Servo Servo4; // Open-Close
 void setup() {
   
   //first positions of servo motors
-  Servo1.write(position1 = 85);
-  Servo2.write(position2 = 140);
-  Servo3.write(position3 = 22);
+  Servo1.write(position1 = 90);
+  Servo2.write(position2 = 90);
+  Servo3.write(position3 = 90);
   Servo4.write(position4 = 90);
 
   //active pins which is defined
