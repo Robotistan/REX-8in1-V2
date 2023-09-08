@@ -42,7 +42,10 @@ Servo Servo3; // Up-Down
 Servo Servo4; // Open-Close
 
 void setup() {
-  
+  Servo1.attach(2);
+  Servo2.attach(26);
+  Servo3.attach(18);
+  Servo4.attach(19);
   //first positions of servo motors
   Servo1.write(position1 = 90);
   Servo2.write(position2 = 90);
@@ -52,10 +55,7 @@ void setup() {
   //active pins which is defined
   pinMode(horn, OUTPUT);
 
-  Servo1.attach(2);
-  Servo2.attach(26);
-  Servo3.attach(18);
-  Servo4.attach(19);
+
 
   pinMode(MotorA1, OUTPUT);
   pinMode(MotorA2, OUTPUT);
