@@ -27,10 +27,10 @@ enum MOTOR_TYPE motorType = DC_MOTOR;
 #define MotorD1 27 // Forward
 #define MotorD2 14 // Backward
 
-int position1 = 0 ;
-int position2 = 0 ;
-int position3 = 0 ;
-int position4 = 0 ;
+int position1 = 90 ;
+int position2 = 90 ;
+int position3 = 90 ;
+int position4 = 90 ;
 
 //define buzzer pins which named "horn"
 #define horn 25
