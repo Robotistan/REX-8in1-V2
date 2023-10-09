@@ -28,10 +28,10 @@ enum MOTOR_TYPE motorType = DC_MOTOR;
 #define MotorD1 27  // Forward
 #define MotorD2 14  // Backward
 
-int position1 = 0;
-int position2 = 0;
-int position3 = 0;
-int position4 = 0;
+int position1 = 90;
+int position2 = 90;
+int position3 = 90;
+int position4 = 90;
 
 //define buzzer pin named "horn"
 int horn = 25;
@@ -101,6 +101,12 @@ void loop() {
     delay(100);
     digitalWrite(horn, LOW);
     delay(1);
+
+    int position1 = 90;
+    int position2 = 90;
+    int position3 = 90;
+    int position4 = 90;
+    
   }
   if (GamePad.isStartPressed()) {
     motorType = DC_MOTOR;
@@ -122,6 +128,7 @@ void loop() {
     case SERVO_MOTOR:
       //erial.println("Servo Turn On");
       servo_motor();
+
       break;
   }
 
@@ -148,6 +155,7 @@ void loop() {
 }
 
 void servo_motor() {
+
   if (GamePad.isUpPressed()) {
     if (position2 > 0) {
       position2 = position2 - 1;
@@ -159,12 +167,12 @@ void servo_motor() {
     }
   }
   if (GamePad.isRightPressed()) {
-    if (position1 < 90) {
+    if (position1 < 140) {
       position1 = position1 + 1;
     }
   }
   if (GamePad.isLeftPressed()) {
-    if (position1 > 0) {
+    if (position1 > 40) {
       position1 = position1 - 1;
     }
   }
@@ -175,19 +183,19 @@ void servo_motor() {
   }
 
   if (GamePad.isCirclePressed()) {
-    if (position4 > 0) {
+    if (position4 > 90) {
       position4 = position4 - 1;
     }
   }
 
   if (GamePad.isCrossPressed()) {
-    if (position3 > 0) {
+    if (position3 > 30) {
       position3 = position3 - 1;
     }
   }
 
   if (GamePad.isTrianglePressed()) {
-    if (position3 < 180) {
+    if (position3 < 150) {
       position3 = position3 + 1;
     }
   }
@@ -239,17 +247,18 @@ void dc_motor() {
 
   if (GamePad.isCrossPressed()) {
     //Serial.print("DC Cross");
-    //tone(horn, 330);
-    delay(100);
-    //noTone(horn);
+    digitalWrite(horn, HIGH);
+    delay(200);
+    digitalWrite(horn, LOW);
+    delay(1);
   }
 
   if (GamePad.isTrianglePressed()) {
     //Serial.print("DC Triangle");
-    Servo1.write(position1);
-    Servo2.write(position2);
-    Servo3.write(position3);
-    Servo4.write(position4);
+    Servo1.write(90);
+    Servo2.write(90);
+    Servo3.write(90);
+    Servo4.write(90);
   }
 }
 
