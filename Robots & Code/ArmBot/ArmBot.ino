@@ -97,15 +97,21 @@ void loop() {
 
   if (GamePad.isSelectPressed()) {
     motorType = SERVO_MOTOR;
-    tone(horn, 330);
-    delay(500);
-    noTone(horn);
+    digitalWrite(horn, HIGH);
+    delay(100);
+    digitalWrite(horn, LOW);
+    delay(1);
   }
   if (GamePad.isStartPressed()) {
     motorType = DC_MOTOR;
-    tone(horn, 330);
+    digitalWrite(horn, HIGH);
     delay(100);
-    noTone(horn);
+    digitalWrite(horn, LOW);
+    delay(1);
+    digitalWrite(horn, HIGH);
+    delay(100);
+    digitalWrite(horn, LOW);
+    delay(1);
   }
 
   switch (motorType) {
@@ -185,7 +191,9 @@ void servo_motor() {
       position3 = position3 + 1;
     }
   }
-  delay(5);
+
+  delay(10);
+
   Servo1.write(position1);
   Servo2.write(position2);
   Servo3.write(position3);
@@ -214,7 +222,7 @@ void dc_motor() {
   if (GamePad.isCirclePressed()) {
     for (int i = 0; i < 3; i++) {
       forward();
-      tone(horn, 330);
+      //tone(horn, 330);
       delay(300);
       left();
       //tone(horn, 430);
@@ -225,15 +233,15 @@ void dc_motor() {
       // tone(horn, 630);
       left();
       delay(300);
-      noTone(horn);
+      //noTone(horn);
     }
   }
 
   if (GamePad.isCrossPressed()) {
     //Serial.print("DC Cross");
-    tone(horn, 330);
+    //tone(horn, 330);
     delay(100);
-    noTone(horn);
+    //noTone(horn);
   }
 
   if (GamePad.isTrianglePressed()) {
@@ -314,4 +322,3 @@ void backward() {
   digitalWrite(MotorD1, LOW);
   digitalWrite(MotorD2, HIGH);
 }
-
