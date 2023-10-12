@@ -8,10 +8,10 @@
 
 #define INTERRUPT_PIN 13
 
-#define Motor_A1 16
-#define Motor_A2 17
-#define Motor_C1 23
-#define Motor_C2 15
+#define Motor_A1 15
+#define Motor_A2 23
+#define Motor_C1 5
+#define Motor_C2 4
 
 MPU6050 mpu;
 
@@ -30,10 +30,10 @@ VectorFloat gravity;    // [x, y, z]            gravity vector
 float ypr[3];           // [yaw, pitch, roll]   yaw/pitch/roll container and gravity vector
 
 //............set following 4 values for your robot....
-double setpoint = 175; //set the value when the bot is perpendicular to ground using serial monitor.(input value)
-double Kp = 10; //Set this value first
-double Kd = 0.20; //Set this value secound
-double Ki = 250; //Finally set this value
+double setpoint = 187.1; //set the value when the bot is perpendicular to ground using serial monitor.(input value)
+double Kp = 8; //Set this value first
+double Kd = 0.23; //Set this value secound
+double Ki = 100; //Finally set this value
 
 
 double input, output;
@@ -61,10 +61,10 @@ void setup() {
   devStatus = mpu.dmpInitialize();
 
   // supply your own gyro offsets here, scaled for min sensitivity (calibration)
-  mpu.setXGyroOffset(-314);
-  mpu.setYGyroOffset(82);
-  mpu.setZGyroOffset(-143);
-  mpu.setZAccelOffset(1154);
+  mpu.setXGyroOffset(45);
+  mpu.setYGyroOffset(-38);
+  mpu.setZGyroOffset(23);
+  mpu.setZAccelOffset(1636);
 
   // make sure it worked (returns 0 if so)
   if (devStatus == 0)
