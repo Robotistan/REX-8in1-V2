@@ -1,22 +1,17 @@
 //"""REX 8in1 Tracker Bot"""
 //Check the web site for Robots https://rex-rdt.readthedocs.io/en/latest/
-#define left_sensor 34 // IR pins
-#define right_sensor 35 // IR pins
-
-int trigPin = 4;    // Trigger
-int echoPin = 5;    // Echo
-long duration, cm;
-
+#define left_sensor 34   // IR pins
+#define right_sensor 35  // IR pins
 
 //define motor pins and speeds
-#define MotorA1 15
-#define MotorA2 23
+#define MotorA1 23
+#define MotorA2 15
 
-#define MotorB1 32
-#define MotorB2 33
+#define MotorB1 33
+#define MotorB2 32
 
-#define MotorC1 5
-#define MotorC2 4
+#define MotorC1 4
+#define MotorC2 5
 
 #define MotorD1 14
 #define MotorD2 27
@@ -25,12 +20,12 @@ long duration, cm;
 #define slow 150
 #define reverse 120
 
-#define STOP    0
-#define FWD     1
-#define BWD     2
-#define RIGHT   3
-#define LEFT    4
-#define THRESHOLD   3500
+#define STOP 0
+#define FWD 1
+#define BWD 2
+#define RIGHT 3
+#define LEFT 4
+#define THRESHOLD 3600
 
 
 uint8_t directionStt = STOP;
@@ -40,9 +35,6 @@ unsigned long reverseTime = 0;
 
 void setup() {
   Serial.begin(115200);
-  //active pins which is defined
-  pinMode(trigPin, OUTPUT);
-  pinMode(echoPin, INPUT);
 
   pinMode(left_sensor, INPUT);
   pinMode(right_sensor, INPUT);
@@ -58,48 +50,29 @@ void setup() {
 
   pinMode(MotorD1, OUTPUT);
   pinMode(MotorD2, OUTPUT);
-
 }
 
 
 void loop() {
-  //this sensor to prevent the robot from crashing if the sensor being disoriented.
-  digitalWrite(trigPin, LOW);
-  delayMicroseconds(5);
-  digitalWrite(trigPin, HIGH);
-  delayMicroseconds(10);
-  digitalWrite(trigPin, LOW);
-  //calculate cm's digital value.
-  /*
-  duration = pulseIn(echoPin, HIGH);
-  cm = (duration / 2) / 29.1;
-  Serial.print(cm);
-  Serial.print("cm");
-  Serial.println();
-  if  (cm < 15) {
-    stop();
-  }*/
 
   //convert analog values to integer values.
   int leftSensor = analogRead(left_sensor);
   int rightSensor = analogRead(right_sensor);
-
+  
   Serial.print("left:");
-  Serial.println(leftSensor);
-  Serial.print("right:");
+  Serial.print(leftSensor);
+  Serial.print("  right:");
   Serial.println(rightSensor);
   Serial.println("");
 
+
   if (leftSensor >= THRESHOLD && rightSensor >= THRESHOLD) {
     directionStt = FWD;
-  }
-  else if (leftSensor < THRESHOLD  && rightSensor > THRESHOLD) {
+  } else if (leftSensor < THRESHOLD && rightSensor > THRESHOLD) {
     directionStt = RIGHT;
-  }
-  else if (leftSensor > THRESHOLD  && rightSensor < THRESHOLD) {
+  } else if (leftSensor > THRESHOLD && rightSensor < THRESHOLD) {
     directionStt = LEFT;
-  }
-  else if (leftSensor < THRESHOLD  && rightSensor < THRESHOLD && directionStt != STOP) {
+  } else if (leftSensor < THRESHOLD && rightSensor < THRESHOLD && directionStt != STOP) {
     directionStt = BWD;
   }
 
@@ -111,12 +84,10 @@ void loop() {
       right();
     else if (directionStt == LEFT)
       left();
-    else if (directionStt == BWD)
-    {
+    else if (directionStt == BWD) {
       backward();
       reverseTime = millis();
-    }
-    else if (directionStt == STOP)
+    } else if (directionStt == STOP)
       stop();
   }
 
@@ -151,7 +122,6 @@ void right() {
 
   analogWrite(MotorD1, LOW);
   analogWrite(MotorD2, mid);
-
 }
 
 void left() {
@@ -181,7 +151,6 @@ void stop() {
 
   analogWrite(MotorD1, LOW);
   analogWrite(MotorD2, LOW);
-
 }
 
 void backward() {
