@@ -16,16 +16,16 @@
 #define MotorD1 14
 #define MotorD2 27
 
-#define mid 160
-#define slow 150
-#define reverse 120
+#define mid 140
+#define slow 120
+#define reverse 110
 
 #define STOP 0
 #define FWD 1
 #define BWD 2
 #define RIGHT 3
 #define LEFT 4
-#define THRESHOLD 3600
+#define THRESHOLD 2000
 
 
 uint8_t directionStt = STOP;
@@ -58,13 +58,12 @@ void loop() {
   //convert analog values to integer values.
   int leftSensor = analogRead(left_sensor);
   int rightSensor = analogRead(right_sensor);
-  
+
   Serial.print("left:");
   Serial.print(leftSensor);
   Serial.print("  right:");
   Serial.println(rightSensor);
   Serial.println("");
-
 
   if (leftSensor >= THRESHOLD && rightSensor >= THRESHOLD) {
     directionStt = FWD;
