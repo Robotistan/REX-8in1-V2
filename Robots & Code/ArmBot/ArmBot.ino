@@ -14,7 +14,6 @@ enum MOTOR_TYPE {
 
 enum MOTOR_TYPE motorType = DC_MOTOR;
 
-#define speed 12
 //define Motor Pins
 #define MotorA1 15  // Forward
 #define MotorA2 23  // Backward
@@ -66,7 +65,6 @@ void setup() {
   Servo3.write(position3);
   Servo4.write(position4);
 
-  pinMode(speed, OUTPUT);
 
   pinMode(MotorA1, OUTPUT);
   pinMode(MotorA2, OUTPUT);
