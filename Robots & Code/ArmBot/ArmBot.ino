@@ -228,18 +228,25 @@ void dc_motor() {
   if (GamePad.isCirclePressed()) {
     for (int i = 0; i < 3; i++) {
       forward();
-      //tone(horn, 330);
+      digitalWrite(horn, HIGH);
+      delay(300);
+      digitalWrite(horn, LOW);
       delay(300);
       left();
-      //tone(horn, 430);
+      digitalWrite(horn, HIGH);
+      delay(400);
+      digitalWrite(horn, LOW);
       delay(300);
       right();
-      //tone(horn, 530);
+      digitalWrite(horn, HIGH);
+      delay(500);
+      digitalWrite(horn, LOW);
       delay(300);
-      // tone(horn, 630);
+      digitalWrite(horn, HIGH);
+      delay(600);
+      digitalWrite(horn, LOW);
       left();
       delay(300);
-      //noTone(horn);
     }
   }
 
