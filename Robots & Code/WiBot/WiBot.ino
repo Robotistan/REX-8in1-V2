@@ -1,25 +1,25 @@
 //Wi-Bot
-
 #define CUSTOM_SETTINGS
 #define INCLUDE_GAMEPAD_MODULE
 #include <DabbleESP32.h>
 #include <Arduino.h>
-#include <analogWrite.h>
 
+//define motor pins and speeds
+#define MotorA1 15  // Forward
+#define MotorA2 23  // Backward
 
-#define MotorA1 15
-#define MotorA2 23
+#define MotorB1 32  // Forward
+#define MotorB2 33  // Backward
 
-#define MotorB1 32
-#define MotorB2 33
+#define MotorC1 5  // Forward
+#define MotorC2 4  // Backward
 
-#define MotorC1 5
-#define MotorC2 4
+#define MotorD1 27  // Forward
+#define MotorD2 14  // Backward
 
-#define MotorD1 14
-#define MotorD2 27
+//define buzzer pin named "horn"
+#define horn 25
 
-#define horn 2
 void setup() {
   pinMode(horn, OUTPUT);
   pinMode(MotorA1, OUTPUT);
@@ -39,75 +39,68 @@ void setup() {
 }
 
 void loop() {
-  //Bu fonksiyon mobil cihazdan gelen bilgilerin güncel tutulması için kullanılır.
   Dabble.processInput();
-  //ilk olarak araç dursun
-  dur();
-  //bu bölümde basılan düğmeye göre ne iş yapılacağını belirliyoruz
-  Serial.print("Dümeye basıldı: ");
+  stop();
   if (GamePad.isUpPressed())
   {
-    Serial.print("İleri");
-    forward();//aracı ileri süren fonksiyon
+    forward();
   }
 
   if (GamePad.isDownPressed())
   {
-    Serial.print("Geri");
-    geri();//aracı geri süren fonksiyon
+    backward();
   }
 
   if (GamePad.isLeftPressed())
   {
-    Serial.print("Sola");
     left();
   }
 
   if (GamePad.isRightPressed())
   {
-    Serial.print("Sağa");
     right();
   }
 
-  //gamepad üzerindeki diğer fonksiyonlar
-  //istersek bunlara da görevler atayabiliriz.
-
   if (GamePad.isSquarePressed())
   {
-    Serial.print("Kare");
+    Serial.print("Square");
 
   }
 
   if (GamePad.isCirclePressed())
   {
-    Serial.print("Daire");
     for (int i = 0; i < 3; i++)
     {
       forward();
-      tone(horn, 330);
+      digitalWrite(horn, HIGH);
       delay(300);
+      digitalWrite(horn, LOW);
       left();
-      tone(horn, 430);
+      digitalWrite(horn, HIGH);
       delay(300);
+      digitalWrite(horn, LOW);
       right ();
-      tone(horn, 530);
+      digitalWrite(horn, HIGH);
       delay(300);
-      tone(horn, 630);
+      digitalWrite(horn, LOW);
       left();
+      digitalWrite(horn, HIGH);
       delay(300);
-      noTone(2);
+      digitalWrite(horn, LOW);
     }
   }
 
   if (GamePad.isCrossPressed())
   {
-    Serial.print("Çarpı");
+    Serial.print("Cross");
     digitalWrite(horn, HIGH);
+    delay(100);
+    digitalWrite(horn, LOW);
   }
 
   if (GamePad.isTrianglePressed())
   {
-    Serial.print("Üçgen");
+    Serial.print("Triangle");
   }
 
   if (GamePad.isStartPressed())
@@ -121,31 +114,25 @@ void loop() {
   }
   Serial.print('\t');
 
-  //analog modda joypad kullanılırsa açı değerleri alınarak da yine görev yapılabilir.
-
   int a = GamePad.getAngle();
-  Serial.print("Açı: ");
+  Serial.print("Angle: ");
   Serial.print(a);
   Serial.print('\t');
   int b = GamePad.getRadius();
-  Serial.print("Yarıçap: ");
+  Serial.print("Radius: ");
   Serial.print(b);
   Serial.print('\t');
   float c = GamePad.getXaxisData();
-  Serial.print("x_ekseni: ");
+  Serial.print("x_axis: ");
   Serial.print(c);
   Serial.print('\t');
   float d = GamePad.getYaxisData();
-  Serial.print("y_ekseni: ");
+  Serial.print("y_axis: ");
   Serial.println(d);
   Serial.println();
-
-
 }
 
-//aracın hareketi için motorları süreceğimiz fonksiyonlar
-void forward() { // ileri yönde hareketi için fonksiyon tanımlıyoruz.
-
+void forward() { 
   digitalWrite(MotorA1, HIGH);
   digitalWrite(MotorA2, LOW);
 
@@ -159,9 +146,7 @@ void forward() { // ileri yönde hareketi için fonksiyon tanımlıyoruz.
   digitalWrite(MotorD2, LOW);
 }
 
-
-void right() { // sağa dönme hareketi için fonksiyon tanımlıyoruz.
-
+void right() { 
   digitalWrite(MotorA1, LOW);
   digitalWrite(MotorA2, HIGH);
 
@@ -173,10 +158,9 @@ void right() { // sağa dönme hareketi için fonksiyon tanımlıyoruz.
 
   digitalWrite(MotorD1, HIGH);
   digitalWrite(MotorD2, LOW);
-
 }
-void left() { // sola dönme hareketi için fonksiyon tanımlıyoruz.
- 
+
+void left() { 
   digitalWrite(MotorA1, HIGH);
   digitalWrite(MotorA2, LOW);
 
@@ -188,12 +172,9 @@ void left() { // sola dönme hareketi için fonksiyon tanımlıyoruz.
 
   digitalWrite(MotorD1, LOW);
   digitalWrite(MotorD2, HIGH);
-
 }
 
-
-void dur() { // durma hareketi için fonksiyon tanımlıyoruz.
-
+void stop() {
   digitalWrite(MotorA1, LOW);
   digitalWrite(MotorA2, LOW);
 
@@ -205,10 +186,9 @@ void dur() { // durma hareketi için fonksiyon tanımlıyoruz.
 
   digitalWrite(MotorD1, LOW);
   digitalWrite(MotorD2, LOW);
-
 }
-void geri() { // geri hareketi için fonksiyon tanımlıyoruz.
 
+void backward() { 
   digitalWrite(MotorA1, LOW);
   digitalWrite(MotorA2, HIGH);
 
@@ -220,5 +200,4 @@ void geri() { // geri hareketi için fonksiyon tanımlıyoruz.
 
   digitalWrite(MotorD1, LOW);
   digitalWrite(MotorD2, HIGH);
-
 }
