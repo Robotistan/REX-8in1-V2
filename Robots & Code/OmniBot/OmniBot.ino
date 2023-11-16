@@ -38,7 +38,6 @@ const int PWMchannel_8 = 11;
 
 const int resolution = 8;
 
-int i = 0 ;
 void setup() {
   pinMode(horn, OUTPUT);
 
