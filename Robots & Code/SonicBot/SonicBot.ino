@@ -39,8 +39,6 @@ const int PWMchannel_8 = 11;
 
 const int resolution = 8;
 
-int turns = 0 ;
-
 void setup() {
   Serial.begin (115200);   //make sure your Serial Monitor is also set at this baud rate.
 
@@ -87,9 +85,7 @@ void setup() {
   delay(1500);
 }
 
-
 void loop() {
-  Serial.println(turns);
   distance();
   if (cm < 8) {
     backward();
@@ -100,16 +96,10 @@ void loop() {
     left();
     stop();
     delay(100);
-    turns++ ;
   }
   else
   {
     forward();
-  }
-  
-  if (turns > 2)
-  {
-    stop();
   }
 }
 
