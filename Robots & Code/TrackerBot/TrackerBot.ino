@@ -19,8 +19,6 @@
 
 //define speed of motors
 #define MID 160
-#define SLOW 120
-#define REVERSE 110
 
 //direction
 #define STOP 0
