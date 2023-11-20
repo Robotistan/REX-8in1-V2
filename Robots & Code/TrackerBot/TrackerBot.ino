@@ -17,8 +17,8 @@
 #define MotorD1 27
 #define MotorD2 14
 
-//define speed of motors
-#define MID 160
+//define speed of motor
+#define MID 140
 
 //direction
 #define STOP 0
@@ -27,7 +27,7 @@
 #define RIGHT 3
 #define LEFT 4
 
-#define THRESHOLD 1500
+#define THRESHOLD 1200
 
 //setting PWM properties
 const int freq = 50;
@@ -64,6 +64,9 @@ void setup() {
 
   pinMode(MotorD1, OUTPUT);
   pinMode(MotorD2, OUTPUT);
+
+  ledcSetup(PWMchannel_1, freq, resolution);
+  ledcAttachPin(MotorA1, PWMchannel_1);
 
   ledcSetup(PWMchannel_2, freq, resolution);
   ledcAttachPin(MotorA2, PWMchannel_2);
