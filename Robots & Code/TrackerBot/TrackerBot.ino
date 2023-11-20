@@ -1,32 +1,48 @@
 //"""REX 8in1 Tracker Bot"""
 //Check the web site for Robots https://rex-rdt.readthedocs.io/en/latest/
+
 #define left_sensor 34   // IR pins
 #define right_sensor 35  // IR pins
 
 //define motor pins and speeds
-#define MotorA1 23
-#define MotorA2 15
+#define MotorA1 15
+#define MotorA2 23
 
-#define MotorB1 33
-#define MotorB2 32
+#define MotorB1 32
+#define MotorB2 33
 
-#define MotorC1 4
-#define MotorC2 5
+#define MotorC1 5
+#define MotorC2 4
 
-#define MotorD1 14
-#define MotorD2 27
+#define MotorD1 27
+#define MotorD2 14
 
-#define mid 140
-#define slow 120
-#define reverse 110
+//define speed of motors
+#define MID 160
+#define SLOW 120
+#define REVERSE 110
 
+//direction
 #define STOP 0
 #define FWD 1
 #define BWD 2
 #define RIGHT 3
 #define LEFT 4
-#define THRESHOLD 2000
 
+#define THRESHOLD 1500
+
+//setting PWM properties
+const int freq = 50;
+const int PWMchannel_1 = 4;
+const int PWMchannel_2 = 5;
+const int PWMchannel_3 = 6;
+const int PWMchannel_4 = 7;
+const int PWMchannel_5 = 8;
+const int PWMchannel_6 = 9;
+const int PWMchannel_7 = 10;
+const int PWMchannel_8 = 11;
+
+const int resolution = 8;
 
 uint8_t directionStt = STOP;
 uint8_t oldDirection = STOP;
@@ -34,7 +50,7 @@ uint8_t oldDirection = STOP;
 unsigned long reverseTime = 0;
 
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(115200);   //make sure your Serial Monitor is also set at this baud rate.
 
   pinMode(left_sensor, INPUT);
   pinMode(right_sensor, INPUT);
@@ -50,11 +66,30 @@ void setup() {
 
   pinMode(MotorD1, OUTPUT);
   pinMode(MotorD2, OUTPUT);
+
+  ledcSetup(PWMchannel_2, freq, resolution);
+  ledcAttachPin(MotorA2, PWMchannel_2);
+
+  ledcSetup(PWMchannel_3, freq, resolution);
+  ledcAttachPin(MotorB1, PWMchannel_3);
+
+  ledcSetup(PWMchannel_4, freq, resolution);
+  ledcAttachPin(MotorB2, PWMchannel_4);
+
+  ledcSetup(PWMchannel_5, freq, resolution);
+  ledcAttachPin(MotorC1, PWMchannel_5);
+
+  ledcSetup(PWMchannel_6, freq, resolution);
+  ledcAttachPin(MotorC2, PWMchannel_6);
+
+  ledcSetup(PWMchannel_7, freq, resolution);
+  ledcAttachPin(MotorD1, PWMchannel_7);
+
+  ledcSetup(PWMchannel_8, freq, resolution);
+  ledcAttachPin(MotorD2, PWMchannel_8);
 }
 
-
 void loop() {
-
   //convert analog values to integer values.
   int leftSensor = analogRead(left_sensor);
   int rightSensor = analogRead(right_sensor);
@@ -67,11 +102,14 @@ void loop() {
 
   if (leftSensor >= THRESHOLD && rightSensor >= THRESHOLD) {
     directionStt = FWD;
-  } else if (leftSensor < THRESHOLD && rightSensor > THRESHOLD) {
+  } 
+  else if (leftSensor < THRESHOLD && rightSensor > THRESHOLD) {
     directionStt = RIGHT;
-  } else if (leftSensor > THRESHOLD && rightSensor < THRESHOLD) {
+  } 
+  else if (leftSensor > THRESHOLD && rightSensor < THRESHOLD) {
     directionStt = LEFT;
-  } else if (leftSensor < THRESHOLD && rightSensor < THRESHOLD && directionStt != STOP) {
+  } 
+  else if (leftSensor < THRESHOLD && rightSensor < THRESHOLD && directionStt != STOP) {
     directionStt = BWD;
   }
 
@@ -95,73 +133,71 @@ void loop() {
 }
 
 void forward() {
+  ledcWrite(PWMchannel_1, MID); //MotorA1
+  ledcWrite(PWMchannel_2, LOW); //MotorA2
 
-  analogWrite(MotorA1, mid);
-  analogWrite(MotorA2, LOW);
+  ledcWrite(PWMchannel_3, MID); //MotorB1
+  ledcWrite(PWMchannel_4, LOW); //MotorB2
 
-  analogWrite(MotorB1, mid);
-  analogWrite(MotorB2, LOW);
+  ledcWrite(PWMchannel_5, MID); //MotorC1
+  ledcWrite(PWMchannel_6, LOW); //MotorC2
 
-  analogWrite(MotorC1, mid);
-  analogWrite(MotorC2, LOW);
-
-  analogWrite(MotorD1, mid);
-  analogWrite(MotorD2, LOW);
+  ledcWrite(PWMchannel_7, MID); //MotorD1
+  ledcWrite(PWMchannel_8, LOW); //MotorD2
 }
 
 void right() {
-  analogWrite(MotorA1, mid);
-  analogWrite(MotorA2, LOW);
+  ledcWrite(PWMchannel_1, MID); //MotorA1
+  ledcWrite(PWMchannel_2, LOW); //MotorA2
 
-  analogWrite(MotorB1, mid);
-  analogWrite(MotorB2, LOW);
-  //delay(300);
-  analogWrite(MotorC1, LOW);
-  analogWrite(MotorC2, mid);
+  ledcWrite(PWMchannel_3, MID); //MotorB1
+  ledcWrite(PWMchannel_4, LOW); //MotorB2
 
-  analogWrite(MotorD1, LOW);
-  analogWrite(MotorD2, mid);
+  ledcWrite(PWMchannel_5, LOW); //MotorC1
+  ledcWrite(PWMchannel_6, MID); //MotorC2
+
+  ledcWrite(PWMchannel_7, LOW); //MotorD1
+  ledcWrite(PWMchannel_8, MID); //MotorD2
 }
 
 void left() {
+  ledcWrite(PWMchannel_1, LOW); //MotorA1
+  ledcWrite(PWMchannel_2, MID); //MotorA2
 
-  analogWrite(MotorA1, LOW);
-  analogWrite(MotorA2, mid);
+  ledcWrite(PWMchannel_3, LOW); //MotorB1
+  ledcWrite(PWMchannel_4, MID); //MotorB2
 
-  analogWrite(MotorB1, LOW);
-  analogWrite(MotorB2, mid);
-  analogWrite(MotorC1, mid);
-  analogWrite(MotorC2, LOW);
+  ledcWrite(PWMchannel_5, MID); //MotorC1
+  ledcWrite(PWMchannel_6, LOW); //MotorC2
 
-  analogWrite(MotorD1, mid);
-  analogWrite(MotorD2, LOW);
+  ledcWrite(PWMchannel_7, MID); //MotorD1
+  ledcWrite(PWMchannel_8, LOW); //MotorD2
 }
 
 void stop() {
+  ledcWrite(PWMchannel_1, LOW); //MotorA1
+  ledcWrite(PWMchannel_2, LOW); //MotorA2
 
-  analogWrite(MotorA1, LOW);
-  analogWrite(MotorA2, LOW);
+  ledcWrite(PWMchannel_3, LOW); //MotorB1
+  ledcWrite(PWMchannel_4, LOW); //MotorB2
 
-  analogWrite(MotorB1, LOW);
-  analogWrite(MotorB2, LOW);
+  ledcWrite(PWMchannel_5, LOW); //MotorC1
+  ledcWrite(PWMchannel_6, LOW); //MotorC2
 
-  analogWrite(MotorC1, LOW);
-  analogWrite(MotorC2, LOW);
-
-  analogWrite(MotorD1, LOW);
-  analogWrite(MotorD2, LOW);
+  ledcWrite(PWMchannel_7, LOW); //MotorD1
+  ledcWrite(PWMchannel_8, LOW); //MotorD2
 }
 
 void backward() {
-  analogWrite(MotorA1, LOW);
-  analogWrite(MotorA2, mid);
+  ledcWrite(PWMchannel_1, LOW); //MotorA1
+  ledcWrite(PWMchannel_2, MID); //MotorA2
 
-  analogWrite(MotorB1, LOW);
-  analogWrite(MotorB2, mid);
-  //delay(300);
-  analogWrite(MotorC1, LOW);
-  analogWrite(MotorC2, mid);
+  ledcWrite(PWMchannel_3, LOW); //MotorB1
+  ledcWrite(PWMchannel_4, MID); //MotorB2
 
-  analogWrite(MotorD1, LOW);
-  analogWrite(MotorD2, mid);
+  ledcWrite(PWMchannel_5, LOW); //MotorC1
+  ledcWrite(PWMchannel_6, MID); //MotorC2
+
+  ledcWrite(PWMchannel_7, LOW); //MotorD1
+  ledcWrite(PWMchannel_8, MID); //MotorD2
 }
