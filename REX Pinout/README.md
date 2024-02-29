@@ -41,8 +41,8 @@
 | :-------- | :------- | :-------------------------    |
 | `A0`      | `34`      | Connected to left sensor when loked from top. |
 | `A1`      | `35`      | Connected to right sensor when loked from top. |
-### Ulstrasonic Sensor Pins
-| Ulstrasonic Sensor   | GPIO      |                                     Explanation                                      |
+### Ultrasonic Sensor Pins
+| Ultrasonic Sensor   | GPIO      |                                     Explanation                                      |
 | :--------            | :-------  | :-------------------------                                                     |
 | `TRIG`               | `17`      | Pin is used to trigger ultrasonic sound pulses                                 |
 | `ECHO`               | `16`      | By measuring the time the Echo pin stays high, the distance can be calculated. |
