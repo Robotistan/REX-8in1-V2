@@ -4,7 +4,7 @@
 #include "I2Cdev.h"
 #include "PID_v1.h" 
 #include "MPU6050_6Axis_MotionApps20.h"
-#include "Wire.h"
+#include <Wire.h>
 
 #define INTERRUPT_PIN 13
 
@@ -30,25 +30,28 @@ VectorFloat gravity;    // [x, y, z]            gravity vector
 float ypr[3];           // [yaw, pitch, roll]   yaw/pitch/roll container and gravity vector
 
 //............set following 4 values for your robot....
-double setpoint = 187.1; //set the value when the bot is perpendicular to ground using serial monitor.(input value)
-double Kp = 8; //Set this value first
-double Kd = 0.23; //Set this value secound
-double Ki = 100; //Finally set this value
+double setpoint = 189.7;  //set the value when the bot is perpendicular to ground using serial monitor.(input value)
+double Kp = 4; //Set this value first
+double Kd = 0.2; //Set this value secound
+double Ki = 40; //Finally set this value
 
 
 double input, output;
 PID pid(&input, &output, &setpoint, Kp, Ki, Kd, DIRECT);
 
+bool interrupteddd = false;
 
 volatile bool mpuInterrupt = false;     // indicates whether MPU interrupt pin has gone high
 void dmpDataReady()
 {
   mpuInterrupt = true;
+  interrupteddd = true;
 }
 
 void setup() {
   Serial.begin(115200);
   Wire.begin();
+
 
   Serial.println(F("Initializing I2C devices..."));
   mpu.initialize();
@@ -61,10 +64,10 @@ void setup() {
   devStatus = mpu.dmpInitialize();
 
   // supply your own gyro offsets here, scaled for min sensitivity (calibration)
-  mpu.setXGyroOffset(45);
-  mpu.setYGyroOffset(-38);
-  mpu.setZGyroOffset(23);
-  mpu.setZAccelOffset(1636);
+  mpu.setXGyroOffset(74);
+  mpu.setYGyroOffset(12);
+  mpu.setZGyroOffset(5);
+  mpu.setZAccelOffset(1094);
 
   // make sure it worked (returns 0 if so)
   if (devStatus == 0)
@@ -74,6 +77,8 @@ void setup() {
     mpu.setDMPEnabled(true);
 
     // enable Arduino interrupt detection
+    
+    pinMode(INTERRUPT_PIN, INPUT);
     Serial.println(F("Enabling interrupt detection (Arduino external interrupt 0)..."));
     attachInterrupt(INTERRUPT_PIN, dmpDataReady, RISING);
     mpuIntStatus = mpu.getIntStatus();
@@ -88,7 +93,7 @@ void setup() {
     //setup PID
     pid.SetMode(AUTOMATIC);
     pid.SetSampleTime(10);
-    pid.SetOutputLimits(-255, 255);
+    pid.SetOutputLimits(-200, 200);
   }
   else
   {
@@ -107,7 +112,6 @@ void setup() {
   pinMode (Motor_C1, OUTPUT);
   pinMode (Motor_C2, OUTPUT);
 
-  pinMode(INTERRUPT_PIN, INPUT_PULLUP);
 
   //By default turn off both the motors
   analogWrite(Motor_A1, LOW);
@@ -119,7 +123,7 @@ void setup() {
 void loop() {
   // if programming failed, don't try to do anything
   if (!dmpReady) return;
-
+  
   // wait for MPU interrupt or extra packet(s) available
   while (!mpuInterrupt && fifoCount < packetSize)
   {
@@ -127,7 +131,7 @@ void loop() {
     pid.Compute();
 
     //Print the value of Input and Output on serial monitor to check how it is working.
-    Serial.print(input); Serial.print(" =>"); Serial.println(output);
+    //Serial.print(input); Serial.print(" =>"); Serial.println(output);
 
     if (input > 120 && input < 230) { //If the Bot is falling
       if (output > 0) //Falling towards front
@@ -137,6 +141,7 @@ void loop() {
     }
     else
       Stop(); //Hold the wheels still
+
   }
 
   // reset interrupt flag and get INT_STATUS byte
@@ -168,6 +173,7 @@ void loop() {
     mpu.dmpGetQuaternion(&q, fifoBuffer); //get value for q
     mpu.dmpGetGravity(&gravity, &q); //get value for gravity
     mpu.dmpGetYawPitchRoll(ypr, &q, &gravity); //get value for ypr
+    //Serial.println(ypr[1]);
     input = ypr[1] * 180 / M_PI + 180;    
     //Serial.println("ypr[1]=");
     //Serial.println(ypr[1]);
@@ -176,9 +182,9 @@ void loop() {
 
 void Forward() //Rotate the wheel forward
 {
-  analogWrite(Motor_A1, output);
+  analogWrite(Motor_A1, output + 55);
   analogWrite(Motor_A2, 0);
-  analogWrite(Motor_C1, output);
+  analogWrite(Motor_C1, output + 55);
   analogWrite(Motor_C2, 0);
   //Serial.print("F"); //Debugging information
 }
@@ -187,9 +193,9 @@ void Forward() //Rotate the wheel forward
 void Reverse() //Rotate the wheel reverse
 {
   analogWrite(Motor_A1, 0);
-  analogWrite(Motor_A2, output * -1);
+  analogWrite(Motor_A2, (output * -1) + 55);
   analogWrite(Motor_C1, 0);
-  analogWrite(Motor_C2, output * -1);
+  analogWrite(Motor_C2, (output * -1) + 55);
   //Serial.print("R"); //Debugging information
 }
 
