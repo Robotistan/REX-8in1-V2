@@ -20,8 +20,8 @@ long duration, cm;
 #define MotorC1 5
 #define MotorC2 4
 
-#define MotorD1 14
-#define MotorD2 27
+#define MotorD1 27
+#define MotorD2 14
 
 //define buzzer pin named "horn"
 #define horn 25
