@@ -5,6 +5,8 @@
 #define right_sensor 35  // IR pins
 
 //define motor pins and speeds
+#define MotorPWM 13	//Pwm
+
 #define MotorA1 15
 #define MotorA2 23
 
@@ -52,6 +54,8 @@ void setup() {
 
   pinMode(left_sensor, INPUT);
   pinMode(right_sensor, INPUT);
+
+  pinMode(MotorPWM, OUTPUT);
 
   pinMode(MotorA1, OUTPUT);
   pinMode(MotorA2, OUTPUT);
@@ -134,6 +138,8 @@ void loop() {
 }
 
 void forward() {
+  digitalWrite(MotorPWM, HIGH);
+
   ledcWrite(PWMchannel_1, MID); //MotorA1
   ledcWrite(PWMchannel_2, LOW); //MotorA2
 
@@ -148,6 +154,8 @@ void forward() {
 }
 
 void right() {
+  digitalWrite(MotorPWM, HIGH);
+
   ledcWrite(PWMchannel_1, MID); //MotorA1
   ledcWrite(PWMchannel_2, LOW); //MotorA2
 
@@ -162,6 +170,8 @@ void right() {
 }
 
 void left() {
+  digitalWrite(MotorPWM, HIGH);
+
   ledcWrite(PWMchannel_1, LOW); //MotorA1
   ledcWrite(PWMchannel_2, MID); //MotorA2
 
@@ -176,6 +186,8 @@ void left() {
 }
 
 void stop() {
+  digitalWrite(MotorPWM, LOW);
+
   ledcWrite(PWMchannel_1, LOW); //MotorA1
   ledcWrite(PWMchannel_2, LOW); //MotorA2
 
@@ -190,6 +202,8 @@ void stop() {
 }
 
 void backward() {
+  digitalWrite(MotorPWM, HIGH);
+  
   ledcWrite(PWMchannel_1, LOW); //MotorA1
   ledcWrite(PWMchannel_2, MID); //MotorA2
 
