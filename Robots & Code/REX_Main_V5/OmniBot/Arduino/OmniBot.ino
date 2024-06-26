@@ -5,6 +5,8 @@
 #include <Arduino.h>
 
 //define pins of motors
+#define MotorPWM 13	//Pwm
+
 #define MotorA1 15 // Forward
 #define MotorA2 23 // Backward
 
@@ -40,6 +42,8 @@ const int resolution = 8;
 
 void setup() {
   pinMode(horn, OUTPUT);
+
+  pinMode(MotorPWM, OUTPUT);
 
   pinMode(MotorA1, OUTPUT);
   pinMode(MotorA2, OUTPUT);
@@ -109,6 +113,7 @@ void loop() {
     Serial.print("Square");
   }
 
+  digitalWrite(MotorPWM, HIGH);
   //Forward
   if (a > 60 && a < 120 && b >= 1 && b <= 3)
   {
@@ -524,6 +529,8 @@ void loop() {
   /////////////////////////////DUR////////////////////////////////////
   else
   {
+    digitalWrite(MotorPWM, LOW);
+
     ledcWrite(PWMchannel_1, 0);         //MotorA1
     ledcWrite(PWMchannel_2, 0);         //MotorA2
 
