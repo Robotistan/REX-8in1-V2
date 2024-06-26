@@ -1,12 +1,11 @@
-//"""REX 8in1 Balance Bot"""
-//Check the web site for Robots https://rex-rdt.readthedocs.io/en/latest/
-
 #include "I2Cdev.h"
 #include "PID_v1.h" 
 #include "MPU6050_6Axis_MotionApps20.h"
 #include <Wire.h>
 
 #define INTERRUPT_PIN 13
+
+#define MotorPWM 13	//Pwm
 
 #define Motor_A1 15
 #define Motor_A2 23
@@ -23,7 +22,6 @@ uint16_t packetSize;    // expected DMP packet size (default is 42 bytes)
 uint16_t fifoCount;     // count of all bytes currently in FIFO
 uint8_t fifoBuffer[64]; // FIFO storage buffer
 
-
 // orientation/motion vars
 Quaternion q;           // [w, x, y, z]         quaternion container
 VectorFloat gravity;    // [x, y, z]            gravity vector
@@ -34,7 +32,6 @@ double setpoint = 189.7;  //set the value when the bot is perpendicular to groun
 double Kp = 4; //Set this value first
 double Kd = 0.2; //Set this value secound
 double Ki = 40; //Finally set this value
-
 
 double input, output;
 PID pid(&input, &output, &setpoint, Kp, Ki, Kd, DIRECT);
@@ -51,7 +48,6 @@ void dmpDataReady()
 void setup() {
   Serial.begin(115200);
   Wire.begin();
-
 
   Serial.println(F("Initializing I2C devices..."));
   mpu.initialize();
@@ -70,14 +66,12 @@ void setup() {
   mpu.setZAccelOffset(1094);
 
   // make sure it worked (returns 0 if so)
-  if (devStatus == 0)
-  {
+  if (devStatus == 0){
     // turn on the DMP, now that it's ready
     Serial.println(F("Enabling DMP..."));
     mpu.setDMPEnabled(true);
 
     // enable Arduino interrupt detection
-    
     pinMode(INTERRUPT_PIN, INPUT);
     Serial.println(F("Enabling interrupt detection (Arduino external interrupt 0)..."));
     attachInterrupt(INTERRUPT_PIN, dmpDataReady, RISING);
@@ -95,8 +89,7 @@ void setup() {
     pid.SetSampleTime(10);
     pid.SetOutputLimits(-200, 200);
   }
-  else
-  {
+  else{
     // ERROR!
     // 1 = initial memory load failed
     // 2 = DMP configuration updates failed
@@ -107,13 +100,14 @@ void setup() {
   }
 
   //Initialise the Motor outpu pins
+  pinMode(MotorPWM, OUTPUT);
   pinMode (Motor_A1, OUTPUT);
   pinMode (Motor_A2, OUTPUT);
   pinMode (Motor_C1, OUTPUT);
   pinMode (Motor_C2, OUTPUT);
 
-
   //By default turn off both the motors
+  digitalWrite(MotorPWM, LOW);
   analogWrite(Motor_A1, LOW);
   analogWrite(Motor_A2, LOW);
   analogWrite(Motor_C1, LOW);
@@ -132,7 +126,6 @@ void loop() {
 
     //Print the value of Input and Output on serial monitor to check how it is working.
     //Serial.print(input); Serial.print(" =>"); Serial.println(output);
-
     if (input > 120 && input < 230) { //If the Bot is falling
       if (output > 0) //Falling towards front
         Forward(); //Rotate the wheels forward
@@ -141,7 +134,6 @@ void loop() {
     }
     else
       Stop(); //Hold the wheels still
-
   }
 
   // reset interrupt flag and get INT_STATUS byte
@@ -182,6 +174,7 @@ void loop() {
 
 void Forward() //Rotate the wheel forward
 {
+  digitalWrite(MotorPWM, HIGH);
   analogWrite(Motor_A1, output + 55);
   analogWrite(Motor_A2, 0);
   analogWrite(Motor_C1, output + 55);
@@ -189,9 +182,9 @@ void Forward() //Rotate the wheel forward
   //Serial.print("F"); //Debugging information
 }
 
-
 void Reverse() //Rotate the wheel reverse
 {
+  digitalWrite(MotorPWM, HIGH);
   analogWrite(Motor_A1, 0);
   analogWrite(Motor_A2, (output * -1) + 55);
   analogWrite(Motor_C1, 0);
@@ -199,9 +192,9 @@ void Reverse() //Rotate the wheel reverse
   //Serial.print("R"); //Debugging information
 }
 
-
 void Stop() //Stop both the wheels
 {
+  digitalWrite(MotorPWM, LOW);
   analogWrite(Motor_A1, 0);
   analogWrite(Motor_A2, 0);
   analogWrite(Motor_C1, 0);
