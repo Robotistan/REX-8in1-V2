@@ -5,6 +5,8 @@
 #include <Arduino.h>
 
 //define motor pins and speeds
+#define MotorPWM 13	//Pwm
+
 #define MotorA1 15  // Forward
 #define MotorA2 23  // Backward
 
@@ -22,6 +24,9 @@
 
 void setup() {
   pinMode(horn, OUTPUT);
+
+  pinMode(MotorPWM, OUTPUT);
+
   pinMode(MotorA1, OUTPUT);
   pinMode(MotorA2, OUTPUT);
 
@@ -133,6 +138,8 @@ void loop() {
 }
 
 void forward() { 
+  digitalWrite(MotorPWM, HIGH);
+
   digitalWrite(MotorA1, HIGH);
   digitalWrite(MotorA2, LOW);
 
@@ -147,6 +154,8 @@ void forward() {
 }
 
 void right() { 
+  digitalWrite(MotorPWM, HIGH);
+
   digitalWrite(MotorA1, LOW);
   digitalWrite(MotorA2, HIGH);
 
@@ -161,6 +170,8 @@ void right() {
 }
 
 void left() { 
+  digitalWrite(MotorPWM, HIGH);
+
   digitalWrite(MotorA1, HIGH);
   digitalWrite(MotorA2, LOW);
 
@@ -175,6 +186,8 @@ void left() {
 }
 
 void stop() {
+  digitalWrite(MotorPWM, LOW);
+
   digitalWrite(MotorA1, LOW);
   digitalWrite(MotorA2, LOW);
 
@@ -189,6 +202,8 @@ void stop() {
 }
 
 void backward() { 
+  digitalWrite(MotorPWM, HIGH);
+  
   digitalWrite(MotorA1, LOW);
   digitalWrite(MotorA2, HIGH);
 
