@@ -11,6 +11,8 @@ long duration, cm;
 #define FAST 110
 
 //define pins of motors
+#define MotorPWM 13	//Pwm
+
 #define MotorA1 15
 #define MotorA2 23
 
@@ -20,8 +22,8 @@ long duration, cm;
 #define MotorC1 5
 #define MotorC2 4
 
-#define MotorD1 27
-#define MotorD2 14
+#define MotorD1 14
+#define MotorD2 27
 
 //define buzzer pin named "horn"
 #define horn 25
@@ -39,6 +41,8 @@ const int PWMchannel_8 = 11;
 
 const int resolution = 8;
 
+int turns = 0 ;
+
 void setup() {
   Serial.begin (115200);   //make sure your Serial Monitor is also set at this baud rate.
 
@@ -46,6 +50,8 @@ void setup() {
   pinMode(echoPin, INPUT);
 
   pinMode(horn, OUTPUT);
+
+  pinMode(MotorPWM, OUTPUT);
 
   pinMode(MotorA1, OUTPUT);
   pinMode(MotorA2, OUTPUT);
@@ -85,8 +91,12 @@ void setup() {
   delay(1500);
 }
 
+
 void loop() {
+  Serial.println(cm);
   distance();
+  delay(500);
+
   if (cm < 8) {
     backward();
     digitalWrite(horn, HIGH);
@@ -96,14 +106,22 @@ void loop() {
     left();
     stop();
     delay(100);
+    turns++ ;
   }
   else
   {
     forward();
   }
+  
+  if (turns > 2)
+  {
+    stop();
+  }
 }
 
 void forward() { 
+  digitalWrite(MotorPWM, HIGH);
+
   ledcWrite(PWMchannel_1, MID); //MotorA1
   ledcWrite(PWMchannel_2, LOW); //MotorA2
 
@@ -118,6 +136,8 @@ void forward() {
 }
 
 void right() { 
+  digitalWrite(MotorPWM, HIGH);
+
   ledcWrite(PWMchannel_1, LOW); //MotorA1
   ledcWrite(PWMchannel_2, FAST); //MotorA2
 
@@ -133,6 +153,8 @@ void right() {
 }
 
 void left() { 
+  digitalWrite(MotorPWM, HIGH);
+
   ledcWrite(PWMchannel_1, LOW); //MotorA1
   ledcWrite(PWMchannel_2, MID); //MotorA2
 
@@ -148,6 +170,8 @@ void left() {
 }
 
 void stop() { 
+  digitalWrite(MotorPWM, LOW);
+
   ledcWrite(PWMchannel_1, LOW); //MotorA1
   ledcWrite(PWMchannel_2, LOW); //MotorA2
 
@@ -162,6 +186,8 @@ void stop() {
 }
 
 void backward() { 
+  digitalWrite(MotorPWM, HIGH);
+  
   ledcWrite(PWMchannel_1, LOW); //MotorA1
   ledcWrite(PWMchannel_2, SLOW); //MotorA2
 
