@@ -9,6 +9,9 @@ ble = bluetooth.BLE()
 # Create an instance of the BLESimplePeripheral class with the BLE object
 sp = BLESimplePeripheral(ble)
 
+#motorPWM
+motor_pwm = Pin(13, Pin.OUT)
+
 #motorA
 motor_A1 = PWM(Pin(15))
 motor_A1.duty_u16(0)
@@ -43,6 +46,8 @@ buzzerStartTime = 0
 MotorSpeed = 65535
 
 def forward(speed):
+   motor_pwm.high()
+   
    motor_A1.duty_u16(speed)
    motor_A2.duty_u16(0)
 
@@ -56,6 +61,8 @@ def forward(speed):
    motor_D2.duty_u16(0)
 
 def backward(speed):
+   motor_pwm.high()
+   
    motor_A1.duty_u16(0)
    motor_A2.duty_u16(speed)
 
@@ -69,6 +76,8 @@ def backward(speed):
    motor_D2.duty_u16(speed)
 
 def right(speed):
+   motor_pwm.high()
+   
    motor_A1.duty_u16(speed)
    motor_A2.duty_u16(0)
 
@@ -82,6 +91,8 @@ def right(speed):
    motor_D2.duty_u16(speed)
 
 def left(speed):
+   motor_pwm.high()
+   
    motor_A1.duty_u16(0)
    motor_A2.duty_u16(speed)
 
@@ -95,6 +106,8 @@ def left(speed):
    motor_D2.duty_u16(0)
 
 def stop():
+   motor_pwm.low()
+   
    motor_A1.duty_u16(0)
    motor_A2.duty_u16(0)
 
@@ -145,6 +158,3 @@ while True:
          
     if sp.is_connected():  # Check if a BLE connection is established
         sp.on_write(on_rx)  # Set the callback function for data reception
-
-
-
