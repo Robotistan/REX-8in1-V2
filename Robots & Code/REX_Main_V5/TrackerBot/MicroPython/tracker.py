@@ -7,6 +7,9 @@ import utime
 leftSensor = ADC(Pin(34))
 rightSensor = ADC(Pin(35))
 
+#motorPWM
+motor_pwm = Pin(13, Pin.OUT)
+
 #motorA
 motor_A1 = PWM(Pin(15))
 motor_A1.duty_u16(0)
@@ -46,6 +49,8 @@ directionStt = STOP
 oldDirection = STOP
 
 def forward(speed):
+   motor_pwm.high()
+   
    motor_A1.duty_u16(speed)
    motor_A2.duty_u16(0)
 
@@ -61,6 +66,8 @@ def forward(speed):
    return
 
 def right(speed):
+   motor_pwm.high()
+   
    motor_A1.duty_u16(speed)
    motor_A2.duty_u16(0)
 
@@ -75,6 +82,8 @@ def right(speed):
    return
 
 def left(speed):
+   motor_pwm.high()
+   
    motor_A1.duty_u16(0)
    motor_A2.duty_u16(speed)
 
@@ -89,6 +98,8 @@ def left(speed):
    return
 
 def backward(speed):
+   motor_pwm.high()
+   
    motor_A1.duty_u16(0)
    motor_A2.duty_u16(speed)
 
@@ -104,6 +115,8 @@ def backward(speed):
    return
 
 def stop():
+   motor_pwm.low()
+   
    motor_A1.duty_u16(0)
    motor_A2.duty_u16(0)
 
