@@ -15,6 +15,8 @@ enum MOTOR_TYPE {
 enum MOTOR_TYPE motorType = DC_MOTOR;
 
 //define Motor Pins
+#define MotorPWM 13	//Pwm
+
 #define MotorA1 15  // Forward
 #define MotorA2 23  // Backward
 
@@ -65,6 +67,7 @@ void setup() {
   Servo3.write(position3);
   Servo4.write(position4);
 
+  pinMode(MotorPWM, OUTPUT);
 
   pinMode(MotorA1, OUTPUT);
   pinMode(MotorA2, OUTPUT);
@@ -268,6 +271,8 @@ void dc_motor() {
 }
 
 void forward() {
+  digitalWrite(MotorPWM, HIGH);
+
   digitalWrite(MotorA1, HIGH);
   digitalWrite(MotorA2, LOW);
 
@@ -282,6 +287,8 @@ void forward() {
 }
 
 void right() {
+  digitalWrite(MotorPWM, HIGH);
+
   digitalWrite(MotorA1, HIGH);
   digitalWrite(MotorA2, LOW);
 
@@ -296,6 +303,8 @@ void right() {
 }
 
 void left() {
+  digitalWrite(MotorPWM, HIGH);
+
   digitalWrite(MotorA1, LOW);
   digitalWrite(MotorA2, HIGH);
 
@@ -310,6 +319,8 @@ void left() {
 }
 
 void stop() {
+  digitalWrite(MotorPWM, LOW);
+
   digitalWrite(MotorA1, LOW);
   digitalWrite(MotorA2, LOW);
 
@@ -324,6 +335,8 @@ void stop() {
 }
 
 void backward() {
+  digitalWrite(MotorPWM, HIGH);
+  
   digitalWrite(MotorA1, LOW);
   digitalWrite(MotorA2, HIGH);
 
