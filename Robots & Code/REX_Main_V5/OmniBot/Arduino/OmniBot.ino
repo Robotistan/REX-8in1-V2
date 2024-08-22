@@ -114,6 +114,9 @@ void loop() {
   }
 
   digitalWrite(MotorPWM, HIGH);
+
+
+
   //Forward
   if (a > 60 && a < 120 && b >= 1 && b <= 3)
   {
@@ -209,17 +212,17 @@ void loop() {
   //Right (0-30)
   else if (a >= 0 && a < 30 && b >= 1 && b <= 3)
   {
-    ledcWrite(PWMchannel_1, low_s); //MotorA1
+    ledcWrite(PWMchannel_1, low_s); //MotorA1  
     ledcWrite(PWMchannel_2, 0);     //MotorA2
 
-    ledcWrite(PWMchannel_3, low_s); //MotorB1
-    ledcWrite(PWMchannel_4, 0);     //MotorB2
+    ledcWrite(PWMchannel_3, 0); //MotorB1
+    ledcWrite(PWMchannel_4, low_s); //MotorB2
 
     ledcWrite(PWMchannel_5, low_s); //MotorC1
     ledcWrite(PWMchannel_6, 0);     //MotorC2
 
-    ledcWrite(PWMchannel_7, low_s); //MotorD1
-    ledcWrite(PWMchannel_8, 0);     //MotorD2
+    ledcWrite(PWMchannel_7, 0); //MotorD1
+    ledcWrite(PWMchannel_8, low_s);     //MotorD2
   }
 
   else if (a >= 0 && a < 30 && b > 3 && b <= 5)
@@ -227,14 +230,14 @@ void loop() {
     ledcWrite(PWMchannel_1, mid_s); //MotorA1
     ledcWrite(PWMchannel_2, 0);     //MotorA2
 
-    ledcWrite(PWMchannel_3, mid_s); //MotorB1
-    ledcWrite(PWMchannel_4, 0);     //MotorB2
+    ledcWrite(PWMchannel_3, 0); //MotorB1
+    ledcWrite(PWMchannel_4, mid_s);     //MotorB2
 
     ledcWrite(PWMchannel_5, mid_s); //MotorC1
     ledcWrite(PWMchannel_6, 0);     //MotorC2
 
-    ledcWrite(PWMchannel_7, mid_s); //MotorD1
-    ledcWrite(PWMchannel_8, 0);     //MotorD2
+    ledcWrite(PWMchannel_7, 0); //MotorD1
+    ledcWrite(PWMchannel_8, mid_s);     //MotorD2
   }
 
   else if (a >= 0 && a < 30 && b > 5 && b <= 7)
@@ -242,14 +245,14 @@ void loop() {
     ledcWrite(PWMchannel_1, high_s); //MotorA1
     ledcWrite(PWMchannel_2, 0);     //MotorA2
 
-    ledcWrite(PWMchannel_3, high_s); //MotorB1
-    ledcWrite(PWMchannel_4, 0);     //MotorB2
+    ledcWrite(PWMchannel_3, 0); //MotorB1
+    ledcWrite(PWMchannel_4, high_s);     //MotorB2
 
     ledcWrite(PWMchannel_5, high_s); //MotorC1
     ledcWrite(PWMchannel_6, 0);     //MotorC2
 
-    ledcWrite(PWMchannel_7, high_s); //MotorD1
-    ledcWrite(PWMchannel_8, 0);     //MotorD2
+    ledcWrite(PWMchannel_7, 0); //MotorD1
+    ledcWrite(PWMchannel_8, high_s);     //MotorD2
   }
   //Right (330-360)
   else if (a > 330 && a < 360 && b >= 1 && b <= 3)
@@ -260,11 +263,11 @@ void loop() {
     ledcWrite(PWMchannel_3, 0);     //MotorB1
     ledcWrite(PWMchannel_4, low_s); //MotorB2
 
-    ledcWrite(PWMchannel_5, 0);     //MotorC1
-    ledcWrite(PWMchannel_6, low_s); //MotorC2
+    ledcWrite(PWMchannel_5, low_s);     //MotorC1
+    ledcWrite(PWMchannel_6, 0); //MotorC2
 
-    ledcWrite(PWMchannel_7, low_s); //MotorD1
-    ledcWrite(PWMchannel_8, 0);     //MotorD2
+    ledcWrite(PWMchannel_7, 0); //MotorD1
+    ledcWrite(PWMchannel_8, low_s);     //MotorD2
   }
 
   else if (a > 330 && a < 360 && b > 3 && b <= 5)
@@ -275,11 +278,11 @@ void loop() {
     ledcWrite(PWMchannel_3, 0);     //MotorB1
     ledcWrite(PWMchannel_4, mid_s); //MotorB2
 
-    ledcWrite(PWMchannel_5, 0);     //MotorC1
-    ledcWrite(PWMchannel_6, mid_s); //MotorC2
+    ledcWrite(PWMchannel_5, mid_s);     //MotorC1
+    ledcWrite(PWMchannel_6, 0); //MotorC2
 
-    ledcWrite(PWMchannel_7, mid_s); //MotorD1
-    ledcWrite(PWMchannel_8, 0);     //MotorD2
+    ledcWrite(PWMchannel_7, 0); //MotorD1
+    ledcWrite(PWMchannel_8, mid_s);     //MotorD2
   }
 
   else if (a > 330 && a < 360 && b > 5 && b <= 7)
@@ -290,11 +293,11 @@ void loop() {
     ledcWrite(PWMchannel_3, 0);      //MotorB1
     ledcWrite(PWMchannel_4, high_s); //MotorB2
 
-    ledcWrite(PWMchannel_5, 0);      //MotorC1
-    ledcWrite(PWMchannel_6, high_s); //MotorC2
+    ledcWrite(PWMchannel_5, high_s);      //MotorC1
+    ledcWrite(PWMchannel_6, 0); //MotorC2
 
-    ledcWrite(PWMchannel_7, high_s); //MotorD1
-    ledcWrite(PWMchannel_8, 0);      //MotorD2
+    ledcWrite(PWMchannel_7, 0); //MotorD1
+    ledcWrite(PWMchannel_8, high_s);      //MotorD2
   }
 
   //Left
@@ -306,11 +309,11 @@ void loop() {
     ledcWrite(PWMchannel_3, low_s); //MotorB1
     ledcWrite(PWMchannel_4, 0);     //MotorB2
 
-    ledcWrite(PWMchannel_5, low_s); //MotorC1
-    ledcWrite(PWMchannel_6, 0);     //MotorC2
+    ledcWrite(PWMchannel_5, 0); //MotorC1
+    ledcWrite(PWMchannel_6, low_s);     //MotorC2
 
-    ledcWrite(PWMchannel_7, 0);     //MotorD1
-    ledcWrite(PWMchannel_8, low_s); //MotorD2
+    ledcWrite(PWMchannel_7, low_s);     //MotorD1
+    ledcWrite(PWMchannel_8, 0); //MotorD2
   }
 
   else if (a > 150 && a < 210 && b > 3 && b <= 5)
@@ -321,11 +324,11 @@ void loop() {
     ledcWrite(PWMchannel_3, mid_s); //MotorB1
     ledcWrite(PWMchannel_4, 0);     //MotorB2
 
-    ledcWrite(PWMchannel_5, mid_s); //MotorC1
-    ledcWrite(PWMchannel_6, 0);     //MotorC2
+    ledcWrite(PWMchannel_5, 0); //MotorC1
+    ledcWrite(PWMchannel_6, mid_s);     //MotorC2
 
-    ledcWrite(PWMchannel_7, 0);     //MotorD1
-    ledcWrite(PWMchannel_8, mid_s); //MotorD2
+    ledcWrite(PWMchannel_7, mid_s);     //MotorD1
+    ledcWrite(PWMchannel_8, 0); //MotorD2
   }
 
   else if (a > 150 && a < 210 && b > 5 && b <= 7)
@@ -336,11 +339,11 @@ void loop() {
     ledcWrite(PWMchannel_3, high_s); //MotorB1
     ledcWrite(PWMchannel_4, 0);      //MotorB2
 
-    ledcWrite(PWMchannel_5, high_s); //MotorC1
-    ledcWrite(PWMchannel_6, 0);      //MotorC2
+    ledcWrite(PWMchannel_5, 0); //MotorC1
+    ledcWrite(PWMchannel_6, high_s);      //MotorC2
 
-    ledcWrite(PWMchannel_7, high_s); //MotorD1
-    ledcWrite(PWMchannel_8, 0);      //MotorD2
+    ledcWrite(PWMchannel_7, 0); //MotorD1
+    ledcWrite(PWMchannel_8, high_s);      //MotorD2
   }
 
   //Right-Forward
@@ -543,4 +546,5 @@ void loop() {
     ledcWrite(PWMchannel_7, 0);         //MotorD1
     ledcWrite(PWMchannel_8, 0);         //MotorD2
   }
+
 }
