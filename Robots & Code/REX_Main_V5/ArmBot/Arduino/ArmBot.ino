@@ -37,6 +37,8 @@ int position4 = 90;
 //define buzzer pin named "horn"
 int horn = 25;
 
+int i = 0;
+
 //define pins of servo motors
 Servo Servo1;  // Forward-Bakcward
 Servo Servo2;  // Right-Legt
@@ -98,10 +100,7 @@ void loop() {
 
   if (GamePad.isSelectPressed()) {
     motorType = SERVO_MOTOR;
-    digitalWrite(horn, HIGH);
-    delay(100);
-    digitalWrite(horn, LOW);
-    delay(1);
+    rex_horn();
 
     int position1 = 90;
     int position2 = 90;
@@ -111,14 +110,7 @@ void loop() {
   }
   if (GamePad.isStartPressed()) {
     motorType = DC_MOTOR;
-    digitalWrite(horn, HIGH);
-    delay(100);
-    digitalWrite(horn, LOW);
-    delay(1);
-    digitalWrite(horn, HIGH);
-    delay(100);
-    digitalWrite(horn, LOW);
-    delay(1);
+    rex_horn();
   }
 
   switch (motorType) {
@@ -127,7 +119,7 @@ void loop() {
       dc_motor();
       break;
     case SERVO_MOTOR:
-      //erial.println("Servo Turn On");
+      //Serial.println("Servo Turn On");
       servo_motor();
 
       break;
@@ -156,7 +148,6 @@ void loop() {
 }
 
 void servo_motor() {
-
   if (GamePad.isUpPressed()) {
     if (position2 > 0) {
       position2 = position2 - 1;
@@ -211,7 +202,7 @@ void servo_motor() {
 
 void dc_motor() {
   if (GamePad.isUpPressed()) {
-    forward();
+      forward();
   }
 
   if (GamePad.isDownPressed()) {
@@ -226,39 +217,15 @@ void dc_motor() {
     right();
   }
   if (GamePad.isSquarePressed()) {
+    rex_horn();
   }
 
   if (GamePad.isCirclePressed()) {
-    for (int i = 0; i < 3; i++) {
-      forward();
-      digitalWrite(horn, HIGH);
-      delay(300);
-      digitalWrite(horn, LOW);
-      delay(300);
-      left();
-      digitalWrite(horn, HIGH);
-      delay(400);
-      digitalWrite(horn, LOW);
-      delay(300);
-      right();
-      digitalWrite(horn, HIGH);
-      delay(500);
-      digitalWrite(horn, LOW);
-      delay(300);
-      digitalWrite(horn, HIGH);
-      delay(600);
-      digitalWrite(horn, LOW);
-      left();
-      delay(300);
-    }
+    rex_horn();
   }
 
   if (GamePad.isCrossPressed()) {
-    //Serial.print("DC Cross");
-    digitalWrite(horn, HIGH);
-    delay(200);
-    digitalWrite(horn, LOW);
-    delay(1);
+    rex_horn();
   }
 
   if (GamePad.isTrianglePressed()) {
@@ -348,4 +315,13 @@ void backward() {
 
   digitalWrite(MotorD1, LOW);
   digitalWrite(MotorD2, HIGH);
+}
+
+void rex_horn() {
+  for(i=0; i<50; i++){
+    digitalWrite(horn, HIGH);
+    delay(1);
+    digitalWrite(horn, LOW);
+    delay(1);
+  }
 }
