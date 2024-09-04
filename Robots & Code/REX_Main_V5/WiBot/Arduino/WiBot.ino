@@ -74,33 +74,12 @@ void loop() {
 
   if (GamePad.isCirclePressed())
   {
-    for (int i = 0; i < 3; i++)
-    {
-      forward();
-      digitalWrite(horn, HIGH);
-      delay(300);
-      digitalWrite(horn, LOW);
-      left();
-      digitalWrite(horn, HIGH);
-      delay(300);
-      digitalWrite(horn, LOW);
-      right ();
-      digitalWrite(horn, HIGH);
-      delay(300);
-      digitalWrite(horn, LOW);
-      left();
-      digitalWrite(horn, HIGH);
-      delay(300);
-      digitalWrite(horn, LOW);
-    }
+    rex_horn();
   }
 
   if (GamePad.isCrossPressed())
   {
-    Serial.print("Cross");
-    digitalWrite(horn, HIGH);
-    delay(100);
-    digitalWrite(horn, LOW);
+    rex_horn();
   }
 
   if (GamePad.isTrianglePressed())
@@ -215,4 +194,13 @@ void backward() {
 
   digitalWrite(MotorD1, LOW);
   digitalWrite(MotorD2, HIGH);
+}
+
+void rex_horn() {
+  for(int i=0; i<50; i++){
+    digitalWrite(horn, HIGH);
+    delay(1);
+    digitalWrite(horn, LOW);
+    delay(1);
+  }
 }
