@@ -102,20 +102,14 @@ void loop() {
 
   if (GamePad.isCrossPressed())
   {
-    digitalWrite(horn, HIGH);
-    delay(100);
-    digitalWrite(horn, LOW);
-    delay(1);
+    rex_horn();
   }
 
   if (GamePad.isSquarePressed())
   {
     Serial.print("Square");
   }
-
   digitalWrite(MotorPWM, HIGH);
-
-
 
   //Forward
   if (a > 60 && a < 120 && b >= 1 && b <= 3)
@@ -546,5 +540,13 @@ void loop() {
     ledcWrite(PWMchannel_7, 0);         //MotorD1
     ledcWrite(PWMchannel_8, 0);         //MotorD2
   }
+}
 
+void rex_horn() {
+  for(int i=0; i<50; i++){
+    digitalWrite(horn, HIGH);
+    delay(1);
+    digitalWrite(horn, LOW);
+    delay(1);
+  }
 }
