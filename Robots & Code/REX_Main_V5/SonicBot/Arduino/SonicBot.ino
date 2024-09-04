@@ -99,10 +99,7 @@ void loop() {
 
   if (cm < 8) {
     backward();
-    digitalWrite(horn, HIGH);
-    delay(100);
-    digitalWrite(horn, LOW);
-    delay(1);
+    rex_horn();
     left();
     stop();
     delay(100);
@@ -219,4 +216,13 @@ void distance() {
   Serial.print("cm");
   Serial.println();
   */
+}
+
+void rex_horn() {
+  for(int i=0; i<50; i++){
+    digitalWrite(horn, HIGH);
+    delay(1);
+    digitalWrite(horn, LOW);
+    delay(1);
+  }
 }
