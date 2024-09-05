@@ -37,8 +37,6 @@ int position4 = 90;
 //define buzzer pin named "horn"
 int horn = 25;
 
-int i = 0;
-
 //define pins of servo motors
 Servo Servo1;  // Forward-Bakcward
 Servo Servo2;  // Right-Legt
@@ -318,7 +316,7 @@ void backward() {
 }
 
 void rex_horn() {
-  for(i=0; i<50; i++){
+  for(int i=0; i<50; i++){
     digitalWrite(horn, HIGH);
     delay(1);
     digitalWrite(horn, LOW);
