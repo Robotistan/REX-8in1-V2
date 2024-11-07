@@ -36,7 +36,7 @@ sensor = HCSR04(trigger_pin=17, echo_pin=16, echo_timeout_us=10000)
 MotorSpeed = 50000
 
 def forward(speed):
-   motor_pwm.high()
+   motor_pwm.value(1)
    
    motor_A1.duty_u16(speed)
    motor_A2.duty_u16(0)
@@ -51,7 +51,7 @@ def forward(speed):
    motor_D2.duty_u16(0)
 
 def stop():
-   motor_pwm.low()
+   motor_pwm.value(0)
    
    motor_A1.duty_u16(0)
    motor_A2.duty_u16(0)
@@ -66,7 +66,7 @@ def stop():
    motor_D2.duty_u16(0)
 
 def backward(speed):
-   motor_pwm.high()
+   motor_pwm.value(1)
    
    motor_A1.duty_u16(0)
    motor_A2.duty_u16(speed)
@@ -81,7 +81,7 @@ def backward(speed):
    motor_D2.duty_u16(speed)
 
 def left(speed):
-   motor_pwm.high()
+   motor_pwm.value(1)
    
    motor_A1.duty_u16(0)
    motor_A2.duty_u16(speed)
