@@ -10,7 +10,7 @@
 #define CHARACTERISTIC_UUID "6E400002-B5A3-F393-E0A9-E50E24DCCA9E" // Custom Characteristic UUID
 
 BLECharacteristic *pCharacteristic;
-std::string characteristicValue = "";
+String characteristicValue = "";
 
 //Motor Pins Definations
 #define MotorPWM 13	// PWM
@@ -212,7 +212,7 @@ class MyServerCallbacks: public BLEServerCallbacks {
 // Callbacks for reading/writing the characteristic
 class MyCallbacks: public BLECharacteristicCallbacks {
     void onWrite(BLECharacteristic *pCharacteristic) {
-      std::string value = pCharacteristic->getValue();
+      String value = pCharacteristic->getValue().c_str();
 
       if (value.length() > 0) {
         for (i = 0; i < value.length(); i++){
