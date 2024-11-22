@@ -29,7 +29,7 @@ String characteristicValue = "";    // Variable to hold the characteristic value
 #define FWD 1        // Move forward
 #define BWD 2        // Move backward
 #define RIGHT 3      // Turn right
-#define LEFT 4		 // Turn left
+#define LEFT 4	     // Turn left
 #define FWD_RIGHT 5  // Forward and right diagonal movement
 #define FWD_LEFT  6  // Forward and left diagonal movement
 #define BWD_RIGHT 7  // Backward and right diagonal movement
