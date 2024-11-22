@@ -59,6 +59,9 @@ int horn = 25;
 int buffer[5];          // Buffer to store received data
 int control = 0;        // Current control mode
 int i = 0;              // Loop variable
+int duty = 0;           // Speed variable
+int ySpeed  = 0;        // Speed based on Y-axis joystick input
+int xSpeed  = 0;        // Speed based on X-axis joystick input
 int deadZone = 20;      // Dead zone threshold around the center (adjust if needed)
 int centerX = 127;      // Center value for X-axis
 int centerY = 127;      // Center value for Y-axis
@@ -66,118 +69,124 @@ int xValue = 0;         // Joystick X-axis
 int yValue = 0;         // Joystick Y-axis
 
 // Function to move the motors in the specified direction with the given speed
-void move(int direction){
+void move(int direction, int speed){
+  duty = constrain(speed, 150, 255);  // Constrain speed within a valid range (150-255)
+
+  // Control motor pins based on the specified direction
   if (direction == FWD){
-    digitalWrite(MotorA1, HIGH); digitalWrite(MotorA2, LOW);
-    digitalWrite(MotorB1, HIGH); digitalWrite(MotorB2, LOW);
-    digitalWrite(MotorC1, HIGH); digitalWrite(MotorC2, LOW);
-    digitalWrite(MotorD1, HIGH); digitalWrite(MotorD2, LOW);
+    analogWrite(MotorA1, duty); analogWrite(MotorA2, LOW);
+    analogWrite(MotorB1, duty); analogWrite(MotorB2, LOW);
+    analogWrite(MotorC1, duty); analogWrite(MotorC2, LOW);
+    analogWrite(MotorD1, duty); analogWrite(MotorD2, LOW);
   }
   else if (direction == BWD){
-    digitalWrite(MotorA1, LOW); digitalWrite(MotorA2, HIGH);
-    digitalWrite(MotorB1, LOW); digitalWrite(MotorB2, HIGH);
-    digitalWrite(MotorC1, LOW); digitalWrite(MotorC2, HIGH);
-    digitalWrite(MotorD1, LOW); digitalWrite(MotorD2, HIGH);
+    analogWrite(MotorA1, LOW); analogWrite(MotorA2, duty);
+    analogWrite(MotorB1, LOW); analogWrite(MotorB2, duty);
+    analogWrite(MotorC1, LOW); analogWrite(MotorC2, duty);
+    analogWrite(MotorD1, LOW); analogWrite(MotorD2, duty);
   }
   else if (direction == LEFT){
-    digitalWrite(MotorA1, LOW);  digitalWrite(MotorA2, HIGH);
-    digitalWrite(MotorB1, LOW);  digitalWrite(MotorB2, HIGH);
-    digitalWrite(MotorC1, HIGH); digitalWrite(MotorC2, LOW);
-    digitalWrite(MotorD1, HIGH); digitalWrite(MotorD2, LOW);
+    analogWrite(MotorA1, LOW);  analogWrite(MotorA2, duty);
+    analogWrite(MotorB1, LOW);  analogWrite(MotorB2, duty);
+    analogWrite(MotorC1, duty); analogWrite(MotorC2, LOW);
+    analogWrite(MotorD1, duty); analogWrite(MotorD2, LOW);
   }
   else if (direction == RIGHT){
-    digitalWrite(MotorA1, HIGH); digitalWrite(MotorA2, LOW);
-    digitalWrite(MotorB1, HIGH); digitalWrite(MotorB2, LOW);
-    digitalWrite(MotorC1, LOW);  digitalWrite(MotorC2, HIGH);
-    digitalWrite(MotorD1, LOW);  digitalWrite(MotorD2, HIGH);
+    analogWrite(MotorA1, duty); analogWrite(MotorA2, LOW);
+    analogWrite(MotorB1, duty); analogWrite(MotorB2, LOW);
+    analogWrite(MotorC1, LOW);  analogWrite(MotorC2, duty);
+    analogWrite(MotorD1, LOW);  analogWrite(MotorD2, duty);
   }
   else if (direction == FWD_RIGHT){
-    digitalWrite(MotorA1, HIGH); digitalWrite(MotorA2, LOW);
-    digitalWrite(MotorB1, HIGH); digitalWrite(MotorB2, LOW);
-    digitalWrite(MotorC1, HIGH); digitalWrite(MotorC2, LOW);  
-    digitalWrite(MotorD1, LOW);  digitalWrite(MotorD2, HIGH);
+    analogWrite(MotorA1, duty); analogWrite(MotorA2, LOW);
+    analogWrite(MotorB1, duty); analogWrite(MotorB2, LOW);
+    analogWrite(MotorC1, duty); analogWrite(MotorC2, LOW);  
+    analogWrite(MotorD1, LOW);  analogWrite(MotorD2, duty);
   }
   else if (direction == FWD_LEFT){
-    digitalWrite(MotorA1, HIGH); digitalWrite(MotorA2, LOW);
-    digitalWrite(MotorB1, LOW);  digitalWrite(MotorB2, HIGH);
-    digitalWrite(MotorC1, HIGH); digitalWrite(MotorC2, LOW);
-    digitalWrite(MotorD1, HIGH); digitalWrite(MotorD2, LOW);  
+    analogWrite(MotorA1, duty); analogWrite(MotorA2, LOW);
+    analogWrite(MotorB1, LOW);  analogWrite(MotorB2, duty);
+    analogWrite(MotorC1, duty); analogWrite(MotorC2, LOW);
+    analogWrite(MotorD1, duty); analogWrite(MotorD2, LOW);  
   }
   else if (direction == BWD_RIGHT){
-    digitalWrite(MotorA1, LOW);  digitalWrite(MotorA2, HIGH);
-    digitalWrite(MotorB1, LOW);  digitalWrite(MotorB2, HIGH);
-    digitalWrite(MotorC1, LOW);  digitalWrite(MotorC2, HIGH);  
-    digitalWrite(MotorD1, HIGH); digitalWrite(MotorD2, LOW);
+    analogWrite(MotorA1, LOW);  analogWrite(MotorA2, duty);
+    analogWrite(MotorB1, LOW);  analogWrite(MotorB2, duty);
+    analogWrite(MotorC1, LOW);  analogWrite(MotorC2, duty);  
+    analogWrite(MotorD1, duty); analogWrite(MotorD2, LOW);
   }
   else if (direction == BWD_LEFT){
-    digitalWrite(MotorA1, LOW);  digitalWrite(MotorA2, HIGH);
-    digitalWrite(MotorB1, HIGH); digitalWrite(MotorB2, LOW);
-    digitalWrite(MotorC1, LOW);  digitalWrite(MotorC2, HIGH);
-    digitalWrite(MotorD1, LOW);  digitalWrite(MotorD2, HIGH); 
+    analogWrite(MotorA1, LOW);  analogWrite(MotorA2, duty);
+    analogWrite(MotorB1, duty); analogWrite(MotorB2, LOW);
+    analogWrite(MotorC1, LOW);  analogWrite(MotorC2, duty);
+    analogWrite(MotorD1, LOW);  analogWrite(MotorD2, duty); 
   }
   else{ //STOP
-    digitalWrite(MotorA1, LOW); digitalWrite(MotorA2, LOW);
-    digitalWrite(MotorB1, LOW); digitalWrite(MotorB2, LOW);
-    digitalWrite(MotorC1, LOW); digitalWrite(MotorC2, LOW);
-    digitalWrite(MotorD1, LOW); digitalWrite(MotorD2, LOW);
+    analogWrite(MotorA1, LOW); analogWrite(MotorA2, LOW);
+    analogWrite(MotorB1, LOW); analogWrite(MotorB2, LOW);
+    analogWrite(MotorC1, LOW); analogWrite(MotorC2, LOW);
+    analogWrite(MotorD1, LOW); analogWrite(MotorD2, LOW);
   }
 }
 
 // Function to move the motors in the specified direction with the given speed
-void omni_move(int direction){
+void omni_move(int direction, int speed){
+  duty = constrain(speed, 150, 255);  // Constrain speed within a valid range (150-255)
+
+  // Control motor pins based on the specified direction
   if (direction == FWD){
-    digitalWrite(MotorA1, LOW); digitalWrite(MotorA2, HIGH);
-    digitalWrite(MotorB1, LOW); digitalWrite(MotorB2, HIGH);
-    digitalWrite(MotorC1, LOW); digitalWrite(MotorC2, HIGH);
-    digitalWrite(MotorD1, LOW); digitalWrite(MotorD2, HIGH);
+    analogWrite(MotorA1, LOW); analogWrite(MotorA2, duty);
+    analogWrite(MotorB1, LOW); analogWrite(MotorB2, duty);
+    analogWrite(MotorC1, LOW); analogWrite(MotorC2, duty);
+    analogWrite(MotorD1, LOW); analogWrite(MotorD2, duty);
   }
   else if (direction == BWD){
-    digitalWrite(MotorA1, HIGH); digitalWrite(MotorA2, LOW);
-    digitalWrite(MotorB1, HIGH); digitalWrite(MotorB2, LOW);
-    digitalWrite(MotorC1, HIGH); digitalWrite(MotorC2, LOW);
-    digitalWrite(MotorD1, HIGH); digitalWrite(MotorD2, LOW);
+    analogWrite(MotorA1, duty); analogWrite(MotorA2, LOW);
+    analogWrite(MotorB1, duty); analogWrite(MotorB2, LOW);
+    analogWrite(MotorC1, duty); analogWrite(MotorC2, LOW);
+    analogWrite(MotorD1, duty); analogWrite(MotorD2, LOW);
   }
   else if (direction == LEFT){
-    digitalWrite(MotorA1, HIGH); digitalWrite(MotorA2, LOW);
-    digitalWrite(MotorB1, LOW); digitalWrite(MotorB2, HIGH);
-    digitalWrite(MotorC1, LOW); digitalWrite(MotorC2, HIGH);
-    digitalWrite(MotorD1, HIGH); digitalWrite(MotorD2, LOW);
+    analogWrite(MotorA1, duty); analogWrite(MotorA2, LOW);
+    analogWrite(MotorB1, LOW);  analogWrite(MotorB2, duty);
+    analogWrite(MotorC1, LOW);  analogWrite(MotorC2, duty);
+    analogWrite(MotorD1, duty); analogWrite(MotorD2, LOW);
   }
   else if (direction == RIGHT){
-    digitalWrite(MotorA1, LOW); digitalWrite(MotorA2, HIGH);
-    digitalWrite(MotorB1, HIGH); digitalWrite(MotorB2, LOW);
-    digitalWrite(MotorC1, HIGH); digitalWrite(MotorC2, LOW);
-    digitalWrite(MotorD1, LOW); digitalWrite(MotorD2, HIGH);
+    analogWrite(MotorA1, LOW);  analogWrite(MotorA2, duty);
+    analogWrite(MotorB1, duty); analogWrite(MotorB2, LOW);
+    analogWrite(MotorC1, duty); analogWrite(MotorC2, LOW);
+    analogWrite(MotorD1, LOW);  analogWrite(MotorD2, duty);
   }
   else if (direction == FWD_RIGHT){
-    digitalWrite(MotorA1, LOW); digitalWrite(MotorA2, HIGH);
-    digitalWrite(MotorB1, LOW);  digitalWrite(MotorB2, LOW);
-    digitalWrite(MotorC1, LOW);  digitalWrite(MotorC2, LOW);  
-    digitalWrite(MotorD1, LOW); digitalWrite(MotorD2, HIGH);
+    analogWrite(MotorA1, LOW);  analogWrite(MotorA2, duty);
+    analogWrite(MotorB1, LOW);  analogWrite(MotorB2, LOW);
+    analogWrite(MotorC1, LOW);  analogWrite(MotorC2, LOW);  
+    analogWrite(MotorD1, LOW);  analogWrite(MotorD2, duty);
   }
   else if (direction == FWD_LEFT){
-    digitalWrite(MotorA1, LOW);  digitalWrite(MotorA2, LOW);
-    digitalWrite(MotorB1, LOW); digitalWrite(MotorB2, HIGH);
-    digitalWrite(MotorC1, LOW); digitalWrite(MotorC2, HIGH);
-    digitalWrite(MotorD1, LOW);  digitalWrite(MotorD2, LOW);  
+    analogWrite(MotorA1, LOW);  analogWrite(MotorA2, LOW);
+    analogWrite(MotorB1, LOW); analogWrite(MotorB2, duty);
+    analogWrite(MotorC1, LOW); analogWrite(MotorC2, duty);
+    analogWrite(MotorD1, LOW);  analogWrite(MotorD2, LOW);  
   }
   else if (direction == BWD_RIGHT){
-    digitalWrite(MotorA1, LOW);  digitalWrite(MotorA2, LOW);
-    digitalWrite(MotorB1, HIGH); digitalWrite(MotorB2, LOW);
-    digitalWrite(MotorC1, HIGH); digitalWrite(MotorC2, LOW);  
-    digitalWrite(MotorD1, LOW);  digitalWrite(MotorD2, LOW);
+    analogWrite(MotorA1, LOW);  analogWrite(MotorA2, LOW);
+    analogWrite(MotorB1, duty); analogWrite(MotorB2, LOW);
+    analogWrite(MotorC1, duty); analogWrite(MotorC2, LOW);  
+    analogWrite(MotorD1, LOW);  analogWrite(MotorD2, LOW);
   }
   else if (direction == BWD_LEFT){
-    digitalWrite(MotorA1, HIGH); digitalWrite(MotorA2, LOW);
-    digitalWrite(MotorB1, LOW);  digitalWrite(MotorB2, LOW);
-    digitalWrite(MotorC1, LOW);  digitalWrite(MotorC2, LOW);
-    digitalWrite(MotorD1, HIGH); digitalWrite(MotorD2, LOW); 
+    analogWrite(MotorA1, duty); analogWrite(MotorA2, LOW);
+    analogWrite(MotorB1, LOW);  analogWrite(MotorB2, LOW);
+    analogWrite(MotorC1, LOW);  analogWrite(MotorC2, LOW);
+    analogWrite(MotorD1, duty); analogWrite(MotorD2, LOW); 
   }
   else{ //STOP
-    digitalWrite(MotorA1, LOW); digitalWrite(MotorA2, LOW);
-    digitalWrite(MotorB1, LOW); digitalWrite(MotorB2, LOW);
-    digitalWrite(MotorC1, LOW); digitalWrite(MotorC2, LOW);
-    digitalWrite(MotorD1, LOW); digitalWrite(MotorD2, LOW);
+    analogWrite(MotorA1, LOW); analogWrite(MotorA2, LOW);
+    analogWrite(MotorB1, LOW); analogWrite(MotorB2, LOW);
+    analogWrite(MotorC1, LOW); analogWrite(MotorC2, LOW);
+    analogWrite(MotorD1, LOW); analogWrite(MotorD2, LOW);
   }
 }
 
@@ -224,76 +233,79 @@ class MyCallbacks: public BLECharacteristicCallbacks {
               control = buttons;
             }
 
-            if(buffer[2] == 2){  / /Horn
+            if(buffer[2] == 2){  //Horn
               rex_horn();
             }
-            
-            if(control == buttons){  // Directional Buttons
-              if(buffer[2] == 99) {  // Stop
-                move(STOP);
+
+            if(control == buttons){ //Directional Buttons
+              if(buffer[2] == 99) {  //Stop
+                move(STOP,0);
               }
-              if(buffer[2] == 3) {  // Forward movement
-                move(FWD);
+              if(buffer[2] == 3) {  //Forward movement
+                move(FWD,255);
               }
-              if(buffer[2] == 4) {  // Forward-right diagonal
-                move(FWD_RIGHT);
+              if(buffer[2] == 4) {  //Forward-right diagonal
+                move(FWD_RIGHT,150);
               }
-              if(buffer[2] == 5) {  // Right turn
-                move(RIGHT);
+              if(buffer[2] == 5) {  //Right turn
+                move(RIGHT,255);
               }
-              if(buffer[2] == 6) {  // Backward-right diagonal
-                move(BWD_RIGHT);
+              if(buffer[2] == 6) {  //Backward-right diagonal
+                move(BWD_RIGHT,150);
               }
-              if(buffer[2] == 7) {  // Backward movement
-                move(BWD);
+              if(buffer[2] == 7) {  //Backward movement
+                move(BWD,255);
               }
-              if(buffer[2] == 8) {  // Backward-left diagonal
-                move(BWD_LEFT);
+              if(buffer[2] == 8) {  //Backward-left diagonal
+                move(BWD_LEFT,150);
               }
-              if(buffer[2] == 9) {  // Left turn
-                move(LEFT);
+              if(buffer[2] == 9) {  //Left turn
+                move(LEFT,255);
               }
-              if(buffer[2] == 10) {  // Forward-left diagonal
-                move(FWD_LEFT);
+              if(buffer[2] == 10) {  //Forward-left diagonal
+                move(FWD_LEFT,150);
               }
             }
             else{ //Joystick
-              xValue = buffer[3];  // Joystick X-axis
-              yValue = buffer[4];  // Joystick Y-axis
+              xValue = buffer[3]; //Joystick X-axis
+              yValue = buffer[4]; //Joystick Y-axis
 
-              if (xValue == 0 && yValue == 0) {   // Check if joystick is close to the center for stopping
-                move(STOP);
+              ySpeed = map(abs(yValue - centerY), 0, 127, 0, 255);  //Map Y-axis for forward/backward speed
+              xSpeed = map(abs(xValue - centerX), 0, 127, 0, 255);  //Map X-axis for turning speed
+
+              if (xValue == 0 && yValue == 0) {   //Check if joystick is close to the center for stopping
+                move(STOP,0);
               }
-              else if (yValue < centerY - deadZone && abs(xValue - centerX) <= deadZone) {   // Forward movement
-                move(FWD);
+              else if (yValue < centerY - deadZone && abs(xValue - centerX) <= deadZone) {   //Forward movement
+                move(FWD, ySpeed);
               }
-              else if (yValue > centerY + deadZone && abs(xValue - centerX) <= deadZone) {   // Backward movement
-                move(BWD);
+              else if (yValue > centerY + deadZone && abs(xValue - centerX) <= deadZone) {   //Backward movement
+                move(BWD, ySpeed);
               }
-              else if (xValue < centerX - deadZone && abs(yValue - centerY) <= deadZone) {   // Left turn
-                move(LEFT);
+              else if (xValue < centerX - deadZone && abs(yValue - centerY) <= deadZone) {   //Left turn
+                move(LEFT, xSpeed);
               }
-              else if (xValue > centerX + deadZone && abs(yValue - centerY) <= deadZone) {   // Right turn
-                move(RIGHT);
+              else if (xValue > centerX + deadZone && abs(yValue - centerY) <= deadZone) {   //Right turn
+                move(RIGHT, xSpeed);
               }
-              else if (yValue < centerY - deadZone && xValue > centerX + deadZone) {  // Forward-right diagonal
-                move(FWD_RIGHT);
+              else if (yValue < centerY - deadZone && xValue > centerX + deadZone) {  //Forward-right diagonal
+                move(FWD_RIGHT, ySpeed);
               }
-              else if (yValue < centerY - deadZone && xValue < centerX - deadZone) {  // Forward-left diagonal
-                move(FWD_LEFT);
+              else if (yValue < centerY - deadZone && xValue < centerX - deadZone) {  //Forward-left diagonal
+                move(FWD_LEFT, ySpeed);
               }
-              else if (yValue > centerY + deadZone && xValue > centerX + deadZone) {  // Backward-right diagonal
-                move(BWD_RIGHT);
+              else if (yValue > centerY + deadZone && xValue > centerX + deadZone) {  //Backward-right diagonal
+                move(BWD_RIGHT, ySpeed);
               }
-              else if (yValue > centerY + deadZone && xValue < centerX - deadZone) {  // Backward-left diagonal
-                move(BWD_LEFT);
+              else if (yValue > centerY + deadZone && xValue < centerX - deadZone) {  //Backward-left diagonal
+                move(BWD_LEFT, ySpeed);
               }
               else{
-                move(STOP);
+                move(STOP,0);
               }
             }
           }
-          else if(buffer[1] == 2){ // Omnibot
+          else if(buffer[1] == 2){ //Omnibot
             if (buffer[2] == 1){
               control = joystick;
             }
@@ -301,77 +313,80 @@ class MyCallbacks: public BLECharacteristicCallbacks {
               control = buttons;
             }
 
-            if(buffer[2] == 2){  // Horn
+            if(buffer[2] == 2){  //Horn
               rex_horn();
             }
 
-            if(control == buttons){  // Directional Buttons
-              if(buffer[2] == 99) {  // Stop
-                omni_move(STOP);
+            if(control == buttons){ //Directional Buttons
+              if(buffer[2] == 99) {  //Stop
+                omni_move(STOP,0);
               }
-              if(buffer[2] == 3) {  // Forward movement
-                omni_move(FWD);
+              if(buffer[2] == 3) {  //Forward movement
+                omni_move(FWD,255);
               }
-              if(buffer[2] == 4) {  // Forward-right diagonal
-                omni_move(FWD_RIGHT);
+              if(buffer[2] == 4) {  //Forward-right diagonal
+                omni_move(FWD_RIGHT,255);
               }
-              if(buffer[2] == 5) {  // Right turn
-                omni_move(RIGHT);
+              if(buffer[2] == 5) {  //Right turn
+                omni_move(RIGHT,255);
               }
-              if(buffer[2] == 6) {  // Backward-right diagonal
-                omni_move(BWD_RIGHT);
+              if(buffer[2] == 6) {  //Backward-right diagonal
+                omni_move(BWD_RIGHT,255);
               }
-              if(buffer[2] == 7) {  // Backward movement
-                omni_move(BWD);
+              if(buffer[2] == 7) {  //Backward movement
+                omni_move(BWD,255);
               }
-              if(buffer[2] == 8) {  // Backward-left diagonal
-                omni_move(BWD_LEFT);
+              if(buffer[2] == 8) {  //Backward-left diagonal
+                omni_move(BWD_LEFT,255);
               }
-              if(buffer[2] == 9) {  // Left turn
-                omni_move(LEFT);
+              if(buffer[2] == 9) {  //Left turn
+                omni_move(LEFT,255);
               }
-              if(buffer[2] == 10) {  // Forward-left diagonal
-                omni_move(FWD_LEFT);
+              if(buffer[2] == 10) {  //Forward-left diagonal
+                omni_move(FWD_LEFT,255);
               }
             }
-            else{ // Joystick
+            else{ //Joystick
               xValue = buffer[3]; //Joystick X-axis
               yValue = buffer[4]; //Joystick Y-axis
 
-              if (xValue == 0 && yValue == 0) {   // Check if joystick is close to the center for stopping
-                omni_move(STOP);
+              ySpeed = map(abs(yValue - centerY), 0, 127, 0, 255);  //Map Y-axis for forward/backward speed
+              xSpeed = map(abs(xValue - centerX), 0, 127, 0, 255);  //Map X-axis for turning speed
+
+              if (xValue == 0 && yValue == 0) {   //Check if joystick is close to the center for stopping
+                omni_move(STOP,0);
               }
-              else if (yValue < centerY - deadZone && abs(xValue - centerX) <= deadZone) {   // Forward movement
-                omni_move(FWD);
+              else if (yValue < centerY - deadZone && abs(xValue - centerX) <= deadZone) {   //Forward movement
+                omni_move(FWD, ySpeed);
               }
-              else if (yValue > centerY + deadZone && abs(xValue - centerX) <= deadZone) {   // Backward movement
-                omni_move(BWD);
+              else if (yValue > centerY + deadZone && abs(xValue - centerX) <= deadZone) {   //Backward movement
+                omni_move(BWD, ySpeed);
               }
-              else if (xValue < centerX - deadZone && abs(yValue - centerY) <= deadZone) {   // Left turn
-                omni_move(LEFT);
+              else if (xValue < centerX - deadZone && abs(yValue - centerY) <= deadZone) {   //Left turn
+                omni_move(LEFT, xSpeed);
               }
-              else if (xValue > centerX + deadZone && abs(yValue - centerY) <= deadZone) {   // Right turn
-                omni_move(RIGHT);
+              else if (xValue > centerX + deadZone && abs(yValue - centerY) <= deadZone) {   //Right turn
+                omni_move(RIGHT, xSpeed);
               }
-              else if (yValue < centerY - deadZone && xValue > centerX + deadZone) {  // Forward-right diagonal
-                omni_move(FWD_RIGHT);
+              else if (yValue < centerY - deadZone && xValue > centerX + deadZone) {  //Forward-right diagonal
+                omni_move(FWD_RIGHT, ySpeed);
               }
-              else if (yValue < centerY - deadZone && xValue < centerX - deadZone) {  // Forward-left diagonal
-                omni_move(FWD_LEFT);
+              else if (yValue < centerY - deadZone && xValue < centerX - deadZone) {  //Forward-left diagonal
+                omni_move(FWD_LEFT, ySpeed);
               }
-              else if (yValue > centerY + deadZone && xValue > centerX + deadZone) {  // Backward-right diagonal
-                omni_move(BWD_RIGHT);
+              else if (yValue > centerY + deadZone && xValue > centerX + deadZone) {  //Backward-right diagonal
+                omni_move(BWD_RIGHT, ySpeed);
               }
-              else if (yValue > centerY + deadZone && xValue < centerX - deadZone) {  // Backward-left diagonal
-                omni_move(BWD_LEFT);
+              else if (yValue > centerY + deadZone && xValue < centerX - deadZone) {  //Backward-left diagonal
+                omni_move(BWD_LEFT, ySpeed);
               }
               else{
-                omni_move(STOP);
+                omni_move(STOP,0);
               }
             }
           }
-          else if(buffer[1] == 3){ // Armbot
-            if(buffer[2] == 1){  // Servo Motors Reset
+          else if(buffer[1] == 3){ //Armbot
+            if(buffer[2] == 1){  //Servo Motors Reset
               position1 = 90;
               position2 = 90;
               position3 = 90;
@@ -382,42 +397,45 @@ class MyCallbacks: public BLECharacteristicCallbacks {
               Servo3.write(position3);
               Servo4.write(position4);
             }
-            else if(buffer[2] == 2){  // Horn
+            else if(buffer[2] == 2){  //Horn
               rex_horn();
             }
-            else if(buffer[2] == 3){ // DC Motors Control
+            else if(buffer[2] == 3){ //DC Motors Control
               xValue = buffer[3]; // Joystick X-axis
               yValue = buffer[4]; // Joystick Y-axis
 
+              ySpeed = map(abs(yValue - centerY), 0, 127, 0, 255);  // Map Y-axis for forward/backward speed
+              xSpeed = map(abs(xValue - centerX), 0, 127, 0, 255);  // Map X-axis for turning speed
+
               if (xValue == 0 && yValue == 0) {   // Check if joystick is close to the center for stopping
-                move(STOP);
+                move(STOP,0);
               }
               else if (yValue < centerY - deadZone && abs(xValue - centerX) <= deadZone) {   // Forward movement
-                move(FWD);
+                move(FWD, ySpeed);
               }
               else if (yValue > centerY + deadZone && abs(xValue - centerX) <= deadZone) {   // Backward movement
-                move(BWD);
+                move(BWD, ySpeed);
               }
               else if (xValue < centerX - deadZone && abs(yValue - centerY) <= deadZone) {   // Left turn
-                move(LEFT);
+                move(LEFT, xSpeed);
               }
               else if (xValue > centerX + deadZone && abs(yValue - centerY) <= deadZone) {   // Right turn
-                move(RIGHT);
+                move(RIGHT, xSpeed);
               }
               else if (yValue < centerY - deadZone && xValue > centerX + deadZone) {  // Forward-right diagonal
-                move(FWD_RIGHT);
+                move(FWD_RIGHT, ySpeed);
               }
               else if (yValue < centerY - deadZone && xValue < centerX - deadZone) {  // Forward-left diagonal
-                move(FWD_LEFT);
+                move(FWD_LEFT, ySpeed);
               }
               else if (yValue > centerY + deadZone && xValue > centerX + deadZone) {  // Backward-right diagonal
-                move(BWD_RIGHT);
+                move(BWD_RIGHT, ySpeed);
               }
               else if (yValue > centerY + deadZone && xValue < centerX - deadZone) {  // Backward-left diagonal
-                move(BWD_LEFT);
+                move(BWD_LEFT, ySpeed);
               }
               else{
-                move(STOP);
+                move(STOP,0);
               }
             }
             else if(buffer[2] == 4){  //Servo Motors Control
@@ -501,7 +519,7 @@ void setup() {
                     );
 
   pCharacteristic->setCallbacks(new MyCallbacks());  // Set characteristic callbacks
-  pCharacteristic->setValue(characteristicValue);    //Initial value
+  pCharacteristic->setValue(characteristicValue);    // Initial value
   pService->start();  // Start the service
   pServer->getAdvertising()->start();  // Start advertising
 
@@ -542,8 +560,7 @@ void setup() {
 
   pinMode(MotorD1, OUTPUT);
   pinMode(MotorD2, OUTPUT);
-  
-  // Initialize the buzzer pin
+
   pinMode(horn, OUTPUT);
 }
 
