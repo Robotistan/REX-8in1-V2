@@ -5,72 +5,73 @@
 #include <BLE2902.h>
 #include <ESP32Servo.h>
 
-// Define BLE UUIDs (Universally Unique Identifiers)
-#define SERVICE_UUID        "6E400001-B5A3-F393-E0A9-E50E24DCCA9E" // Custom Service UUID
-#define CHARACTERISTIC_UUID "6E400002-B5A3-F393-E0A9-E50E24DCCA9E" // Custom Characteristic UUID
+// Define BLE UUIDs (Universally Unique Identifiers) for the custom service and characteristic
+#define SERVICE_UUID        "6E400001-B5A3-F393-E0A9-E50E24DCCA9E" // Custom Service UUID for identifying the BLE service
+#define CHARACTERISTIC_UUID "6E400002-B5A3-F393-E0A9-E50E24DCCA9E" // Custom Characteristic UUID for data transfer
 
-BLECharacteristic *pCharacteristic;
-String characteristicValue = "";
+BLECharacteristic *pCharacteristic; // Pointer to BLE characteristic object
+String characteristicValue = "";    // Variable to hold the characteristic value
 
-//Motor Pins Definations
-#define MotorPWM 13	// PWM
+// Motor Pins Definations
+#define MotorPWM 13	// PWM pin for speed control
 
-#define MotorA1 15  // Forward
-#define MotorA2 23  // Backward
+#define MotorA1 15  // Motor A forward control
+#define MotorA2 23  // Motor A backward control
+#define MotorB1 32  // Motor B forward control
+#define MotorB2 33  // Motor B backward control
+#define MotorC1 27  // Motor C forward control
+#define MotorC2 14  // Motor C backward control
+#define MotorD1 5   // Motor D forward control
+#define MotorD2 4   // Motor D backward control
 
-#define MotorB1 32  // Forward
-#define MotorB2 33  // Backward
+// Direction Constants for Movement
+#define STOP 0       // Stop all motors
+#define FWD 1        // Move forward
+#define BWD 2        // Move backward
+#define RIGHT 3      // Turn right
+#define LEFT 4		 // Turn left
+#define FWD_RIGHT 5  // Forward and right diagonal movement
+#define FWD_LEFT  6  // Forward and left diagonal movement
+#define BWD_RIGHT 7  // Backward and right diagonal movement
+#define BWD_LEFT  8  // Backward and left diagonal movement
 
-#define MotorC1 27  // Forward
-#define MotorC2 14  // Backward
+// Control Modes
+#define joystick 1  // Control via joystick
+#define buttons 2   // Control via buttons
 
-#define MotorD1 5  // Forward
-#define MotorD2 4  // Backward
+// Define servo motor objects for controlling specific movements
+int position1 = 90;  // Servo 1 default position
+int position2 = 90;  // Servo 2 default position
+int position3 = 90;  // Servo 3 default position
+int position4 = 90;  // Servo 4 default position
 
-#define STOP 0
-#define FWD 1
-#define BWD 2
-#define RIGHT 3
-#define LEFT 4
-#define FWD_RIGHT 5
-#define FWD_LEFT  6
-#define BWD_RIGHT 7
-#define BWD_LEFT  8
+// Define pins of servo motors
+Servo Servo1;  // Forward-Backward control
+Servo Servo2;  // Right-Left control
+Servo Servo3;  // Up-Down control
+Servo Servo4;  // Open-Close mechanism
 
-#define joystick 1
-#define buttons 2
-
-// Default Servo Positions
-int position1 = 90;
-int position2 = 90;
-int position3 = 90;
-int position4 = 90;
-
-//Define pins of servo motors
-Servo Servo1;  // Forward-Bakcward
-Servo Servo2;  // Right-Left
-Servo Servo3;  // Up-Down
-Servo Servo4;  // Open-Close
-
-//Define Buzzer Pin Named "horn"
+// Define the pin for the buzzer, named "horn"
 int horn = 25;
 
 // Variables
-int buffer[5];
-int control = 0;
-int i = 0;
-int ySpeed  = 0;
-int xSpeed  = 0;
+int buffer[5];          // Buffer to store received data
+int control = 0;        // Current control mode
+int i = 0;              // Loop variable
+int ySpeed  = 0;        // Speed based on Y-axis joystick input
+int xSpeed  = 0;        // Speed based on X-axis joystick input
 int deadZone = 20;      // Dead zone threshold around the center (adjust if needed)
 int centerX = 127;      // Center value for X-axis
 int centerY = 127;      // Center value for Y-axis
 int xValue = 0;         // Joystick X-axis
 int yValue = 0;         // Joystick Y-axis
 
+// Function to move the motors in the specified direction with the given speed
 void move(int direction, int speed){
-    speed = constrain(speed, 150, 255);  // Ensure speed is within valid range
-    analogWrite(MotorPWM, speed);
+    speed = constrain(speed, 150, 255);  // Constrain speed within a valid range (150-255)
+    analogWrite(MotorPWM, speed);        // Set motor speed using PWM
 
+  // Control motor pins based on the specified direction
   if (direction == FWD){
     digitalWrite(MotorA1, HIGH); digitalWrite(MotorA2, LOW);
     digitalWrite(MotorB1, HIGH); digitalWrite(MotorB2, LOW);
@@ -127,10 +128,12 @@ void move(int direction, int speed){
   }
 }
 
+// Function to move the motors in the specified direction with the given speed
 void omni_move(int direction, int speed){
-    speed = constrain(speed, 150, 255);  // Ensure speed is within valid range
-    analogWrite(MotorPWM, speed);
+    speed = constrain(speed, 150, 255);  // Constrain speed within a valid range (150-255)
+    analogWrite(MotorPWM, speed);        // Set motor speed using PWM
 
+  // Control motor pins based on the specified direction
   if (direction == FWD){
     digitalWrite(MotorA1, LOW); digitalWrite(MotorA2, HIGH);
     digitalWrite(MotorB1, LOW); digitalWrite(MotorB2, HIGH);
@@ -187,6 +190,7 @@ void omni_move(int direction, int speed){
   }
 }
 
+// Function to activate the buzzer with a quick beep
 void rex_horn() {
   for(i=0; i<30; i++){
     digitalWrite(horn, HIGH);
@@ -199,21 +203,22 @@ void rex_horn() {
 // Callbacks for when a client connects or disconnects
 class MyServerCallbacks: public BLEServerCallbacks {
     void onConnect(BLEServer* pServer) {
-      Serial.println("Client connected");
+      Serial.println("Client connected");  // Log when a client connects
     }
 
     void onDisconnect(BLEServer* pServer) {
-      Serial.println("Client disconnected");
+      Serial.println("Client disconnected");  // Log when a client disconnects
       // Restart advertising after client disconnects
       pServer->startAdvertising();
     }
 };
 
-// Callbacks for reading/writing the characteristic
+// Callback class for handling BLE characteristic read/write
 class MyCallbacks: public BLECharacteristicCallbacks {
     void onWrite(BLECharacteristic *pCharacteristic) {
-      String value = pCharacteristic->getValue().c_str();
+      String value = pCharacteristic->getValue().c_str();  // Get the value written to the characteristic
 
+	  // Process the value if it has been received
       if (value.length() > 0) {
         for (i = 0; i < value.length(); i++){
           buffer[i] = value[i];
@@ -221,7 +226,7 @@ class MyCallbacks: public BLECharacteristicCallbacks {
           //delay(100);
         }
 
-        if(buffer[0] == 75){  //Rex Header Byte
+        if(buffer[0] == 75){  // Header byte for Rex commands
           if(buffer[1] == 1){ //Wibot & Roverbot
             if (buffer[2] == 1){
               control = joystick;
@@ -515,18 +520,15 @@ void setup() {
                       BLECharacteristic::PROPERTY_WRITE
                     );
 
-  pCharacteristic->setCallbacks(new MyCallbacks());
-  pCharacteristic->setValue(characteristicValue); //Initial value
-
-  // Start the service
-  pService->start();
-
-  // Start advertising
-  pServer->getAdvertising()->start();
+  pCharacteristic->setCallbacks(new MyCallbacks());  // Set characteristic callbacks
+  pCharacteristic->setValue(characteristicValue);    //Initial value
+  pService->start();  // Start the service
+  pServer->getAdvertising()->start();  // Start advertising
 
   characteristicValue = "";
   pCharacteristic->setValue(characteristicValue);
 
+  // Initialize servo motors and set their default positions
   ESP32PWM::allocateTimer(0);
   ESP32PWM::allocateTimer(1);
   ESP32PWM::allocateTimer(2);
@@ -537,18 +539,18 @@ void setup() {
   Servo3.setPeriodHertz(50);
   Servo4.setPeriodHertz(50);
 
-  Servo1.attach(2, 600, 2500);
-  Servo2.attach(26, 600, 2500);
-  Servo3.attach(18, 600, 2500);
-  Servo4.attach(19, 600, 2500);
+  Servo1.attach(2, 600, 2500);   // Attach Servo 1 to pin 2
+  Servo2.attach(26, 600, 2500);  // Attach Servo 2 to pin 26
+  Servo3.attach(18, 600, 2500);  // Attach Servo 3 to pin 18
+  Servo4.attach(19, 600, 2500);  // Attach Servo 4 to pin 19
 
-  //First positions of servo motors
+  // Set initial positions
   Servo1.write(position1);
   Servo2.write(position2);
   Servo3.write(position3);
   Servo4.write(position4);
 
-  //Defined active pins
+  // Initialize motor control pins
   pinMode(MotorPWM, OUTPUT);
 
   pinMode(MotorA1, OUTPUT);
@@ -562,7 +564,7 @@ void setup() {
 
   pinMode(MotorD1, OUTPUT);
   pinMode(MotorD2, OUTPUT);
-
+  // Initialize the buzzer pin
   pinMode(horn, OUTPUT);
 }
 
