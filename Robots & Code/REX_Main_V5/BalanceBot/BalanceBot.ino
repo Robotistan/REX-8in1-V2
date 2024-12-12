@@ -1,3 +1,5 @@
+// ESP32 Board Version Must Be 2.0.11
+
 #include "I2Cdev.h"
 #include "PID_v1.h" 
 #include "MPU6050_6Axis_MotionApps20.h"
