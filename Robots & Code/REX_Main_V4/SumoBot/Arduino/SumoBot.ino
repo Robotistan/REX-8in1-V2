@@ -1,3 +1,5 @@
+// ESP32 Board Version Must Be 2.0.11
+
 #define SensorLEFT 34   // IR pin
 #define SensorRIGHT 35  // IR pin
 int trigPin = 17;       // Trigger
