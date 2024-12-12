@@ -1,3 +1,5 @@
+// ESP32 Board Version Must Be 2.0.11
+
 //Wi-Bot
 #define CUSTOM_SETTINGS
 #define INCLUDE_GAMEPAD_MODULE
