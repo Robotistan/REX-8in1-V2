@@ -1,5 +1,5 @@
 //"""REX 8in1 Balance Bot"""
-//Check the web site for Robots https://rex-rdt.readthedocs.io/en/latest/
+// ESP32 Board Version Must Be 2.0.11
 
 #include "I2Cdev.h"
 #include "PID_v1.h" 
