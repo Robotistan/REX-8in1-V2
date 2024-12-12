@@ -1,5 +1,5 @@
 //"""REX 8in1 Sonic Bot"""
-//Check the web site for Robots https://rex-rdt.readthedocs.io/en/latest/
+// ESP32 Board Version Must Be 2.0.11
 
 int trigPin = 17;    // Trigger
 int echoPin = 16;    // Echo
