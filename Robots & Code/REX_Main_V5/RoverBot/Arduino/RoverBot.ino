@@ -1,5 +1,6 @@
 //"""REX 8in1 Rover Bot"""
-//Check the web site for Robots https://rex-rdt.readthedocs.io/en/latest/
+// ESP32 Board Version Must Be 2.0.11
+
 #include <DabbleESP32.h>
 #include <Arduino.h>
 
