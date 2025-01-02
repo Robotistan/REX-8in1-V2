@@ -50,6 +50,21 @@ FWD_LEFT = 6
 BWD_RIGHT = 7
 BWD_LEFT = 8
 
+# Notes
+NOTE_C  = 262
+NOTE_CS = 278
+NOTE_D  = 294
+NOTE_DS = 312
+NOTE_E  = 330
+NOTE_F  = 350
+NOTE_FS = 370
+NOTE_G  = 392
+NOTE_GS = 416
+NOTE_A  = 440
+NOTE_AS = 467
+NOTE_B  = 494
+NOTE_C2 = 524
+
 # Joystick Modes
 joystick = 1
 buttons = 2
@@ -244,6 +259,12 @@ def rex_horn():  #Activate the buzzer for a short beep
     buzzer.duty_u16(32768)
     time.sleep(0.2)
     buzzer.duty_u16(0)
+    
+def piano_tone(note): #Play a specific piano note for a given duration
+    buzzer.freq(note)
+    buzzer.duty_u16(1000)
+    time.sleep(0.2)
+    buzzer.duty_u16(0)  
 
 # Initialize BLE device with callback for processing incoming data
 ble_device = ESP32_BLE()
@@ -434,7 +455,34 @@ while True:
                             position4 = position4 + 5
                             Servo4.move(position4)
                 else:
-                    print("Wrong Command")      
+                    print("Wrong Command")
+            elif(buffer[1] == 5): #Piano
+                if(buffer[2] == 1): #C1
+                    piano_tone(NOTE_C)
+                elif(buffer[2] == 2): #D
+                    piano_tone(NOTE_D)
+                elif(buffer[2] == 3): #E
+                    piano_tone(NOTE_E)
+                elif(buffer[2] == 4): #F
+                    piano_tone(NOTE_F)
+                elif(buffer[2] == 5): #G
+                    piano_tone(NOTE_G)
+                elif(buffer[2] == 6): #A
+                    piano_tone(NOTE_A)
+                elif(buffer[2] == 7): #B
+                    piano_tone(NOTE_B)
+                elif(buffer[2] == 8): #C2
+                    piano_tone(NOTE_C2)
+                elif(buffer[2] == 9): #CS
+                    piano_tone(NOTE_CS)
+                elif(buffer[2] == 10): #DS
+                    piano_tone(NOTE_DS)
+                elif(buffer[2] == 11): #FS
+                    piano_tone(NOTE_FS)
+                elif(buffer[2] == 12): #GS
+                    piano_tone(NOTE_GS)
+                elif(buffer[2] == 13): #AS
+                    piano_tone(NOTE_AS)
             else:
                 print("Wrong Robot")
 
