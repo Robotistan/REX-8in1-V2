@@ -25,6 +25,8 @@ String characteristicValue = "";     // Variable to hold the characteristic valu
 #define MotorD1 27  // Motor D forward control
 #define MotorD2 14  // Motor D backward control
 
+#define horn 25 // Buzzer
+
 // Direction Constants for Movement
 #define STOP 0       // Stop all motors
 #define FWD 1        // Move forward
@@ -40,6 +42,23 @@ String characteristicValue = "";     // Variable to hold the characteristic valu
 #define joystick 1  // Control via joystick
 #define buttons 2   // Control via buttons
 
+//Notes
+#define NOTE_C  262
+#define NOTE_CS 278
+#define NOTE_D  294
+#define NOTE_DS 312
+#define NOTE_E  330
+#define NOTE_F  350
+#define NOTE_FS 370
+#define NOTE_G  392
+#define NOTE_GS 416
+#define NOTE_A  440
+#define NOTE_AS 467
+#define NOTE_B  494
+#define NOTE_C2  524
+
+#define NOTE_DURATION 100
+
 // Define servo motor objects for controlling specific movements
 int position1 = 90;  // Servo 1 default position
 int position2 = 90;  // Servo 2 default position
@@ -51,9 +70,6 @@ Servo Servo1;  // Forward-Bakcward control
 Servo Servo2;  // Right-Left control
 Servo Servo3;  // Up-Down control
 Servo Servo4;  // Open-Close mechanism
-
-// Define the pin for the buzzer, named "horn"
-int horn = 25;
 
 // Variables
 int buffer[5];          // Buffer to store received data
@@ -192,10 +208,7 @@ void omni_move(int direction, int speed){
 
 // Function to activate the buzzer with a quick beep
 void rex_horn() {
-    digitalWrite(horn, HIGH);
-    delay(150);
-    digitalWrite(horn, LOW);
-    delay(150);
+  tone(horn, 262, NOTE_DURATION);
 }
 
 // Callbacks for when a client connects or disconnects
@@ -488,6 +501,49 @@ class MyCallbacks: public BLECharacteristicCallbacks {
                 }
               }
             }
+          }
+          else if(buffer[1] == 5){ //Piano
+            if(buffer[2] == 1){ //C1
+              tone(horn, NOTE_C, NOTE_DURATION);
+            }
+            else if(buffer[2] == 2){ //D
+              tone(horn, NOTE_D, NOTE_DURATION);
+            }
+            else if(buffer[2] == 3){ //E
+              tone(horn, NOTE_E, NOTE_DURATION);
+            }
+            else if(buffer[2] == 4){ //F
+              tone(horn, NOTE_F, NOTE_DURATION);
+            }
+            else if(buffer[2] == 5){ //G
+              tone(horn, NOTE_G, NOTE_DURATION);
+            }
+            else if(buffer[2] == 6){ //A
+              tone(horn, NOTE_A, NOTE_DURATION);
+            }
+            else if(buffer[2] == 7){ //B
+              tone(horn, NOTE_B, NOTE_DURATION);
+            }
+            else if(buffer[2] == 8){ //C2
+              tone(horn, NOTE_C2, NOTE_DURATION);
+            }
+            else if(buffer[2] == 9){ //CS1
+              tone(horn, NOTE_CS, NOTE_DURATION);
+            }
+            else if(buffer[2] == 10){ //DS1
+              tone(horn, NOTE_DS, NOTE_DURATION);
+            }
+            else if(buffer[2] == 11){ //FS1
+              tone(horn, NOTE_FS, NOTE_DURATION);
+            }
+            else if(buffer[2] == 12){ //GS1
+              tone(horn, NOTE_GS, NOTE_DURATION);
+            }
+            else if(buffer[2] == 13){ //AS1
+              tone(horn, NOTE_AS, NOTE_DURATION);
+            }
+            delay(500);
+            noTone(horn);
           }
           else{
             Serial.println("Wrong data");
