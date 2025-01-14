@@ -19,7 +19,7 @@
 </p>
 
 ## Pin Connection Tables
-### DC Motor Pins
+### DC Motor Pins V4
 | Motor-A   | GPIO     | Explanation                         | - | Motor-B   | GPIO     | Explanation                         |
 | :-------- | :------- | :-------------------------    |:--| :-------- | :------- | :-------------------------    |
 | `M_A1`    | `15`     | Forward.                      | - | `M_B1`    | `32`     | Forward.                      |
@@ -30,11 +30,23 @@
 | `M_C1`    | `5`      | Forward.                      | - | `M_D1`    | `27`     | Forward.                      |
 | `M_C2`    | `4`      | Backward.                     | - | `M_D2`    | `14`     | Backward.                     |
 
+### DC Motor Pins V5
+| Motor-A   | GPIO     | Explanation                         | - | Motor-B   | GPIO     | Explanation                         |
+| :-------- | :------- | :-------------------------    |:--| :-------- | :------- | :-------------------------    |
+| `M_A1`    | `15`     | Forward.                      | - | `M_B1`    | `32`     | Forward.                      |
+| `M_A2`    | `23`     | Backward.                     | - | `M_B2`    | `33`     | Backward.                     |
+
+| Motor-C   | GPIO     | Explanation                         | - | Motor-D   | GPIO     | Explanation                         |
+| :-------- | :------- | :-------------------------    |:- | :-------- | :------- | :-------------------------    |
+| `M_C1`    | `14`      | Forward.                      | - | `M_D1`    | `5`     | Forward.                      |
+| `M_C2`    | `27`      | Backward.                     | - | `M_D2`    | `4`     | Backward.                     |
+
 ### Servo Motor Pins
 | Servo Pins   | GPIO     | Explanation                      | -  | Servo Pins   | GPIO     | Explanation                      |
 | :--------    | :------- | :------------------------- |:-| :--------    | :------- | :------------------------- |
 | `Servo-1`    | `2`      | Powered by 6V | - | `Servo-3`    | `18`     | Powered by 6V |
 | `Servo-2`    | `26`     | Powered by 6V | - | `Servo-4`    | `19`     | Powered by 6V |
+
 
 ### IR Sensor Pins
 | IR Sensor | GPIO     |       Explanation                   |
