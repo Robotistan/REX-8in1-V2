@@ -15,11 +15,11 @@
 #define MotorB1 32  // Forward
 #define MotorB2 33  // Backward
 
-#define MotorC1 5  // Forward
-#define MotorC2 4  // Backward
+#define MotorC1 27  // Forward
+#define MotorC2 14  // Backward
 
-#define MotorD1 27  // Forward
-#define MotorD2 14  // Backward
+#define MotorD1 5  // Forward
+#define MotorD2 4  // Backward
 
 //define buzzer pin named "horn"
 #define horn 25
@@ -134,7 +134,7 @@ void forward() {
   digitalWrite(MotorD2, LOW);
 }
 
-void right() { 
+void left() { 
   digitalWrite(MotorPWM, HIGH);
 
   digitalWrite(MotorA1, LOW);
@@ -150,7 +150,7 @@ void right() {
   digitalWrite(MotorD2, LOW);
 }
 
-void left() { 
+void right() { 
   digitalWrite(MotorPWM, HIGH);
 
   digitalWrite(MotorA1, HIGH);
