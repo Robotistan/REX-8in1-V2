@@ -1,0 +1,788 @@
+module main
+author unknown
+version 1 0 
+description ''
+
+script 175 50 {
+whenStarted
+forever {
+  if ('REX sees line' true true) {
+    'REX motor' 'ALL' 0 ('REX speed' 512)
+  } ('REX sees line' true false) {
+    'REX motor' 1 0 ('REX speed' 0)
+    'REX motor' 3 0 ('REX speed' 0)
+    'REX motor' 5 0 ('REX speed' 256)
+    'REX motor' 7 0 ('REX speed' 256)
+  } ('REX sees line' false true) {
+    'REX motor' 1 0 ('REX speed' 256)
+    'REX motor' 3 0 ('REX speed' 256)
+    'REX motor' 5 1 ('REX speed' 0)
+    'REX motor' 7 1 ('REX speed' 0)
+  } ('REX sees line' false false) {
+    'REX motor' 1 1 ('REX speed' 256)
+    'REX motor' 3 1 ('REX speed' 256)
+    'REX motor' 5 1 ('REX speed' 256)
+    'REX motor' 7 1 ('REX speed' 256)
+  }
+}
+}
+
+
+module 'Distance (HC-SR04)' Input
+author 'Joan Guillén & Josep Ferràndiz'
+version 1 4 
+tags sensor 'hc-sr04' distance ultrasound 
+description 'Support for the HC-SR04 ultrasound distance sensor.'
+variables _sr04_last 
+
+  spec 'r' 'distance (cm)' 'distance (cm) trigger _ echo _' 'num num' 2 4
+  spec 'r' 'sr04_distanceOnePin' 'distance (cm) pin _' 'num' 0
+
+to 'distance (cm)' trig ech {
+  comment 'Contributed by Joan Guillén and Josep Ferràndiz'
+  digitalWriteOp trig false
+  waitMicros 2
+  digitalWriteOp trig true
+  waitMicros 50
+  digitalWriteOp trig false
+  local 'start' (microsOp)
+  waitUntil (or (not (digitalReadOp ech)) (((microsOp) - start) > 23320))
+  waitUntil (or (digitalReadOp ech) (((microsOp) - start) > 23320))
+  if (((microsOp) - start) > 23320) {
+    comment 'Distance sensor not ready; return the last distance reading'
+    return _sr04_last
+  }
+  comment 'Pulse sent. Measure time until echo is detected.'
+  start = (microsOp)
+  waitUntil (or (not (digitalReadOp ech)) (((microsOp) - start) > 23320))
+  _sr04_last = ((10 * ((microsOp) - start)) / 583)
+  comment 'Leave some time for reverberations to die away.'
+  waitMillis 10
+  return _sr04_last
+}
+
+to sr04_distanceOnePin pin {
+  return ('distance (cm)' pin pin)
+}
+
+
+module 'IR Remote' Comm
+author MicroBlocks
+version 1 8 
+tags ir infrared remote 
+description 'Sends and receives infrared remote control messages like the ones used for TV sets or air conditioners. Currently supports only the NEC protocol, which is quite common but not the only IR protocol in use. An NEC message consists of a one byte device number and a one byte command.
+
+Note: Transmitting IR does not work on ESP8266 boards.
+
+Receiving requires an IR receiver module, such as those built into the Circuit Playground Express and ED1 boards. Transmitting requires an IR transmitter LED, such as those built into the Circuit Playground Express and several M5 Stack products. Inexpensive IR LED transmitter and receivers are available for use with other boards.
+'
+variables _ir_pin _ir_pulse_times _ir_last_code _ir_last_device _ir_transmit_pin 
+
+  spec ' ' 'attachIR' 'attach IR receiver to pin _' 'num' 0
+  spec 'r' 'ir_code_received' 'IR code received?'
+  spec 'r' 'ir_last_code' 'IR code'
+  space
+  spec ' ' 'IR_Transmit' 'IR transmit device _ command _' 'num num' 48896 1
+  spec ' ' 'attachIRTransmitter' 'attach IR transmitter to pin _' 'num' 0
+  space
+  spec 'r' 'receiveIR' 'receive IR code'
+  space
+  spec ' ' '_testIR' '_test IR'
+  spec 'r' '_receiveIRFromDevice' '_receive IR code from device _' 'num' 48896
+  space
+  spec ' ' '_captureIRMessage' '_captureIRMessage' 'any'
+  spec ' ' '_dumpIR' '_dumpIR' 'any'
+  spec 'r' '_getIRByte' '_getIRByte _' 'auto any' 4
+  spec 'r' '_got32Bits' '_got32Bits' 'any'
+  spec ' ' '_IR_SendByte' '_IR_SendByte _' 'auto' '10'
+  spec ' ' 'timerIRCapture' 'timerIRCapture'
+  spec ' ' 'interruptIRCapture' 'interruptIRCapture'
+
+to IR_Transmit device command {
+  if (_ir_transmit_pin == 0) {if (or ((boardType) == 'CircuitPlayground') ((boardType) == 'M5Atom-Matrix')) {
+    _ir_transmit_pin = 12
+  } (or ((boardType) == 'M5StickC') ((boardType) == 'M5StickC+')) {
+    _ir_transmit_pin = 9
+  }}
+  comment 'Message start pulse and space'
+  '[io:playTone]' _ir_transmit_pin 38000
+  waitMicros 9000
+  '[io:playTone]' _ir_transmit_pin 0
+  waitMicros 4500
+  comment 'Send device and command and their inverses'
+  '_IR_SendByte' (device & 255)
+  '_IR_SendByte' ((device >> 8) & 255)
+  '_IR_SendByte' command
+  '_IR_SendByte' ('~' command)
+  comment 'Send stop bit'
+  '[io:playTone]' _ir_transmit_pin 38000
+  waitMicros 562
+  '[io:playTone]' _ir_transmit_pin 0
+  comment 'Turn off IR transmit LED'
+  if (or ((boardType) == 'M5StickC') ((boardType) == 'M5StickC+')) {
+    comment 'IR pin is inverted so true means "off"'
+    digitalWriteOp _ir_transmit_pin true
+  } else {
+    digitalWriteOp _ir_transmit_pin false
+  }
+}
+
+to '_IR_SendByte' byte {
+  local 'bit' 1
+  repeat 8 {
+    if (0 == (byte & bit)) {
+      '[io:playTone]' _ir_transmit_pin 38000
+      waitMicros 530
+      '[io:playTone]' _ir_transmit_pin 0
+      waitMicros 530
+    } else {
+      '[io:playTone]' _ir_transmit_pin 38000
+      waitMicros 530
+      '[io:playTone]' _ir_transmit_pin 0
+      waitMicros 1630
+    }
+    bit = (bit << 1)
+  }
+}
+
+to '_captureIRMessage' {
+  if (_ir_pulse_times == 0) {
+    _ir_pulse_times = (newList 100)
+    if (_ir_pin == 0) {
+      if ((boardType) == 'CircuitPlayground') {
+        _ir_pin = 11
+      } ((boardType) == 'Citilab ED1') {
+        _ir_pin = 35
+      } ((boardType) == 'D1-Mini') {
+        _ir_pin = 2
+      } ((boardType) == 'MakerPort') {
+        _ir_pin = 18
+      } ((boardType) == 'MakerPort V3') {
+        _ir_pin = 22
+      }
+    }
+  }
+  comment 'Capture the next IR message.'
+  interruptIRCapture
+}
+
+to '_dumpIR' {
+  comment 'Print raw pulse timings to the terminal.
+Can be used to analyze new protocols.'
+  local 'i' 1
+  graphIt '-----'
+  repeat (size _ir_pulse_times) {
+    local 'mark usecs' (at i _ir_pulse_times)
+    local 'space usecs' (at (i + 1) _ir_pulse_times)
+    graphIt (v 'mark usecs') (v 'space usecs')
+    i += 2
+    if ((v 'space usecs') == 0) {
+      graphIt 'timing entries:' (i - 2)
+      return 0
+    }
+  }
+}
+
+to '_getIRByte' position {
+  local 'result' 0
+  local 'i' position
+  local 'bit' 1
+  repeat 8 {
+    if ((at i _ir_pulse_times) > 1000) {result = (result | bit)}
+    bit = (bit << 1)
+    i += 2
+  }
+  return result
+}
+
+to '_got32Bits' {
+  return (and ((at 67 _ir_pulse_times) != 0) ((at 68 _ir_pulse_times) == 0))
+}
+
+to '_receiveIRFromDevice' deviceID {
+  forever {
+    '_captureIRMessage'
+    if ('_got32Bits') {
+      local 'id_lowByte' ('_getIRByte' 4 nil)
+      local 'id_highByte' ('_getIRByte' 20 nil)
+      if (and (id_highByte == (deviceID >> 8)) (id_lowByte == (deviceID & 255))) {
+        return ('_getIRByte' 36 nil)
+      }
+    }
+  }
+}
+
+to '_testIR' {
+  forever {
+    '_captureIRMessage'
+    if ('_got32Bits') {
+      comment 'Four byte message format:
+<device low byte><device high byte><command><command, bit-inverted>'
+      local 'b1' ('_getIRByte' 4 nil)
+      local 'b2' ('_getIRByte' 20 nil)
+      local 'b3' ('_getIRByte' 36 nil)
+      local 'b4' ('_getIRByte' 52 nil)
+      sayIt 'Device:' ((b2 << 8) | b1) 'code:' b3
+    }
+  }
+}
+
+to attachIR pin {
+  _ir_pin = pin
+}
+
+to attachIRTransmitter pin {
+  _ir_transmit_pin = pin
+}
+
+to interruptIRCapture {
+  comment 'Capture IR pulses using interrupt-based pulse capture system.'
+  atPut 'all' _ir_pulse_times 0
+  comment 'Wait for IR signal -- this is the start of a new message.
+Note: THe pin goes low when an IR signal is detected.'
+  waitUntil (not (digitalReadOp _ir_pin))
+  local 'start' (millisOp)
+  '[sensors:captureStart]' _ir_pin
+  comment 'Collect IR pulses until we receive over 67 pulses or until the timeout.'
+  repeatUntil (or (('[sensors:captureCount]') > 67) ((millisSince start) > 200)) {
+    waitMillis 5
+  }
+  local 'pulseData' ('[sensors:captureEnd]')
+  comment 'If we got at least 67 pulses, copy their absolute values (durations) into _ir_pulse_times.'
+  if ((size pulseData) >= 67) {
+    for i 67 {
+      atPut i _ir_pulse_times (absoluteValue (at i pulseData))
+    }
+  }
+}
+
+to ir_code_received {
+  return ((receiveIR) >= 0)
+}
+
+to ir_last_code {
+  return _ir_last_code
+}
+
+to receiveIR {
+  forever {
+    '_captureIRMessage'
+    if ('_got32Bits') {
+      local 'id_lowByte' ('_getIRByte' 4 nil)
+      local 'id_highByte' ('_getIRByte' 20 nil)
+      _ir_last_device = ((id_highByte << 8) | id_lowByte)
+      _ir_last_code = ('_getIRByte' 36 nil)
+      atPut 'all' _ir_pulse_times 0
+      return _ir_last_code
+    }
+  }
+}
+
+to timerIRCapture {
+  comment 'Capture IR pulses using the microseconds timer. (Original version, not currently used.)'
+  atPut 'all' _ir_pulse_times 0
+  local 'i' 1
+  comment 'Wait for IR signal -- this is the start of a new message.
+Note: THe pin goes low when an IR signal is detected.'
+  waitUntil (not (digitalReadOp _ir_pin))
+  local 'start' (microsOp)
+  forever {
+    comment 'Record the time until the end of the current IR pulse ("mark")'
+    waitUntil (digitalReadOp _ir_pin)
+    local 'end' (microsOp)
+    atPut i _ir_pulse_times (end - start)
+    i += 1
+    start = end
+    comment 'Record time until the start of the next IR pulse ("space")'
+    repeatUntil (not (digitalReadOp _ir_pin)) {
+      if (((microsOp) - start) > 5000) {
+        comment 'No IR pulse for 5000 usecs means "end of message"'
+        return 0
+      }
+    }
+    local 'end' (microsOp)
+    atPut i _ir_pulse_times (end - start)
+    i += 1
+    start = end
+  }
+}
+
+
+module 'REX Kit' Output
+author 'Turgut Guneysu'
+version 1 6 
+depends 'Distance (HC-SR04)' 'IR Remote' Servo varPrims 
+choices servoAngleMenu '0' Def Min Max 
+choices servoNumMenu 'base:1' '2:2' '3:3' 'top:4' ALL 
+choices speedMenu 'stop:0' 'slow:256' 'normal:512' 'fast:1023' 
+choices motorDirMenu 'fwd:0' 'bwd:1' 
+choices trackerMenu left right 
+choices motorNameMenu 'A:1' 'C:5' 'B:3' 'D:7' ALL 
+description 'Robotistan REX Kit Library
+
+This library controls these REX components:
+- 4 x DC Motors (A, B, C, D)
+- 4 x Servos (Robotic Arm: base, 2, 3, top)
+- 2 x IR Line Sensors
+- HC-SR04 Ultrasonic Distance Sensor
+- Piezo speaker
+
+Use separate libraries to control:
+- Graphic display (OLED)
+- HuskyLens AI Camera
+- Network: WIFI, UDP, Websocket, 
+- Comms: Serial, I2C
+- MPU6050
+
+See https://www.robotistan.com/rex-evolution-serisi-super-star-transformers-8-in-1  
+
+CHANGES:
+- Motors C & D Pin swaps due to design change by Robotistan. 
+  Will be fixed in the new board version.
+- Speed selection by menu
+- Correct motor 0 speed logic
+- Adjust Servo defaults
+- Limit script naming corrections
+'
+variables rex_armMin rex_armMax rex_armCur rex_armDef rex_armIncr rex_armAddr rex_armWait rex_irAddr rex_motorAddr rex_initialized rex_trigEchoAddr rex_buzzerAddr 
+
+  spec ' ' 'REX Arm servo' 'REX Arm s# _ angle (0-180) _ slow _' 'str.servoNumMenu str.servoAngleMenu bool' 1 90 true
+  spec ' ' 'REX Arm stop' 'REX Arm stop s# _' 'menu.servoNumMenu' 'ALL'
+  spec ' ' 'REX beep' 'REX beep _ ms' 'auto' 100
+  spec 'r' 'REX distance' 'REX distance'
+  spec ' ' 'REX motor' 'REX motor _ dir _ speed (0-1023) _' 'menu.motorNameMenu menu.motorDirMenu auto' 1 0 256
+  spec 'r' 'REX line sensor' 'REX line sensor _' 'menu.trackerMenu' 'left'
+  spec 'r' 'REX sees line' 'REX sees line on left _ right _' 'bool bool' true true
+  spec 'r' 'REX speed' 'REX speed _' 'str.speedMenu' 'slow'
+  spec ' ' '_REX Arm new default' '_REX Arm new default base _ s2 _ s3 _ top _' 'num num num num' 90 90 90 90
+  spec ' ' '_REX Arm new maximum' '_REX Arm new maximum base _ s2 _ s3 _ top _' 'num num num num' 90 90 90 90
+  spec ' ' '_REX Arm new minimum' '_REX Arm new minimum base _ s2 _ s3 _ top _' 'num num num num' 90 90 90 90
+  spec 'r' '_REX angleValid' '_REX angleValid _' 'num' 90
+  spec 'r' '_REX anglesOK servo' '_REX anglesOK s# _ angle _' 'str.servoNumMenu num' 1 0
+  spec ' ' '_REX initialize' '_REX initialize'
+  spec 'r' '_byteArr2str' '_byteArr2str _ separator _ uniCode _' 'auto str bool' '10' '' false
+
+to 'REX Arm servo' servoNum angle slow {
+  comment 'Moves Servos gradually based on rex_armIncr.
+params are extracted and converted to numeric.
+
+This script is called with paramList::
+  List [action,s#, ServoAngle]
+Make sure they are NUMERIC.
+
+Before moving, new angle is verified against rex_armMin & rex_armMax
+to keep movements within SAFE bounds.
+'
+  if (0 == rex_initialized) {
+    '_REX initialize'
+  }
+  local 'specialAngles' ('[data:makeList]' 'Def' 'Max' 'Min')
+  comment 'Prep servoNum'
+  if ('ALL' == servoNum) {
+    servoNum = ('[data:asByteArray]' ('[data:range]' 4 1))
+  } else {
+    servoNum = ('[data:asByteArray]' servoNum)
+  }
+  local 'angleIdx' ('[data:find]' angle specialAngles)
+  for s# servoNum {
+    comment 'Prep angle:
+  if not special, make numeric
+  else
+  set angle to selected limit'
+    if (-1 == angleIdx) {
+      angle# = (angle * 1)
+    } else {
+      local 'angle#' (at s# ('[vars:varNamed]' ('[data:join]' 'rex_arm' angle)))
+    }
+    waitMillis 0
+    if ('_REX anglesOK servo' s# angle#) {
+      if slow {
+        for deg ('[data:range]' (at s# rex_armCur) angle# rex_armIncr) {
+          setServoAngle (at s# rex_armAddr) (deg - 90)
+          waitMillis rex_armWait
+        }
+        comment 'Fractional Correction'
+        if (deg != angle#) {
+          setServoAngle (at s# rex_armAddr) (angle# - 90)
+          waitMillis 200
+        }
+      } else {
+        setServoAngle (at s# rex_armAddr) (angle# - 90)
+        waitMillis 200
+      }
+      atPut s# rex_armCur angle#
+    } else {
+      sayIt 'Invalid ANGLE value:' angle#
+    }
+  }
+}
+
+to 'REX Arm stop' servoNum {
+  if (0 == rex_initialized) {'_REX initialize'}
+  comment 'Prep servoNum'
+  if ('ALL' == servoNum) {
+    servoNum = ('[data:asByteArray]' ('[data:range]' 1 4))
+  } else {
+    servoNum = ('[data:asByteArray]' servoNum)
+  }
+  for s# servoNum {
+    stopServo (at s# rex_armAddr)
+    waitMillis 50
+  }
+}
+
+to 'REX beep' duration {
+  comment 'Buzzer'
+  if (0 == rex_initialized) {
+    '_REX initialize'
+  }
+  local 'end time' ((millisOp) + duration)
+  repeatUntil ((millisOp) >= (v 'end time')) {
+    digitalWriteOp rex_buzzerAddr true
+    waitMicros 1900
+    digitalWriteOp rex_buzzerAddr false
+    waitMicros 1900
+  }
+}
+
+to 'REX distance' {
+  comment 'HC-SR04 Ultrasonic Distance Sensor'
+  if (0 == rex_initialized) {
+    '_REX initialize'
+  }
+  return ('distance (cm)' (at 1 rex_trigEchoAddr) (at 2 rex_trigEchoAddr))
+}
+
+to 'REX line sensor' sensor {
+  comment 'IR Sensors:
+U1  34  left from top.
+U2  35  right from top.
+
+When REX’s line-tracking sensor is put on the
+  black line it outputs 1, 
+  white area it outputs 0.'
+  if (0 == rex_initialized) {
+    '_REX initialize'
+  }
+  if (sensor == 'left') {
+    return (digitalReadOp (at 1 rex_irAddr))
+  } (sensor == 'right') {
+    return (digitalReadOp (at 2 rex_irAddr))
+  }
+}
+
+to 'REX motor' motor dir speed {
+  comment 'Processing order of the motors is:
+  FRONT left and right
+  REAR left and right
+
+//define Motor Pins
+#define MotorPWM 13	//Pwm
+
+#define MotorA1 15  // Forward        #define MotorB1 32  // Forward
+#define MotorA2 23  // Backward     #define MotorB2 33  // Backward
+
+#define MotorC1 5  // Forward         #define MotorD1 27  // Forward
+#define MotorC2 4  // Backward      #define MotorD2 14  // Backward
+
+PWM:    SPEED
+FWD:    H/L, H/L, H/L, H/L
+BWD:    L/H, L/H, L/H, L/H
+RIGHT:  H/L, H/L, L/H, L/H
+LEFT:    L/H, L/H,  H/L, H/L
+
+STOP:   All LOW'
+  if (0 == rex_initialized) {
+    '_REX initialize'
+  }
+  local 'pwmAddr' 13
+  if ('ALL' == motor) {
+    motor = ('[data:asByteArray]' ('[data:makeList]' 1 5 3 7))
+  } else {
+    motor = ('[data:asByteArray]' motor)
+  }
+  for m# motor {
+    analogWriteOp pwmAddr speed
+    if (0 == speed) {
+      local 'motorAddrIdx' m#
+      digitalWriteOp (at motorAddrIdx rex_motorAddr) false
+      digitalWriteOp (at (motorAddrIdx + 1) rex_motorAddr) false
+    } else {
+      local 'motorAddrIdx' (m# + dir)
+      if (0 == dir) {
+        digitalWriteOp (at motorAddrIdx rex_motorAddr) true
+        digitalWriteOp (at (motorAddrIdx + 1) rex_motorAddr) false
+      } else {
+        digitalWriteOp (at motorAddrIdx rex_motorAddr) true
+        digitalWriteOp (at (motorAddrIdx - 1) rex_motorAddr) false
+      }
+    }
+  }
+}
+
+to 'REX sees line' leftSide rightSide {
+  comment 'Allows for dual evaluation of the sensors for faster results '
+  if (0 == rex_initialized) {
+    '_REX initialize'
+  }
+  return (and (leftSide == ('REX line sensor' 'left')) (rightSide == ('REX line sensor' 'right')))
+}
+
+to 'REX speed' speed {
+  comment 'This block can be used anywhere motor speed is needed.
+It provides a standard and easy way to set speeds.
+
+stop:      0
+slow:     256
+normal: 512
+fast:      1023'
+  return ('[data:convertType]' speed 'number')
+}
+
+to '_REX Arm new default' s1Def s2Def s3Def s4Def {
+  local 'prevVal' rex_armDef
+  if (and ('_REX angleValid' s1Def) (and ('_REX angleValid' s2Def) (and ('_REX angleValid' s3Def) ('_REX angleValid' s4Def)))) {
+    rex_armDef = ('[data:asByteArray]' ('[data:makeList]' s1Def s2Def s3Def s4Def))
+    sayIt 'New DEFAULTS set.' ('[data:unicodeString]' 10) 'PREV:' ('_byteArr2str' prevVal ',' false) ('[data:unicodeString]' 10) 'NEW:' ('_byteArr2str' rex_armDef ',' false)
+  } else {
+    sayIt 'Invalid angle detected.'
+  }
+}
+
+to '_REX Arm new maximum' s1Max s2Max s3Max s4Max {
+  local 'prevVal' rex_armMax
+  if (and ('_REX angleValid' s1Max) (and ('_REX angleValid' s2Max) (and ('_REX angleValid' s3Max) ('_REX angleValid' s4Max)))) {
+    rex_armMax = ('[data:asByteArray]' ('[data:makeList]' s1Max s2Max s3Max s4Max))
+    sayIt 'New MAXIMUMS set.' ('[data:unicodeString]' 10) 'PREV:' ('_byteArr2str' prevVal ',' false) ('[data:unicodeString]' 10) 'NEW:' ('_byteArr2str' rex_armMax ',' false)
+  } else {
+    sayIt 'Invalid angle detected.'
+  }
+}
+
+to '_REX Arm new minimum' s1Min s2Min s3Min s4Min {
+  local 'prevVal' rex_armMin
+  if (and ('_REX angleValid' s1Min) (and ('_REX angleValid' s2Min) (and ('_REX angleValid' s3Min) ('_REX angleValid' s4Min)))) {
+    rex_armMin = ('[data:asByteArray]' ('[data:makeList]' s1Min s2Min s3Min s4Min))
+    sayIt 'New MINIMUMS set.' ('[data:unicodeString]' 10) 'PREV:' ('_byteArr2str' prevVal ',' false) ('[data:unicodeString]' 10) 'NEW:' ('_byteArr2str' rex_armMin ',' false)
+  } else {
+    sayIt 'Invalid angle detected.'
+  }
+}
+
+to '_REX angleValid' angle {
+  if (and (angle >= 0) (angle <= 180)) {
+    return (booleanConstant true)
+  } else {
+    return (booleanConstant false)
+  }
+}
+
+to '_REX anglesOK servo' s# newAngle {
+  if (0 == rex_initialized) {'_REX initialize'}
+  if (s# == 'ALL') {return 'Select a specific Servo Number.'}
+  if (and (newAngle >= (at s# rex_armMin)) (newAngle <= (at s# rex_armMax))) {
+    return (booleanConstant true)
+  } else {
+    return (booleanConstant false)
+  }
+}
+
+to '_REX initialize' {
+  comment 'SERVOS are numbered 1 - 4 starting with the Base.
+
+For each servo there are 5 byteArrays keeping track of
+addresses, current, default, max, min positions.
+
+Servo movements are modulated by time and increment.
+Servo positions are 0-180 within this application, all translated
+to -90 thru +90 for the library.
+
+At init time, rex_armCur = rex_armDef.
+If any "REX Arm new" blocks are used, remember to refer to the
+rex_arm_xxx variables for the actual values; and not the init tables.
+
+MOTORS are named A - D and numbered 1 - 4.
+A, C are FRONT motors; B, D are REAR motors.
+Directions are FWD (0) and BWD (1).
+SPEED range is 0 - 1023, default = 256.
+Motors are given FWD and BWD pin assignments (rex_motorAddr).
+To turn FWD, the fwd pin is energized and the bwd pin is set to 0.
+To turn BWD, the bwd pin is energized and fwd pin is set to 0.
+
+#define MotorA1 15 // Forward (R)
+#define MotorA2 23 // Backward (B)
+
+#define MotorB1 32 // Forward (R)
+#define MotorB2 33 // Backward (B)
+
+#define MotorC1 27 // Forward (R)
+#define MotorC2 14 // Backward B)
+
+#define MotorD1 5  // Forward (R)
+#define MotorD2 4  // Backward (B)'
+  rex_armIncr = 2
+  rex_armWait = 30
+  rex_armAddr = ('[data:asByteArray]' ('[data:makeList]' 2 26 18 19))
+  rex_armCur = ('[data:asByteArray]' ('[data:makeList]' 90 150 90 45))
+  rex_armDef = ('[data:asByteArray]' ('[data:makeList]' 90 150 90 45))
+  rex_armMax = ('[data:asByteArray]' ('[data:makeList]' 180 150 150 90))
+  rex_armMin = ('[data:asByteArray]' ('[data:makeList]' 0 20 0 0))
+  rex_buzzerAddr = 25
+  rex_irAddr = ('[data:asByteArray]' ('[data:makeList]' 34 35))
+  rex_motorAddr = ('[data:asByteArray]' ('[data:makeList]' 15 23 32 33 27 14 5 4))
+  rex_trigEchoAddr = ('[data:asByteArray]' ('[data:makeList]' 17 16))
+  rex_initialized = (booleanConstant true)
+  sayIt 'REX library initialized...'
+}
+
+to '_byteArr2str' byteArr sep unicode {
+  comment 'Converts byteArrays to string, with or without unicode conversion and with optional separators'
+  if (isType byteArr 'byte array') {
+    local 'strOut' ''
+    for val byteArr {
+      if unicode {
+        local 'newVal' ('[data:join]' ('[data:unicodeString]' val) sep)
+      } else {
+        local 'newVal' ('[data:join]' val sep)
+      }
+      strOut = ('[data:join]' strOut newVal)
+    }
+    if ((size sep) > 0) {
+      strOut = ('[data:copyFromTo]' strOut 1 ((size strOut) - (size sep)))
+    }
+    return strOut
+  } else {
+    return 'NOT byteArray'
+  }
+}
+
+
+module Servo Output
+author MicroBlocks
+version 1 3 
+tags servo motor angle rotation position 
+description 'Control both positional (angle) and rotational servo motors.
+'
+variables _servoPin _servoPulseWidth 
+
+  spec ' ' 'setServoAngle' 'set servo _ to _ degrees (-90 to 90)' 'num num' 1 90
+  spec ' ' 'setServoSpeed' 'set servo _ to speed _ (-100 to 100)' 'num num' 1 100
+  spec ' ' 'stopServo' 'stop servo _' 'num' 1
+  spec 'r' '_servoIndex' '_servoIndex _' 'num' 1
+  spec ' ' '_servoPulse' '_servoPulse pin _ usecs _' 'num num' 1 1500
+  spec ' ' '_servoUpdateLoop' '_servoUpdateLoop'
+
+to '_servoIndex' which {
+  if (_servoPin == 0) {
+    _servoPin = ('[data:makeList]')
+    _servoPulseWidth = ('[data:makeList]')
+    sendBroadcast '_servoUpdateLoop'
+  }
+  local 'i' ('[data:find]' which _servoPin)
+  if (i < 0) {
+    comment 'Add new pin'
+    '[data:addLast]' which _servoPin
+    '[data:addLast]' '1500' _servoPulseWidth
+    i = (size _servoPin)
+  }
+  return i
+}
+
+to '_servoPulse' pin usecs {
+  if (usecs == 0) {
+    comment 'Servo stopped; do nothing'
+    return 0
+  }
+  usecs = (maximum 850 (minimum usecs 2150))
+  comment 'Split wait into a long wait followed by a wait of <= 30 usecs for greater accuracy'
+  local 'endTime' ((microsOp) + usecs)
+  digitalWriteOp pin true
+  waitMicros (usecs - 30)
+  waitMicros (endTime - (microsOp))
+  digitalWriteOp pin false
+}
+
+to '_servoUpdateLoop' {
+  forever {
+    if (_servoPin != 0) {
+      comment 'If the _servoPin list is not 0, update the servos'
+      for i (size _servoPin) {
+        local 'pin' (at i _servoPin)
+        local 'usecs' (at i _servoPulseWidth)
+        if (and (pin >= 0) (usecs != 0)) {
+          '_servoPulse' pin usecs
+        }
+      }
+      waitMillis 15
+    }
+  }
+}
+
+to setServoAngle which degrees optionalReverse {
+  local 'reversed' false
+  if ((pushArgCount) > 2) {
+    reversed = optionalReverse
+  }
+  if reversed {
+    degrees = (0 - degrees)
+  }
+  local 'pulseWidth' (1500 - (10 * degrees))
+  if ('[io:hasServo]') {
+    '[io:setServo]' which pulseWidth
+  } else {
+    atPut ('_servoIndex' which) _servoPulseWidth pulseWidth
+  }
+}
+
+to setServoSpeed which speed optionalReverse {
+  local 'reversed' false
+  if ((pushArgCount) > 2) {
+    reversed = optionalReverse
+  }
+  if reversed {
+    speed = (0 - speed)
+  }
+  local 'pulseWidth' (1500 - (10 * speed))
+  if ((absoluteValue speed) < 2) {
+    pulseWidth = 0
+  }
+  if ('[io:hasServo]') {
+    '[io:setServo]' which pulseWidth
+  } else {
+    atPut ('_servoIndex' which) _servoPulseWidth pulseWidth
+  }
+}
+
+to stopServo which {
+  if ('[io:hasServo]') {
+    '[io:setServo]' which 0
+  } else {
+    atPut ('_servoIndex' which) _servoPulseWidth 0
+  }
+}
+
+
+module 'Variable Primitives' Variables
+author MicroBlocks
+version 1 0 
+tags introspection variables 
+description 'Global variable introspection primitives to read and write variables given their name, enumerate variables and check whether a variable exists.'
+
+  spec 'r' 'varNames' 'varNames'
+  spec 'r' '[vars:varExists]' 'variable named _ exists?' 'str' 'var'
+  spec 'r' '[vars:varNamed]' 'value of variable named _' 'str' 'var'
+  spec ' ' '[vars:setVarNamed]' 'set variable named _ to _' 'str auto' 'var' 0
+  spec 'r' '[vars:varNameForIndex]' 'variable name for index _' 'num' 1
+
+to varNames {
+  local 'result' ('[data:makeList]')
+  local 'count' ('[vars:varNameForIndex]' -1)
+  for i count {
+    local 'varName' ('[vars:varNameForIndex]' i)
+    if (isType varName 'string') {
+      '[data:addLast]' varName result
+    }
+  }
+  return result
+}
+
