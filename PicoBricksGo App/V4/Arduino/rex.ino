@@ -542,7 +542,7 @@ class MyCallbacks: public BLECharacteristicCallbacks {
             else if(buffer[2] == 13){ //AS1
               tone(horn, NOTE_AS, NOTE_DURATION);
             }
-            delay(500);
+            delay(5);
             noTone(horn);
           }
           else{
