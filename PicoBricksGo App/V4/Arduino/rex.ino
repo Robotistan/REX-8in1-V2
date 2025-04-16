@@ -231,8 +231,8 @@ class MyCallbacks: public BLECharacteristicCallbacks {
         size_t length = pCharacteristic->getLength(); 
 
       // Process the value if it has been received
-      if (length() > 0) {
-        for (i = 0; i < length(); i++){
+      if (length > 0) {
+        for (i = 0; i < length; i++){
           buffer[i] = value[i];
           //Serial.println(buffer[i]);
           //delay(100);
