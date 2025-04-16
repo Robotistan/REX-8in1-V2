@@ -230,11 +230,12 @@ class MyServerCallbacks: public BLEServerCallbacks {
 // Callbacks for reading/writing the characteristic
 class MyCallbacks: public BLECharacteristicCallbacks {
     void onWrite(BLECharacteristic *pCharacteristic) {
-      String value = pCharacteristic->getValue().c_str(); // Get the value written to the characteristic
+        const uint8_t* value = pCharacteristic->getData();  // Get the value written to the characteristic
+        size_t length = pCharacteristic->getLength(); 
 
       // Process the value if it has been received
-      if (value.length() > 0) {
-        for (i = 0; i < value.length(); i++){
+      if (length() > 0) {
+        for (i = 0; i < length(); i++){
           buffer[i] = value[i];
           //Serial.println(buffer[i]);
           //delay(100);
