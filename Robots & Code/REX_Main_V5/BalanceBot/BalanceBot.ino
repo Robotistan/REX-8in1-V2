@@ -5,7 +5,7 @@
 #include "MPU6050_6Axis_MotionApps20.h"
 #include <Wire.h>
 
-#define INTERRUPT_PIN 13
+#define INTERRUPT_PIN 5
 
 #define MotorPWM 13	//Pwm
 
