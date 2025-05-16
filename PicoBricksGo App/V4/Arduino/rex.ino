@@ -208,7 +208,12 @@ void omni_move(int direction, int speed){
 
 // Function to activate the buzzer with a quick beep
 void rex_horn() {
-  tone(horn, 262, NOTE_DURATION);
+    for(int i=0; i<50; i++){
+        digitalWrite(horn, HIGH);
+        delay(2);
+        digitalWrite(horn, LOW);
+        delay(2);
+    }
 }
 
 // Callbacks for when a client connects or disconnects
