@@ -74,7 +74,7 @@ Servo Servo3;  // Up-Down control
 Servo Servo4;  // Open-Close mechanism
 
 // Variables
-int buffer[5];          // Buffer to store received data
+int buffer[15];          // Buffer to store received data
 int control = 0;        // Current control mode
 int i = 0;              // Loop variable
 int ySpeed  = 0;        // Speed based on Y-axis joystick input
@@ -554,12 +554,31 @@ class MyCallbacks: public BLECharacteristicCallbacks {
             delay(5);
             noTone(horn);
           }
+          else if(buffer[1] == 6){ //Voice Control
+            if(((buffer[2] == 'i') && (buffer[3] == 'l') && (buffer[4] == 'e') && (buffer[5] == 'r') && (buffer[6] == 'i')) || (((buffer[2] == 'f') && (buffer[3] == 'o') && (buffer[4] == 'r') && (buffer[5] == 'w') && (buffer[6] == 'a') && (buffer[7] == 'r') && (buffer[8] == 'd')))){  //ileri, forward
+              move(FWD, 255);
+              delay(500);
+            }
+            if(((buffer[2] == 'g') && (buffer[3] == 'e') && (buffer[4] == 'r') && (buffer[5] == 'i')) || (((buffer[2] == 'b') && (buffer[3] == 'a') && (buffer[4] == 'c') && (buffer[5] == 'k') && (buffer[6] == 'w') && (buffer[7] == 'a') && (buffer[8] == 'r') && (buffer[9] == 'd')))){  //geri, backward
+              move(BWD, 255);
+              delay(500);
+            }
+            if(((buffer[2] == 's') && (buffer[3] == 'a') && (buffer[4] == 'g')) || (((buffer[2] == 'r') && (buffer[3] == 'i') && (buffer[4] == 'g') && (buffer[5] == 'h') && (buffer[6] == 't')))){  //sağ, right
+              move(RIGHT, 200);
+              delay(300);
+            }
+            if(((buffer[2] == 's') && (buffer[3] == 'o') && (buffer[4] == 'l')) || (((buffer[2] == 'l') && (buffer[3] == 'e') && (buffer[4] == 'f') && (buffer[5] == 't')))){  //sol, left
+              move(LEFT, 200);
+              delay(300);
+            }
+            move(STOP,0);
+          }
           else{
             Serial.println("Wrong data");
           }
       }
       //Clear Buffer
-      for(i=0; i<5; i++)
+      for(i=0; i<15; i++)
         buffer[i] = 0;
       }
     }
