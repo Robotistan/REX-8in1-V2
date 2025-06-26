@@ -72,7 +72,7 @@ Servo Servo3;  // Up-Down control
 Servo Servo4;  // Open-Close mechanism
 
 // Variables
-int buffer[5];          // Buffer to store received data
+int buffer[15];          // Buffer to store received data
 int control = 0;        // Current control mode
 int i = 0;              // Loop variable
 int duty = 0;           // Speed variable
@@ -209,10 +209,10 @@ void omni_move(int direction, int speed){
 // Function to activate the buzzer with a quick beep
 void rex_horn() {
     for(int i=0; i<50; i++){
-        digitalWrite(horn, HIGH);
-        delay(2);
-        digitalWrite(horn, LOW);
-        delay(2);
+      digitalWrite(horn, HIGH);
+      delay(2);
+      digitalWrite(horn, LOW);
+      delay(2);
     }
 }
 
@@ -232,12 +232,11 @@ class MyServerCallbacks: public BLEServerCallbacks {
 // Callback class for handling BLE characteristic read/write
 class MyCallbacks: public BLECharacteristicCallbacks {
     void onWrite(BLECharacteristic *pCharacteristic) {
-        const uint8_t* value = pCharacteristic->getData();  // Get the value written to the characteristic
-        size_t length = pCharacteristic->getLength(); 
+      String value = pCharacteristic->getValue().c_str();  // Get the value written to the characteristic
 
       // Process the value if it has been received
-      if (length > 0) {
-        for (i = 0; i < length; i++){
+      if (value.length() > 0) {
+        for (i = 0; i < value.length(); i++){
           buffer[i] = value[i];
           //Serial.println(buffer[i]);
           //delay(100);
@@ -548,15 +547,34 @@ class MyCallbacks: public BLECharacteristicCallbacks {
             else if(buffer[2] == 13){ //AS1
               tone(horn, NOTE_AS, NOTE_DURATION);
             }
-            delay(5);
+            delay(500);
             noTone(horn);
+          }
+          else if(buffer[1] == 6){ //Voice Control
+            if(((buffer[2] == 'i') && (buffer[3] == 'l') && (buffer[4] == 'e') && (buffer[5] == 'r') && (buffer[6] == 'i')) || (((buffer[2] == 'f') && (buffer[3] == 'o') && (buffer[4] == 'r') && (buffer[5] == 'w') && (buffer[6] == 'a') && (buffer[7] == 'r') && (buffer[8] == 'd')))){  //ileri, forward
+              move(FWD, 255);
+              delay(500);
+            }
+            if(((buffer[2] == 'g') && (buffer[3] == 'e') && (buffer[4] == 'r') && (buffer[5] == 'i')) || (((buffer[2] == 'b') && (buffer[3] == 'a') && (buffer[4] == 'c') && (buffer[5] == 'k') && (buffer[6] == 'w') && (buffer[7] == 'a') && (buffer[8] == 'r') && (buffer[9] == 'd')))){  //geri, backward
+              move(BWD, 255);
+              delay(500);
+            }
+            if(((buffer[2] == 's') && (buffer[3] == 'a') && (buffer[4] == 'g')) || (((buffer[2] == 'r') && (buffer[3] == 'i') && (buffer[4] == 'g') && (buffer[5] == 'h') && (buffer[6] == 't')))){  //sağ, right
+              move(RIGHT, 200);
+              delay(300);
+            }
+            if(((buffer[2] == 's') && (buffer[3] == 'o') && (buffer[4] == 'l')) || (((buffer[2] == 'l') && (buffer[3] == 'e') && (buffer[4] == 'f') && (buffer[5] == 't')))){  //sol, left
+              move(LEFT, 200);
+              delay(300);
+            }
+            move(STOP,0);
           }
           else{
             Serial.println("Wrong data");
           }
       }
       //Clear Buffer
-      for(i=0; i<5; i++)
+      for(i=0; i<15; i++)
         buffer[i] = 0;
       }
     }
