@@ -99,7 +99,7 @@ while True:
     distance = sensor.distance_cm()
     print(distance)
     time.sleep(0.5)
-    '''
+    
     if distance > 12:
         forward(MotorSpeed)
     else:
@@ -110,4 +110,4 @@ while True:
         left(MotorSpeed)
         time.sleep(0.2)
         stop()
-    '''
+    
