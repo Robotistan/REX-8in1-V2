@@ -1,5 +1,5 @@
 //"""REX 8in1 Arm Bot"""
-// ESP32 Board Version Must Be 2.0.17
+// ESP32 Board Version Must Be 2.0.11
 
 #define CUSTOM_SETTINGS
 #define INCLUDE_GAMEPAD_MODULE
