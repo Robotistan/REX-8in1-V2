@@ -1,5 +1,5 @@
 //"""REX 8in1 Sumo Bot"""
-//Check the web site for Robots https://rex-rdt.readthedocs.io/en/latest/
+// ESP32 Board Version Must Be 2.0.17
 
 #define SensorLEFT 34   // IR pin
 #define SensorRIGHT 35  // IR pin
