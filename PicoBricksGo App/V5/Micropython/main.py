@@ -483,6 +483,29 @@ while True:
                     piano_tone(NOTE_GS)
                 elif(buffer[2] == 13): #AS
                     piano_tone(NOTE_AS)
+            elif buffer[1] == 6: #Voice Control
+                # ileri / forward
+                if (len(buffer) >= 7 and buffer[2] == ord('i') and buffer[3] == ord('l') and buffer[4] == ord('e') and buffer[5] == ord('r') and buffer[6] == ord('i')) or \
+                   (len(buffer) >= 9 and buffer[2] == ord('f') and buffer[3] == ord('o') and buffer[4] == ord('r') and buffer[5] == ord('w') and buffer[6] == ord('a') and buffer[7] == ord('r') and buffer[8] == ord('d')):
+                    move(FWD, 255)
+                # geri / backward / back
+                elif (len(buffer) >= 6 and buffer[2] == ord('g') and buffer[3] == ord('e') and buffer[4] == ord('r') and buffer[5] == ord('i')) or \
+                     (len(buffer) >= 6 and buffer[2] == ord('b') and buffer[3] == ord('a') and buffer[4] == ord('c') and buffer[5] == ord('k')):
+                    move(BWD, 255)
+                # sag / right
+                elif (len(buffer) >= 5 and buffer[2] == ord('s') and buffer[3] == ord('a') and buffer[4] == ord('g')) or \
+                     (len(buffer) >= 7 and buffer[2] == ord('r') and buffer[3] == ord('i') and buffer[4] == ord('g') and buffer[5] == ord('h') and buffer[6] == ord('t')):
+                    move(RIGHT, 200)
+                # sol / left
+                elif (len(buffer) >= 5 and buffer[2] == ord('s') and buffer[3] == ord('o') and buffer[4] == ord('l')) or \
+                     (len(buffer) >= 6 and buffer[2] == ord('l') and buffer[3] == ord('e') and buffer[4] == ord('f') and buffer[5] == ord('t')):
+                    move(LEFT, 200)
+                # dur / stop
+                elif (len(buffer) >= 5 and buffer[2] == ord('d') and buffer[3] == ord('u') and buffer[4] == ord('r')) or \
+                     (len(buffer) >= 6 and buffer[2] == ord('s') and buffer[3] == ord('t') and buffer[4] == ord('o') and buffer[5] == ord('p')):
+                    move(STOP, 0)
+                else:
+                    print("Unknown voice command")
             else:
                 print("Wrong Robot")
 
