@@ -65,7 +65,7 @@ String characteristicValue = "";     // Variable to hold the characteristic valu
 int position1 = 90;  // Servo 1 default position
 int position2 = 90;  // Servo 2 default position
 int position3 = 90;  // Servo 3 default position
-int position4 = 90;  // Servo 4 default position
+int position4 = 130;  // Servo 4 default position
 
 // Define pins of servo motors
 Servo Servo1;  // Forward-Bakcward control
@@ -412,7 +412,7 @@ class MyCallbacks: public BLECharacteristicCallbacks {
               position1 = 90;
               position2 = 90;
               position3 = 90;
-              position4 = 90;
+              position4 = 130;
 
               Servo1.write(position1);
               Servo2.write(position2);
@@ -497,13 +497,13 @@ class MyCallbacks: public BLECharacteristicCallbacks {
                   Servo3.write(position3);
                 }
               }
-              if(buffer[3] == 7){   //Servo 4 Open
+              if(buffer[3] == 8){   //Servo 4 Open
                 if (position4 > 90) {
                   position4 = position4 - 5;
                   Servo4.write(position4);
                 }
               }
-              if(buffer[3] == 8){   //Servo 4 Close
+              if(buffer[3] == 7){   //Servo 4 Close
                 if (position4 < 160) {
                   position4 = position4 + 5;
                   Servo4.write(position4);
