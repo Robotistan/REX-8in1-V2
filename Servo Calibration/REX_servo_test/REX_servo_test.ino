@@ -21,5 +21,5 @@ void loop() {
   myservo1.write(90);
   myservo2.write(90);
   myservo3.write(90);
-  myservo4.write(160);
+  myservo4.write(130);
 }
