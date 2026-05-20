@@ -473,37 +473,37 @@ class MyCallbacks: public BLECharacteristicCallbacks {
                   Servo1.write(position1);
                 }
               }
-              if(buffer[3] == 3){   //Servo 2 Up
+              if(buffer[3] == 4){   //Servo 2 Up
                 if (position2 < 140) {
                   position2 = position2 + 5;
                   Servo2.write(position2);
                 }
               }
-              if(buffer[3] == 4){   //Servo 2 Down
+              if(buffer[3] == 3){   //Servo 2 Down
                 if (position2 > 0) {
                   position2 = position2 - 5;
                   Servo2.write(position2);
                 }
               }
-              if(buffer[3] == 5){   //Servo 3 Down
+              if(buffer[3] == 6){   //Servo 3 Down
                 if (position3 > 30) {
                   position3 = position3 - 5;
                   Servo3.write(position3);
                 }
               }
-              if(buffer[3] == 6){   //Servo 3 Up
+              if(buffer[3] == 5){   //Servo 3 Up
                 if (position3 < 150) {
                   position3 = position3 + 5;
                   Servo3.write(position3);
                 }
               }
-              if(buffer[3] == 8){   //Servo 4 Open
+              if(buffer[3] == 7){   //Servo 4 Open
                 if (position4 > 90) {
                   position4 = position4 - 5;
                   Servo4.write(position4);
                 }
               }
-              if(buffer[3] == 7){   //Servo 4 Close
+              if(buffer[3] == 8){   //Servo 4 Close
                 if (position4 < 160) {
                   position4 = position4 + 5;
                   Servo4.write(position4);
